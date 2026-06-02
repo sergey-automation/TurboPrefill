@@ -12,7 +12,10 @@ This repository contains a file overlay for llama.cpp and helper scripts for run
 
 ## Install
 
+## Install
+
 Clone TurboPrefill:
+
 ```bash
 cd /workspace
 git clone https://github.com/sergey-automation/TurboPrefill.git
@@ -21,7 +24,9 @@ git clone https://github.com/sergey-automation/TurboPrefill.git
 Clone llama.cpp and check out the tested base:
 
 ```bash
-mkdir -p /workspace/projects cd /workspace/projects
+mkdir -p /workspace/projects
+cd /workspace/projects
+
 git clone https://github.com/ggml-org/llama.cpp.git
 cd llama.cpp
 git checkout 2e97c5f96
@@ -31,6 +36,7 @@ git rev-parse HEAD
 Copy TurboPrefill files into the llama.cpp tree:
 
 ```bash
+chmod +x /workspace/TurboPrefill/install.sh
 /workspace/TurboPrefill/install.sh /workspace/projects/llama.cpp
 ```
 Or copy the overlay manually:
@@ -76,9 +82,10 @@ Check files:
 ```bash
 ls -lh /workspace/models ls -lh /workspace/models/Q4_K_M
 ```
-
+## Note
+ llama-bench pp tests currently do not exercise TurboPrefill because they use a benchmark batch mode with n_outputs_all=1. TurboPrefill is enabled for real prompt prefill paths where n_outputs_all=0, such as llama-server long prompt processing.
 ## Benchmark scripts
-enchmark scripts are designed to be copied into the llama.cpp checkout and executed from there.
+Benchmark scripts are designed to be copied into the llama.cpp checkout and executed from there.
 
 All benchmark files are copied into the root directory of llama.cpp.
 All benchmark scripts are executed from the root directory of llama.cpp.

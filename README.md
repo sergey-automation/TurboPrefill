@@ -12,13 +12,13 @@ This repository contains a file overlay for llama.cpp and helper scripts for run
 
 ## Install
 
-## Install
 
 Clone TurboPrefill:
 
 ```bash
 cd /workspace
 git clone https://github.com/sergey-automation/TurboPrefill.git
+chmod +x /workspace/TurboPrefill/install.sh
 ```
 
 Clone llama.cpp and check out the tested base:
@@ -34,23 +34,29 @@ git rev-parse HEAD
 ```
 
 Copy TurboPrefill files into the llama.cpp tree:
-
+The benchmark scripts are not installed automatically.
+Copy the benchmark files you want to use into the llama.cpp root directory.
 ```bash
 chmod +x /workspace/TurboPrefill/install.sh
 /workspace/TurboPrefill/install.sh /workspace/projects/llama.cpp
 ```
-Or copy the overlay manually:
+Benchmark scripts (GPT-OSS-20B):
 ```bash
-cp -r /workspace/TurboPrefill/files/* /workspace/projects/llama.cpp/
+cp -r /workspace/TurboPrefill/benchmarks/gpt20b/* \
+/workspace/projects/llama.cpp/
 ```
+Benchmark scripts (GPT-OSS-120B):
 
+```bash
+cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* \
+/workspace/projects/llama.cpp/
+```
 
 ## Build
 
 ```bash
 cd /workspace/projects/llama.cpp
 
-cd /path/to/llama.cpp
 cmake -B build \
   -DGGML_CUDA=ON \
   -DGGML_CUDA_FA=ON \
@@ -68,27 +74,34 @@ pip install requests
 ## Download models
 Create model directory:
 ```bash
-mkdir -p /workspace/models cd /workspace/models
+mkdir -p /workspace/models
+cd /workspace/models
 ```
 GPT-OSS 20B:
 ```bash
-hf download unsloth/gpt-oss-20b-GGUF \ gpt-oss-20b-Q4_K_M.gguf \ --local-dir /workspace/models
+hf download unsloth/gpt-oss-20b-GGUF \
+  gpt-oss-20b-Q4_K_M.gguf \
+  --local-dir /workspace/models
 ```
 GPT-OSS 120B:
 ```bash
-hf download unsloth/gpt-oss-120b-GGUF \ Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf \ Q4_K_M/gpt-oss-120b-Q4_K_M-00002-of-00002.gguf \ --local-dir /workspace/models
+hf download unsloth/gpt-oss-120b-GGUF \
+  Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf \
+  Q4_K_M/gpt-oss-120b-Q4_K_M-00002-of-00002.gguf \
+  --local-dir /workspace/models
 ```
 Check files:
 ```bash
-ls -lh /workspace/models ls -lh /workspace/models/Q4_K_M
+ls -lh /workspace/models
+ls -lh /workspace/models/Q4_K_M
 ```
 ## Note
  llama-bench pp tests currently do not exercise TurboPrefill because they use a benchmark batch mode with n_outputs_all=1. TurboPrefill is enabled for real prompt prefill paths where n_outputs_all=0, such as llama-server long prompt processing.
 ## Benchmark scripts
 Benchmark scripts are designed to be copied into the llama.cpp checkout and executed from there.
 
-All benchmark files are copied into the root directory of llama.cpp.
-All benchmark scripts are executed from the root directory of llama.cpp.
+Benchmark files must be copied into the llama.cpp root directory.
+Benchmark scripts must be executed from the llama.cpp root directory.
 Copy GPT-OSS 20B scripts:
 ```bash
 cp -r /workspace/TurboPrefill/benchmarks/gpt20b/* /workspace/projects/llama.cpp/
@@ -100,11 +113,13 @@ cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* /workspace/projects/llama.cpp
 ## Run benchmarks
 GPT-OSS 20B baseline:
 ```bash
-cd /workspace/projects/llama.cpp TURBOPREFILL=0 python3 bench_server_gpt20b.py
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=0 python3 bench_server_gpt20b.py
 ```
 GPT-OSS 20B with TurboPrefill:
 ```bash
-cd /workspace/projects/llama.cpp TURBOPREFILL=1 python3 bench_server_gpt20b.py
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=1 python3 bench_server_gpt20b.py
 ```
 GPT-OSS 120B baseline:
 ```bash
@@ -116,11 +131,17 @@ GPT-OSS 120B with TurboPrefill:
 cd /workspace/projects/llama.cpp
 TURBOPREFILL=1 python3 bench_server_gpt120b.py
 ```
-Reports are saved to:
-
-/workspace/bench_reports_gpt-20b/
-/workspace/bench_reports_gpt-120b/
-
+Reports are saved to the OUTPUT_DIR configured in:
+- server_config_20b.sh
+- server_config_gpt120b.sh
+If you see:
+```text
+$'\r': command not found
+```
+convert shell scripts to Unix format:
+```bash
+sed -i 's/\r$//' *.sh
+```
 ## Run server UI
 GPT-OSS 20B:
 ```bash
@@ -150,17 +171,14 @@ Do not expose llama-server directly to the public internet without access contro
 If you edit .sh files from Windows, save them with Unix line endings: LF, not CRLF.
 
 If you see this error:
-
 $'\r': command not found
 
 fix the files:
 ```bash
 cd /workspace/projects/llama.cpp
 
-sed -i 's/\r$//' server_config_20b.sh run_server_gpt20b.sh
-sed -i 's/\r$//' server_config_gpt120b.sh run_server_gpt120b.sh
+sed -i 's/\r$//' *.sh
 ```
-
 
 ## Enable or disable TurboPrefill
 

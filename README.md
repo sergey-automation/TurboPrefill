@@ -23,6 +23,57 @@ This repository contains a file overlay for llama.cpp and helper scripts for run
 | 24560 | 1853 | 3684 | **1.99x** |
 | 32761 | 1776 | 3359 | **1.89x** |
 
+# How TurboPrefill Was Created
+
+For more than 20 years, I worked on the design, construction, and optimization of custom industrial production lines and control systems.
+
+While experimenting with running local AI models using llama.cpp on multi-GPU systems in layer-split mode, I noticed a well-known characteristic of long-context prefill execution.
+
+In layer-split mode, the model is distributed across multiple GPUs by layers. Under the standard execution path, each ubatch passes sequentially through all model layers. As a result, some GPUs remain idle while waiting for the previous ubatch to complete processing through the remaining layers.
+
+While analyzing the scheduler's behavior, I began asking a simple question: does prefill really require waiting for the previous ubatch to traverse the entire model before the next ubatch can begin?
+
+For decode, such a dependency does exist. However, during prefill, the next ubatch can start processing on a layer immediately after the previous ubatch has finished on that layer, without waiting for it to complete the entire model.
+
+To test this idea, I created an experimental execution path that later became TurboPrefill.
+
+The core idea is not to modify the model, mathematical computations, or attention algorithms. TurboPrefill changes only the scheduling strategy used to process a series of ubatches inside the scheduler.
+
+If GPUs are viewed as stations on a production line, the standard approach sends one workpiece through every station before starting the next one. As a result, parts of the equipment periodically sit idle while waiting for previous stages to finish.
+
+TurboPrefill is intended to keep multiple ubatches active within the pipeline simultaneously. This allows each GPU to begin processing the next ubatch as soon as its own work is complete, without waiting for the previous ubatch to finish across the entire GPU chain.
+
+In simplified form:
+
+Standard scheduler:
+
+```text
+step    1234567890123
+GPU(1)  #000#000#0000
+GPU(2)  0#000#000#000
+GPU(3)  00#000#000#00
+GPU(4)  000#000#000#0
+```
+
+TurboPrefill:
+
+```text
+step    1234567
+GPU(1)  ###0000
+GPU(2)  0###000
+GPU(3)  00###00
+GPU(4)  000###0
+```
+
+TurboPrefill does not modify model weights, computations, or inference results. Only the execution order of prefill workloads inside the scheduler is changed.
+
+As a result, idle time between processing stages can be reduced and higher prefill performance can be achieved on long contexts while preserving identical model outputs.
+
+TurboPrefill is not intended to be a universal accelerator for all llama.cpp workloads.
+
+It is specifically designed for long single-request prefill workloads running in multi-GPU layer-split mode, where underutilization of available hardware is most visible.
+
+The idea behind TurboPrefill did not come from modifying the mathematical side of the model. It came from viewing multi-GPU inference as a production pipeline, where the primary focus is hardware utilization, reducing idle time, and improving overall system throughput.
 
 ## Tested llama.cpp base
 

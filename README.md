@@ -229,9 +229,12 @@ This suggests that TurboPrefill is not tied to a specific GPU count. The schedul
 
 ## Validation Across GPU Generations
 
+![TurboPrefill Benchmark](benchmarks/RTX3090_4x/4xRTX3090.png)
+
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
 
 Architecture	Hardware
+
 Pascal	NVIDIA P104-100
 Ampere	NVIDIA RTX 3090
 Blackwell	NVIDIA RTX 5060 Ti 16GB

@@ -1,0 +1,816 @@
+ggml_cuda_init: found 10 CUDA devices (Total VRAM: 81163 MiB):
+  Device 0: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 1: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 2: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 3: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 4: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 5: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 6: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 7: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 8: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 9: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+build_info: b9100-2e97c5f96
+system_info: n_threads = 2 (n_threads_batch = 2) / 4 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+init: using 5 threads for HTTP server
+start: binding port with default address family
+main: loading model
+srv    load_model: loading model '/home/serg/workspace/models/Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf'
+common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+common_params_fit_impl: getting device memory data for initial parameters:
+common_memory_breakdown_print: | memory breakdown [MiB] | total   free    self   model   context   compute    unaccounted |
+common_memory_breakdown_print: |   - CUDA0 (P104-100)   |  8116 = 8026 + (5149 =  4907 +     130 +     111) +       -5060 |
+common_memory_breakdown_print: |   - CUDA1 (P104-100)   |  8116 = 8026 + (6865 =  6542 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA2 (P104-100)   |  8116 = 8026 + (6864 =  6541 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA3 (P104-100)   |  8116 = 8026 + (6864 =  6541 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA4 (P104-100)   |  8116 = 8026 + (6865 =  6542 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA5 (P104-100)   |  8116 = 8026 + (6864 =  6541 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA6 (P104-100)   |  8116 = 8026 + (6864 =  6541 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA7 (P104-100)   |  8116 = 8026 + (6865 =  6542 +     260 +      62) +       -6775 |
+common_memory_breakdown_print: |   - CUDA8 (P104-100)   |  8116 = 8026 + (5229 =  4907 +     259 +      62) +       -5140 |
+common_memory_breakdown_print: |   - CUDA9 (P104-100)   |  8116 = 8026 + (4070 =  3858 +     130 +      82) +       -3981 |
+common_memory_breakdown_print: |   - Host               |                  477 =   379 +       0 +      98                |
+common_params_fit_impl: projected memory use with initial parameters [MiB]:
+common_params_fit_impl:   - CUDA0 (NVIDIA P104-100):   8116 total,   5149 used,   2876 free vs. target of   1024
+common_params_fit_impl:   - CUDA1 (NVIDIA P104-100):   8116 total,   6865 used,   1161 free vs. target of   1024
+common_params_fit_impl:   - CUDA2 (NVIDIA P104-100):   8116 total,   6864 used,   1162 free vs. target of   1024
+common_params_fit_impl:   - CUDA3 (NVIDIA P104-100):   8116 total,   6864 used,   1162 free vs. target of   1024
+common_params_fit_impl:   - CUDA4 (NVIDIA P104-100):   8116 total,   6865 used,   1161 free vs. target of   1024
+common_params_fit_impl:   - CUDA5 (NVIDIA P104-100):   8116 total,   6864 used,   1162 free vs. target of   1024
+common_params_fit_impl:   - CUDA6 (NVIDIA P104-100):   8116 total,   6864 used,   1162 free vs. target of   1024
+common_params_fit_impl:   - CUDA7 (NVIDIA P104-100):   8116 total,   6865 used,   1161 free vs. target of   1024
+common_params_fit_impl:   - CUDA8 (NVIDIA P104-100):   8116 total,   5229 used,   2797 free vs. target of   1024
+common_params_fit_impl:   - CUDA9 (NVIDIA P104-100):   8116 total,   4070 used,   3956 free vs. target of   1024
+common_params_fit_impl: projected to use 62503 MiB of device memory vs. 80268 MiB of free device memory
+common_params_fit_impl: targets for free memory can be met on all devices, no changes needed
+common_fit_params: successfully fit params to free device memory
+common_fit_params: fitting params to free memory took 2.21 seconds
+llama_model_loader: additional 1 GGUFs metadata loaded.
+llama_model_loader: loaded meta data with 40 key-value pairs and 687 tensors from /home/serg/workspace/models/Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = gpt-oss
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = Gpt-Oss-120B
+llama_model_loader: - kv   3:                           general.basename str              = Gpt-Oss-120B
+llama_model_loader: - kv   4:                       general.quantized_by str              = Unsloth
+llama_model_loader: - kv   5:                         general.size_label str              = 120B
+llama_model_loader: - kv   6:                            general.license str              = apache-2.0
+llama_model_loader: - kv   7:                           general.repo_url str              = https://huggingface.co/unsloth
+llama_model_loader: - kv   8:                               general.tags arr[str,2]       = ["vllm", "text-generation"]
+llama_model_loader: - kv   9:                        gpt-oss.block_count u32              = 36
+llama_model_loader: - kv  10:                     gpt-oss.context_length u32              = 131072
+llama_model_loader: - kv  11:                   gpt-oss.embedding_length u32              = 2880
+llama_model_loader: - kv  12:                gpt-oss.feed_forward_length u32              = 2880
+llama_model_loader: - kv  13:               gpt-oss.attention.head_count u32              = 64
+llama_model_loader: - kv  14:            gpt-oss.attention.head_count_kv u32              = 8
+llama_model_loader: - kv  15:                     gpt-oss.rope.freq_base f32              = 150000.000000
+llama_model_loader: - kv  16:   gpt-oss.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  17:                       gpt-oss.expert_count u32              = 128
+llama_model_loader: - kv  18:                  gpt-oss.expert_used_count u32              = 4
+llama_model_loader: - kv  19:               gpt-oss.attention.key_length u32              = 64
+llama_model_loader: - kv  20:             gpt-oss.attention.value_length u32              = 64
+llama_model_loader: - kv  21:           gpt-oss.attention.sliding_window u32              = 128
+llama_model_loader: - kv  22:         gpt-oss.expert_feed_forward_length u32              = 2880
+llama_model_loader: - kv  23:                  gpt-oss.rope.scaling.type str              = yarn
+llama_model_loader: - kv  24:                gpt-oss.rope.scaling.factor f32              = 32.000000
+llama_model_loader: - kv  25: gpt-oss.rope.scaling.original_context_length u32              = 4096
+llama_model_loader: - kv  26:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  27:                         tokenizer.ggml.pre str              = gpt-4o
+llama_model_loader: - kv  28:                      tokenizer.ggml.tokens arr[str,201088]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  29:                  tokenizer.ggml.token_type arr[i32,201088]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  30:                      tokenizer.ggml.merges arr[str,446189]  = ["Ġ Ġ", "Ġ ĠĠĠ", "ĠĠ ĠĠ", "...
+llama_model_loader: - kv  31:                tokenizer.ggml.bos_token_id u32              = 199998
+llama_model_loader: - kv  32:                tokenizer.ggml.eos_token_id u32              = 200002
+llama_model_loader: - kv  33:            tokenizer.ggml.padding_token_id u32              = 200017
+llama_model_loader: - kv  34:                    tokenizer.chat_template str              = {# Chat template fixes by Unsloth #}\n...
+llama_model_loader: - kv  35:               general.quantization_version u32              = 2
+llama_model_loader: - kv  36:                          general.file_type u32              = 15
+llama_model_loader: - kv  37:                                   split.no u16              = 0
+llama_model_loader: - kv  38:                        split.tensors.count i32              = 687
+llama_model_loader: - kv  39:                                split.count u16              = 2
+llama_model_loader: - type  f32:  433 tensors
+llama_model_loader: - type q5_0:   91 tensors
+llama_model_loader: - type q8_0:   19 tensors
+llama_model_loader: - type q4_K:   36 tensors
+llama_model_loader: - type mxfp4:  108 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 58.45 GiB (4.30 BPW) 
+llama_prepare_model_devices: using device CUDA0 (NVIDIA P104-100) (0000:01:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA1 (NVIDIA P104-100) (0000:02:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA2 (NVIDIA P104-100) (0000:09:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA3 (NVIDIA P104-100) (0000:0b:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA4 (NVIDIA P104-100) (0000:0d:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA5 (NVIDIA P104-100) (0000:0e:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA6 (NVIDIA P104-100) (0000:0f:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA7 (NVIDIA P104-100) (0000:10:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA8 (NVIDIA P104-100) (0000:11:00.0) - 8026 MiB free
+llama_prepare_model_devices: using device CUDA9 (NVIDIA P104-100) (0000:12:00.0) - 8026 MiB free
+load: 0 unused tokens
+load: setting token '<|message|>' (200008) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|start|>' (200006) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|constrain|>' (200003) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|channel|>' (200005) attribute to USER_DEFINED (16), old attributes: 8
+load: printing all EOG tokens:
+load:   - 199999 ('<|endoftext|>')
+load:   - 200002 ('<|return|>')
+load:   - 200007 ('<|end|>')
+load:   - 200012 ('<|call|>')
+load: special_eog_ids contains both '<|return|>' and '<|call|>', or '<|calls|>' and '<|flush|>' tokens, removing '<|end|>' token from EOG list
+load: special tokens cache size = 21
+load: token to piece cache size = 1.3332 MB
+print_info: arch                  = gpt-oss
+print_info: vocab_only            = 0
+print_info: no_alloc              = 0
+print_info: n_ctx_train           = 131072
+print_info: n_embd                = 2880
+print_info: n_embd_inp            = 2880
+print_info: n_layer               = 36
+print_info: n_head                = 64
+print_info: n_head_kv             = 8
+print_info: n_rot                 = 64
+print_info: n_swa                 = 128
+print_info: is_swa_any            = 1
+print_info: n_embd_head_k         = 64
+print_info: n_embd_head_v         = 64
+print_info: n_gqa                 = 8
+print_info: n_embd_k_gqa          = 512
+print_info: n_embd_v_gqa          = 512
+print_info: f_norm_eps            = 0.0e+00
+print_info: f_norm_rms_eps        = 1.0e-05
+print_info: f_clamp_kqv           = 0.0e+00
+print_info: f_max_alibi_bias      = 0.0e+00
+print_info: f_logit_scale         = 0.0e+00
+print_info: f_attn_scale          = 0.0e+00
+print_info: f_attn_value_scale    = 0.0000
+print_info: n_ff                  = 2880
+print_info: n_expert              = 128
+print_info: n_expert_used         = 4
+print_info: n_expert_groups       = 0
+print_info: n_group_used          = 0
+print_info: causal attn           = 1
+print_info: pooling type          = -1
+print_info: rope type             = 2
+print_info: rope scaling          = yarn
+print_info: freq_base_train       = 150000.0
+print_info: freq_scale_train      = 0.03125
+print_info: freq_base_swa         = 150000.0
+print_info: freq_scale_swa        = 0.03125
+print_info: n_embd_head_k_swa     = 64
+print_info: n_embd_head_v_swa     = 64
+print_info: n_rot_swa             = 64
+print_info: n_ctx_orig_yarn       = 4096
+print_info: rope_yarn_log_mul     = 0.0000
+print_info: rope_finetuned        = unknown
+print_info: model type            = 120B
+print_info: model params          = 116.83 B
+print_info: general.name          = Gpt-Oss-120B
+print_info: n_ff_exp              = 2880
+print_info: vocab type            = BPE
+print_info: n_vocab               = 201088
+print_info: n_merges              = 446189
+print_info: BOS token             = 199998 '<|startoftext|>'
+print_info: EOS token             = 200002 '<|return|>'
+print_info: EOT token             = 199999 '<|endoftext|>'
+print_info: PAD token             = 200017 '<|reserved_200017|>'
+print_info: LF token              = 198 'Ċ'
+print_info: EOG token             = 199999 '<|endoftext|>'
+print_info: EOG token             = 200002 '<|return|>'
+print_info: EOG token             = 200012 '<|call|>'
+print_info: max token length      = 256
+load_tensors: loading model tensors, this can take a while... (mmap = true, direct_io = false)
+load_tensors: offloading output layer to GPU
+load_tensors: offloading 35 repeating layers to GPU
+load_tensors: offloaded 37/37 layers to GPU
+load_tensors:   CPU_Mapped model buffer size =   379.71 MiB
+load_tensors:        CUDA0 model buffer size =  4907.62 MiB
+load_tensors:        CUDA1 model buffer size =  6542.44 MiB
+load_tensors:        CUDA2 model buffer size =  6541.92 MiB
+load_tensors:        CUDA3 model buffer size =  6541.92 MiB
+load_tensors:        CUDA4 model buffer size =  6542.44 MiB
+load_tensors:        CUDA5 model buffer size =  6541.92 MiB
+load_tensors:        CUDA6 model buffer size =  6541.92 MiB
+load_tensors:        CUDA7 model buffer size =  6542.44 MiB
+load_tensors:        CUDA8 model buffer size =  4907.62 MiB
+load_tensors:        CUDA9 model buffer size =  3858.58 MiB
+....................................................................................................
+common_init_result: added <|endoftext|> logit bias = -inf
+common_init_result: added <|return|> logit bias = -inf
+common_init_result: added <|call|> logit bias = -inf
+llama_context: constructing llama_context
+llama_context: n_seq_max     = 1
+llama_context: n_ctx         = 66304
+llama_context: n_ctx_seq     = 66304
+llama_context: n_batch       = 4096
+llama_context: n_ubatch      = 32
+llama_context: causal_attn   = 1
+llama_context: flash_attn    = auto
+llama_context: kv_unified    = false
+llama_context: freq_base     = 150000.0
+llama_context: freq_scale    = 0.03125
+llama_context: n_ctx_seq (66304) < n_ctx_train (131072) -- the full capacity of the model will not be utilized
+llama_context:  CUDA_Host  output buffer size =     0.77 MiB
+llama_kv_cache_iswa: creating non-SWA KV cache, size = 66304 cells
+llama_kv_cache:      CUDA0 KV buffer size =   129.50 MiB
+llama_kv_cache:      CUDA1 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA2 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA3 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA4 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA5 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA6 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA7 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA8 KV buffer size =   259.00 MiB
+llama_kv_cache:      CUDA9 KV buffer size =   129.50 MiB
+llama_kv_cache: size = 2331.00 MiB ( 66304 cells,  18 layers,  1/1 seqs), K (f16): 1165.50 MiB, V (f16): 1165.50 MiB
+llama_kv_cache: attn_rot_k = 0, n_embd_head_k_all = 64
+llama_kv_cache: attn_rot_v = 0, n_embd_head_k_all = 64
+llama_kv_cache_iswa: creating     SWA KV cache, size = 256 cells
+llama_kv_cache:      CUDA0 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA1 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA2 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA3 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA4 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA5 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA6 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA7 KV buffer size =     1.00 MiB
+llama_kv_cache:      CUDA8 KV buffer size =     0.50 MiB
+llama_kv_cache:      CUDA9 KV buffer size =     0.50 MiB
+llama_kv_cache: size =    9.00 MiB (   256 cells,  18 layers,  1/1 seqs), K (f16):    4.50 MiB, V (f16):    4.50 MiB
+llama_kv_cache: attn_rot_k = 0, n_embd_head_k_all = 64
+llama_kv_cache: attn_rot_v = 0, n_embd_head_k_all = 64
+llama_context: pipeline parallelism enabled
+sched_reserve: reserving ...
+sched_reserve: Flash Attention was auto, set to enabled
+sched_reserve: resolving fused Gated Delta Net support:
+sched_reserve: fused Gated Delta Net (autoregressive) enabled
+sched_reserve: fused Gated Delta Net (chunked) enabled
+sched_reserve:      CUDA0 compute buffer size =   111.72 MiB
+sched_reserve:      CUDA1 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA2 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA3 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA4 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA5 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA6 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA7 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA8 compute buffer size =    58.40 MiB
+sched_reserve:      CUDA9 compute buffer size =    77.88 MiB
+sched_reserve:  CUDA_Host compute buffer size =    98.22 MiB
+sched_reserve: graph nodes  = 2024
+sched_reserve: graph splits = 11
+sched_reserve: reserve took 139.69 ms, sched copies = 12
+common_init_from_params: warming up the model with an empty run - please wait ... (--no-warmup to disable)
+srv    load_model: initializing slots, n_slots = 1
+no implementations specified for speculative decoding
+slot   load_model: id  0 | task -1 | new slot, n_ctx = 66304
+srv    load_model: prompt cache is enabled, size limit: 8192 MiB
+srv    load_model: use `--cache-ram 0` to disable the prompt cache
+srv    load_model: for more info see https://github.com/ggml-org/llama.cpp/pull/16391
+srv          init: init: --cache-idle-slots requires --kv-unified, disabling
+init: chat template, example_format: '<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.
+Knowledge cutoff: 2024-06
+Current date: 2026-06-01
+
+Reasoning: medium
+
+# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|><|start|>developer<|message|># Instructions
+
+You are a helpful assistant<|end|><|start|>user<|message|>Hello<|end|><|start|>assistant<|channel|>final<|message|>Hi there<|end|><|start|>user<|message|>How are you?<|end|><|start|>assistant'
+srv          init: init: chat template, thinking = 1
+main: model loaded
+main: server is listening on http://0.0.0.0:8081
+main: starting the main loop...
+srv  update_slots: all slots are idle
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+srv  get_availabl: updating prompt cache
+srv          load:  - looking for better prompt, base f_keep = -1.000, sim = 0.000
+srv        update:  - cache state: 0 prompts, 0.000 MiB (limits: 8192.000 MiB, 66304 tokens, 8589934592 est)
+srv  get_availabl: prompt cache update took 0.18 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+slot update_slots: id  0 | task 0 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 255
+slot update_slots: id  0 | task 0 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 0 | prompt processing progress, n_tokens = 219, batch.n_tokens = 219, progress = 0.858824
+decode: TurboPrefill requested=0 active=0 n_tokens=219 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 0 | n_tokens = 219, memory_seq_rm [219, end)
+slot update_slots: id  0 | task 0 | prompt processing progress, n_tokens = 251, batch.n_tokens = 32, progress = 0.984314
+slot create_check: id  0 | task 0 | created context checkpoint 1 of 32 (pos_min = 0, pos_max = 218, n_tokens = 219, size = 7.702 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 0 | n_tokens = 251, memory_seq_rm [251, end)
+slot init_sampler: id  0 | task 0 | init sampler, took 0.04 ms, tokens: text = 255, total = 255
+slot update_slots: id  0 | task 0 | prompt processing done, n_tokens = 255, batch.n_tokens = 4
+slot print_timing: id  0 | task 0 | 
+prompt eval time =    3546.52 ms /   255 tokens (   13.91 ms per token,    71.90 tokens per second)
+       eval time =    4537.08 ms /   128 tokens (   35.45 ms per token,    28.21 tokens per second)
+      total time =    8083.60 ms /   383 tokens
+slot      release: id  0 | task 0 | stop processing: n_tokens = 382, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.357 (> 0.100 thold), f_keep = 0.471
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 382, total state size = 22.438 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.471, sim = 0.357
+srv        update:  - cache state: 1 prompts, 30.140 MiB (limits: 8192.000 MiB, 66304 tokens, 103826 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv  get_availabl: prompt cache update took 131.65 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 131 | processing task, is_child = 0
+slot update_slots: id  0 | task 131 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 504
+slot update_slots: id  0 | task 131 | erased invalidated context checkpoint (pos_min = 0, pos_max = 218, n_tokens = 219, n_swa = 128, pos_next = 0, size = 7.702 MiB)
+slot update_slots: id  0 | task 131 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 131 | prompt processing progress, n_tokens = 468, batch.n_tokens = 468, progress = 0.928571
+decode: TurboPrefill requested=0 active=0 n_tokens=468 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 131 | n_tokens = 468, memory_seq_rm [468, end)
+slot update_slots: id  0 | task 131 | prompt processing progress, n_tokens = 500, batch.n_tokens = 32, progress = 0.992063
+slot create_check: id  0 | task 131 | created context checkpoint 1 of 32 (pos_min = 212, pos_max = 467, n_tokens = 468, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 131 | n_tokens = 500, memory_seq_rm [500, end)
+slot init_sampler: id  0 | task 131 | init sampler, took 0.15 ms, tokens: text = 504, total = 504
+slot update_slots: id  0 | task 131 | prompt processing done, n_tokens = 504, batch.n_tokens = 4
+slot print_timing: id  0 | task 131 | 
+prompt eval time =    5786.58 ms /   504 tokens (   11.48 ms per token,    87.10 tokens per second)
+       eval time =    4584.46 ms /   128 tokens (   35.82 ms per token,    27.92 tokens per second)
+      total time =   10371.04 ms /   632 tokens
+slot      release: id  0 | task 131 | stop processing: n_tokens = 631, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 0.177 (> 0.100 thold), f_keep = 0.285
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 631, total state size = 31.195 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.285, sim = 0.177
+srv        update:  - cache state: 2 prompts, 70.338 MiB (limits: 8192.000 MiB, 66304 tokens, 117980 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv  get_availabl: prompt cache update took 184.07 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 262 | processing task, is_child = 0
+slot update_slots: id  0 | task 262 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 1017
+slot update_slots: id  0 | task 262 | erased invalidated context checkpoint (pos_min = 212, pos_max = 467, n_tokens = 468, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 262 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 262 | prompt processing progress, n_tokens = 981, batch.n_tokens = 981, progress = 0.964602
+decode: TurboPrefill requested=0 active=0 n_tokens=981 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 262 | n_tokens = 981, memory_seq_rm [981, end)
+slot update_slots: id  0 | task 262 | prompt processing progress, n_tokens = 1013, batch.n_tokens = 32, progress = 0.996067
+slot create_check: id  0 | task 262 | created context checkpoint 1 of 32 (pos_min = 725, pos_max = 980, n_tokens = 981, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 262 | n_tokens = 1013, memory_seq_rm [1013, end)
+slot init_sampler: id  0 | task 262 | init sampler, took 0.12 ms, tokens: text = 1017, total = 1017
+slot update_slots: id  0 | task 262 | prompt processing done, n_tokens = 1017, batch.n_tokens = 4
+slot print_timing: id  0 | task 262 | 
+prompt eval time =   10984.96 ms /  1017 tokens (   10.80 ms per token,    92.58 tokens per second)
+       eval time =    4618.08 ms /   128 tokens (   36.08 ms per token,    27.72 tokens per second)
+      total time =   15603.04 ms /  1145 tokens
+slot      release: id  0 | task 262 | stop processing: n_tokens = 1144, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33218230710
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 1144, total state size = 49.236 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.157, sim = 0.088
+srv        update:  - cache state: 3 prompts, 128.577 MiB (limits: 8192.000 MiB, 66304 tokens, 137428 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv  get_availabl: prompt cache update took 281.81 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 393 | processing task, is_child = 0
+slot update_slots: id  0 | task 393 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 2044
+slot update_slots: id  0 | task 393 | erased invalidated context checkpoint (pos_min = 725, pos_max = 980, n_tokens = 981, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 393 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 393 | prompt processing progress, n_tokens = 2008, batch.n_tokens = 2008, progress = 0.982387
+decode: TurboPrefill requested=0 active=0 n_tokens=2008 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 393 | n_tokens = 2008, memory_seq_rm [2008, end)
+slot update_slots: id  0 | task 393 | prompt processing progress, n_tokens = 2040, batch.n_tokens = 32, progress = 0.998043
+slot create_check: id  0 | task 393 | created context checkpoint 1 of 32 (pos_min = 1752, pos_max = 2007, n_tokens = 2008, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 393 | n_tokens = 2040, memory_seq_rm [2040, end)
+slot init_sampler: id  0 | task 393 | init sampler, took 0.25 ms, tokens: text = 2044, total = 2044
+slot update_slots: id  0 | task 393 | prompt processing done, n_tokens = 2044, batch.n_tokens = 4
+slot print_timing: id  0 | task 393 | 
+prompt eval time =   22628.33 ms /  2044 tokens (   11.07 ms per token,    90.33 tokens per second)
+       eval time =    4666.71 ms /   128 tokens (   36.46 ms per token,    27.43 tokens per second)
+      total time =   27295.04 ms /  2172 tokens
+slot      release: id  0 | task 393 | stop processing: n_tokens = 2171, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33246493151
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 2171, total state size = 85.353 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.083, sim = 0.044
+srv        update:  - cache state: 4 prompts, 222.933 MiB (limits: 8192.000 MiB, 66304 tokens, 159038 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv  get_availabl: prompt cache update took 492.50 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 524 | processing task, is_child = 0
+slot update_slots: id  0 | task 524 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 4076
+slot update_slots: id  0 | task 524 | erased invalidated context checkpoint (pos_min = 1752, pos_max = 2007, n_tokens = 2008, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 524 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 524 | prompt processing progress, n_tokens = 4040, batch.n_tokens = 4040, progress = 0.991168
+decode: TurboPrefill requested=0 active=0 n_tokens=4040 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 524 | n_tokens = 4040, memory_seq_rm [4040, end)
+slot update_slots: id  0 | task 524 | prompt processing progress, n_tokens = 4072, batch.n_tokens = 32, progress = 0.999019
+slot create_check: id  0 | task 524 | created context checkpoint 1 of 32 (pos_min = 3784, pos_max = 4039, n_tokens = 4040, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 524 | n_tokens = 4072, memory_seq_rm [4072, end)
+slot init_sampler: id  0 | task 524 | init sampler, took 0.50 ms, tokens: text = 4076, total = 4076
+slot update_slots: id  0 | task 524 | prompt processing done, n_tokens = 4076, batch.n_tokens = 4
+slot print_timing: id  0 | task 524 | 
+prompt eval time =   45610.07 ms /  4076 tokens (   11.19 ms per token,    89.37 tokens per second)
+       eval time =    4755.02 ms /   128 tokens (   37.15 ms per token,    26.92 tokens per second)
+      total time =   50365.10 ms /  4204 tokens
+slot      release: id  0 | task 524 | stop processing: n_tokens = 4203, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33297934465
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 4203, total state size = 156.814 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.043, sim = 0.029
+srv        update:  - cache state: 5 prompts, 388.750 MiB (limits: 8192.000 MiB, 66304 tokens, 179770 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv  get_availabl: prompt cache update took 876.10 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 655 | processing task, is_child = 0
+slot update_slots: id  0 | task 655 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 6142
+slot update_slots: id  0 | task 655 | erased invalidated context checkpoint (pos_min = 3784, pos_max = 4039, n_tokens = 4040, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 655 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 655 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.666884
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 655 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 655 | prompt processing progress, n_tokens = 6106, batch.n_tokens = 2010, progress = 0.994139
+decode: TurboPrefill requested=0 active=0 n_tokens=2010 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 655 | n_tokens = 6106, memory_seq_rm [6106, end)
+slot update_slots: id  0 | task 655 | prompt processing progress, n_tokens = 6138, batch.n_tokens = 32, progress = 0.999349
+slot create_check: id  0 | task 655 | created context checkpoint 1 of 32 (pos_min = 5850, pos_max = 6105, n_tokens = 6106, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 655 | n_tokens = 6138, memory_seq_rm [6138, end)
+slot init_sampler: id  0 | task 655 | init sampler, took 0.75 ms, tokens: text = 6142, total = 6142
+slot update_slots: id  0 | task 655 | prompt processing done, n_tokens = 6142, batch.n_tokens = 4
+slot print_timing: id  0 | task 655 | 
+prompt eval time =   71610.00 ms /  6142 tokens (   11.66 ms per token,    85.77 tokens per second)
+       eval time =    4856.60 ms /   128 tokens (   37.94 ms per token,    26.36 tokens per second)
+      total time =   76466.59 ms /  6270 tokens
+slot      release: id  0 | task 655 | stop processing: n_tokens = 6269, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33375677182
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 6269, total state size = 229.470 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.027, sim = 0.021
+srv        update:  - cache state: 6 prompts, 627.224 MiB (limits: 8192.000 MiB, 66304 tokens, 193298 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv  get_availabl: prompt cache update took 1273.16 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 787 | processing task, is_child = 0
+slot update_slots: id  0 | task 787 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 8164
+slot update_slots: id  0 | task 787 | erased invalidated context checkpoint (pos_min = 5850, pos_max = 6105, n_tokens = 6106, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 787 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 787 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.501715
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 787 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 787 | prompt processing progress, n_tokens = 8128, batch.n_tokens = 4032, progress = 0.995590
+decode: TurboPrefill requested=0 active=0 n_tokens=4032 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 787 | n_tokens = 8128, memory_seq_rm [8128, end)
+slot update_slots: id  0 | task 787 | prompt processing progress, n_tokens = 8160, batch.n_tokens = 32, progress = 0.999510
+slot create_check: id  0 | task 787 | created context checkpoint 1 of 32 (pos_min = 7872, pos_max = 8127, n_tokens = 8128, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 787 | n_tokens = 8160, memory_seq_rm [8160, end)
+slot init_sampler: id  0 | task 787 | init sampler, took 0.98 ms, tokens: text = 8164, total = 8164
+slot update_slots: id  0 | task 787 | prompt processing done, n_tokens = 8164, batch.n_tokens = 4
+slot print_timing: id  0 | task 787 | 
+prompt eval time =   96078.56 ms /  8164 tokens (   11.77 ms per token,    84.97 tokens per second)
+       eval time =    4951.65 ms /   128 tokens (   38.68 ms per token,    25.85 tokens per second)
+      total time =  101030.21 ms /  8292 tokens
+slot      release: id  0 | task 787 | stop processing: n_tokens = 8291, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33478497576
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 8291, total state size = 300.579 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.020, sim = 0.014
+srv        update:  - cache state: 7 prompts, 936.806 MiB (limits: 8192.000 MiB, 66304 tokens, 201921 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv        update:    - prompt 0x58f0dfcb6200:    8291 tokens, checkpoints:  1,   309.583 MiB
+srv  get_availabl: prompt cache update took 1675.55 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 919 | processing task, is_child = 0
+slot update_slots: id  0 | task 919 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 12280
+slot update_slots: id  0 | task 919 | erased invalidated context checkpoint (pos_min = 7872, pos_max = 8127, n_tokens = 8128, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 919 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 919 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.333550
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 919 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 919 | prompt processing progress, n_tokens = 8192, batch.n_tokens = 4096, progress = 0.667101
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 919 | n_tokens = 8192, memory_seq_rm [8192, end)
+slot update_slots: id  0 | task 919 | 8192 tokens since last checkpoint at 0, creating new checkpoint during processing at position 12244
+slot update_slots: id  0 | task 919 | prompt processing progress, n_tokens = 12244, batch.n_tokens = 4052, progress = 0.997068
+slot create_check: id  0 | task 919 | created context checkpoint 1 of 32 (pos_min = 7936, pos_max = 8191, n_tokens = 8192, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4052 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 919 | n_tokens = 12244, memory_seq_rm [12244, end)
+slot update_slots: id  0 | task 919 | prompt processing progress, n_tokens = 12276, batch.n_tokens = 32, progress = 0.999674
+slot create_check: id  0 | task 919 | created context checkpoint 2 of 32 (pos_min = 11988, pos_max = 12243, n_tokens = 12244, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 919 | n_tokens = 12276, memory_seq_rm [12276, end)
+slot init_sampler: id  0 | task 919 | init sampler, took 1.48 ms, tokens: text = 12280, total = 12280
+slot update_slots: id  0 | task 919 | prompt processing done, n_tokens = 12280, batch.n_tokens = 4
+slot print_timing: id  0 | task 919 | 
+prompt eval time =  154191.15 ms / 12280 tokens (   12.56 ms per token,    79.64 tokens per second)
+       eval time =    5156.23 ms /   128 tokens (   40.28 ms per token,    24.82 tokens per second)
+      total time =  159347.38 ms / 12408 tokens
+slot      release: id  0 | task 919 | stop processing: n_tokens = 12407, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33639982835
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 12407, total state size = 445.329 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.015, sim = 0.011
+srv        update:  - cache state: 8 prompts, 1400.142 MiB (limits: 8192.000 MiB, 66304 tokens, 207692 est)
+srv        update:    - prompt 0x58f0d9431890:     382 tokens, checkpoints:  1,    30.140 MiB
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv        update:    - prompt 0x58f0dfcb6200:    8291 tokens, checkpoints:  1,   309.583 MiB
+srv        update:    - prompt 0x58f0deb393a0:   12407 tokens, checkpoints:  2,   463.336 MiB
+srv  get_availabl: prompt cache update took 2466.26 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 1052 | processing task, is_child = 0
+slot update_slots: id  0 | task 1052 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 16373
+slot update_slots: id  0 | task 1052 | erased invalidated context checkpoint (pos_min = 7936, pos_max = 8191, n_tokens = 8192, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1052 | erased invalidated context checkpoint (pos_min = 11988, pos_max = 12243, n_tokens = 12244, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1052 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 1052 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.250168
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1052 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 1052 | prompt processing progress, n_tokens = 8192, batch.n_tokens = 4096, progress = 0.500336
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1052 | n_tokens = 8192, memory_seq_rm [8192, end)
+slot update_slots: id  0 | task 1052 | 8192 tokens since last checkpoint at 0, creating new checkpoint during processing at position 12288
+slot update_slots: id  0 | task 1052 | prompt processing progress, n_tokens = 12288, batch.n_tokens = 4096, progress = 0.750504
+slot create_check: id  0 | task 1052 | created context checkpoint 1 of 32 (pos_min = 7936, pos_max = 8191, n_tokens = 8192, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1052 | n_tokens = 12288, memory_seq_rm [12288, end)
+slot update_slots: id  0 | task 1052 | prompt processing progress, n_tokens = 16337, batch.n_tokens = 4049, progress = 0.997801
+decode: TurboPrefill requested=0 active=0 n_tokens=4049 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1052 | n_tokens = 16337, memory_seq_rm [16337, end)
+slot update_slots: id  0 | task 1052 | prompt processing progress, n_tokens = 16369, batch.n_tokens = 32, progress = 0.999756
+slot create_check: id  0 | task 1052 | created context checkpoint 2 of 32 (pos_min = 16081, pos_max = 16336, n_tokens = 16337, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1052 | n_tokens = 16369, memory_seq_rm [16369, end)
+slot init_sampler: id  0 | task 1052 | init sampler, took 2.00 ms, tokens: text = 16373, total = 16373
+slot update_slots: id  0 | task 1052 | prompt processing done, n_tokens = 16373, batch.n_tokens = 4
+slot print_timing: id  0 | task 1052 | 
+prompt eval time =  213419.01 ms / 16373 tokens (   13.03 ms per token,    76.72 tokens per second)
+       eval time =    5343.61 ms /   128 tokens (   41.75 ms per token,    23.95 tokens per second)
+      total time =  218762.63 ms / 16501 tokens
+slot      release: id  0 | task 1052 | stop processing: n_tokens = 16500, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 33861590921
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 16500, total state size = 589.271 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.010, sim = 0.007
+srv          load:  - found better prompt with f_keep = 0.471, sim = 0.007
+srv        update:  - cache state: 8 prompts, 1977.280 MiB (limits: 8192.000 MiB, 66304 tokens, 213848 est)
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv        update:    - prompt 0x58f0dfcb6200:    8291 tokens, checkpoints:  1,   309.583 MiB
+srv        update:    - prompt 0x58f0deb393a0:   12407 tokens, checkpoints:  2,   463.336 MiB
+srv        update:    - prompt 0x58f0debfc610:   16500 tokens, checkpoints:  2,   607.277 MiB
+srv  get_availabl: prompt cache update took 3384.94 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 1186 | processing task, is_child = 0
+slot update_slots: id  0 | task 1186 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 24560
+slot update_slots: id  0 | task 1186 | erased invalidated context checkpoint (pos_min = 0, pos_max = 218, n_tokens = 219, n_swa = 128, pos_next = 0, size = 7.702 MiB)
+slot update_slots: id  0 | task 1186 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.166775
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 8192, batch.n_tokens = 4096, progress = 0.333550
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 8192, memory_seq_rm [8192, end)
+slot update_slots: id  0 | task 1186 | 8192 tokens since last checkpoint at 0, creating new checkpoint during processing at position 12288
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 12288, batch.n_tokens = 4096, progress = 0.500326
+slot create_check: id  0 | task 1186 | created context checkpoint 1 of 32 (pos_min = 7936, pos_max = 8191, n_tokens = 8192, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 12288, memory_seq_rm [12288, end)
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 16384, batch.n_tokens = 4096, progress = 0.667101
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 16384, memory_seq_rm [16384, end)
+slot update_slots: id  0 | task 1186 | 8192 tokens since last checkpoint at 8192, creating new checkpoint during processing at position 20480
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 20480, batch.n_tokens = 4096, progress = 0.833876
+slot create_check: id  0 | task 1186 | created context checkpoint 2 of 32 (pos_min = 16128, pos_max = 16383, n_tokens = 16384, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 20480, memory_seq_rm [20480, end)
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 24524, batch.n_tokens = 4044, progress = 0.998534
+decode: TurboPrefill requested=0 active=0 n_tokens=4044 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 24524, memory_seq_rm [24524, end)
+slot update_slots: id  0 | task 1186 | prompt processing progress, n_tokens = 24556, batch.n_tokens = 32, progress = 0.999837
+slot create_check: id  0 | task 1186 | created context checkpoint 3 of 32 (pos_min = 24268, pos_max = 24523, n_tokens = 24524, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1186 | n_tokens = 24556, memory_seq_rm [24556, end)
+slot init_sampler: id  0 | task 1186 | init sampler, took 3.01 ms, tokens: text = 24560, total = 24560
+slot update_slots: id  0 | task 1186 | prompt processing done, n_tokens = 24560, batch.n_tokens = 4
+slot print_timing: id  0 | task 1186 | 
+prompt eval time =  346628.27 ms / 24560 tokens (   14.11 ms per token,    70.85 tokens per second)
+       eval time =    5692.91 ms /   128 tokens (   44.48 ms per token,    22.48 tokens per second)
+      total time =  352321.18 ms / 24688 tokens
+slot      release: id  0 | task 1186 | stop processing: n_tokens = 24687, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34217770680
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 24687, total state size = 877.189 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.007, sim = 0.005
+srv        update:  - cache state: 9 prompts, 2881.478 MiB (limits: 8192.000 MiB, 66304 tokens, 216928 est)
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv        update:    - prompt 0x58f0dfcb6200:    8291 tokens, checkpoints:  1,   309.583 MiB
+srv        update:    - prompt 0x58f0deb393a0:   12407 tokens, checkpoints:  2,   463.336 MiB
+srv        update:    - prompt 0x58f0debfc610:   16500 tokens, checkpoints:  2,   607.277 MiB
+srv        update:    - prompt 0x58f0deab1380:   24687 tokens, checkpoints:  3,   904.199 MiB
+srv  get_availabl: prompt cache update took 4848.81 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 1322 | processing task, is_child = 0
+slot update_slots: id  0 | task 1322 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 32761
+slot update_slots: id  0 | task 1322 | erased invalidated context checkpoint (pos_min = 7936, pos_max = 8191, n_tokens = 8192, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1322 | erased invalidated context checkpoint (pos_min = 16128, pos_max = 16383, n_tokens = 16384, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1322 | erased invalidated context checkpoint (pos_min = 24268, pos_max = 24523, n_tokens = 24524, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1322 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.125027
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 8192, batch.n_tokens = 4096, progress = 0.250053
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 8192, memory_seq_rm [8192, end)
+slot update_slots: id  0 | task 1322 | 8192 tokens since last checkpoint at 0, creating new checkpoint during processing at position 12288
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 12288, batch.n_tokens = 4096, progress = 0.375080
+slot create_check: id  0 | task 1322 | created context checkpoint 1 of 32 (pos_min = 7936, pos_max = 8191, n_tokens = 8192, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 12288, memory_seq_rm [12288, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 16384, batch.n_tokens = 4096, progress = 0.500107
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 16384, memory_seq_rm [16384, end)
+slot update_slots: id  0 | task 1322 | 8192 tokens since last checkpoint at 8192, creating new checkpoint during processing at position 20480
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 20480, batch.n_tokens = 4096, progress = 0.625134
+slot create_check: id  0 | task 1322 | created context checkpoint 2 of 32 (pos_min = 16128, pos_max = 16383, n_tokens = 16384, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 20480, memory_seq_rm [20480, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 24576, batch.n_tokens = 4096, progress = 0.750160
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 24576, memory_seq_rm [24576, end)
+slot update_slots: id  0 | task 1322 | 8192 tokens since last checkpoint at 16384, creating new checkpoint during processing at position 28672
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 28672, batch.n_tokens = 4096, progress = 0.875187
+slot create_check: id  0 | task 1322 | created context checkpoint 3 of 32 (pos_min = 24320, pos_max = 24575, n_tokens = 24576, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 28672, memory_seq_rm [28672, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 32725, batch.n_tokens = 4053, progress = 0.998901
+decode: TurboPrefill requested=0 active=0 n_tokens=4053 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 32725, memory_seq_rm [32725, end)
+slot update_slots: id  0 | task 1322 | prompt processing progress, n_tokens = 32757, batch.n_tokens = 32, progress = 0.999878
+slot create_check: id  0 | task 1322 | created context checkpoint 4 of 32 (pos_min = 32469, pos_max = 32724, n_tokens = 32725, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1322 | n_tokens = 32757, memory_seq_rm [32757, end)
+slot init_sampler: id  0 | task 1322 | init sampler, took 3.95 ms, tokens: text = 32761, total = 32761
+slot update_slots: id  0 | task 1322 | prompt processing done, n_tokens = 32761, batch.n_tokens = 4
+slot print_timing: id  0 | task 1322 | 
+prompt eval time =  480363.32 ms / 32761 tokens (   14.66 ms per token,    68.20 tokens per second)
+       eval time =    6021.62 ms /   128 tokens (   47.04 ms per token,    21.26 tokens per second)
+      total time =  486384.94 ms / 32889 tokens
+slot      release: id  0 | task 1322 | stop processing: n_tokens = 32888, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34709279644
+srv  get_availabl: updating prompt cache
+srv   prompt_save:  - saving prompt with length 32888, total state size = 1165.599 MiB
+srv          load:  - looking for better prompt, base f_keep = 0.005, sim = 0.003
+srv        update:  - cache state: 10 prompts, 4083.091 MiB (limits: 8192.000 MiB, 66304 tokens, 219072 est)
+srv        update:    - prompt 0x58f0c70e2050:     631 tokens, checkpoints:  1,    40.198 MiB
+srv        update:    - prompt 0x58f0d9430000:    1144 tokens, checkpoints:  1,    58.239 MiB
+srv        update:    - prompt 0x58f0dfb836e0:    2171 tokens, checkpoints:  1,    94.356 MiB
+srv        update:    - prompt 0x58f0dfb83ff0:    4203 tokens, checkpoints:  1,   165.817 MiB
+srv        update:    - prompt 0x58f0dfc6e940:    6269 tokens, checkpoints:  1,   238.473 MiB
+srv        update:    - prompt 0x58f0dfcb6200:    8291 tokens, checkpoints:  1,   309.583 MiB
+srv        update:    - prompt 0x58f0deb393a0:   12407 tokens, checkpoints:  2,   463.336 MiB
+srv        update:    - prompt 0x58f0debfc610:   16500 tokens, checkpoints:  2,   607.277 MiB
+srv        update:    - prompt 0x58f0deab1380:   24687 tokens, checkpoints:  3,   904.199 MiB
+srv        update:    - prompt 0x58f0dead75c0:   32888 tokens, checkpoints:  4,  1201.612 MiB
+srv  get_availabl: prompt cache update took 6458.55 ms
+slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> ?top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+slot launch_slot_: id  0 | task 1460 | processing task, is_child = 0
+slot update_slots: id  0 | task 1460 | new prompt, n_ctx_slot = 66304, n_keep = 0, task.n_tokens = 64423
+slot update_slots: id  0 | task 1460 | erased invalidated context checkpoint (pos_min = 7936, pos_max = 8191, n_tokens = 8192, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1460 | erased invalidated context checkpoint (pos_min = 16128, pos_max = 16383, n_tokens = 16384, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1460 | erased invalidated context checkpoint (pos_min = 24320, pos_max = 24575, n_tokens = 24576, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1460 | erased invalidated context checkpoint (pos_min = 32469, pos_max = 32724, n_tokens = 32725, n_swa = 128, pos_next = 0, size = 9.003 MiB)
+slot update_slots: id  0 | task 1460 | n_tokens = 0, memory_seq_rm [0, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 4096, batch.n_tokens = 4096, progress = 0.063580
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 4096, memory_seq_rm [4096, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 8192, batch.n_tokens = 4096, progress = 0.127160
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 8192, memory_seq_rm [8192, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 0, creating new checkpoint during processing at position 12288
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 12288, batch.n_tokens = 4096, progress = 0.190739
+slot create_check: id  0 | task 1460 | created context checkpoint 1 of 32 (pos_min = 7936, pos_max = 8191, n_tokens = 8192, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 12288, memory_seq_rm [12288, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 16384, batch.n_tokens = 4096, progress = 0.254319
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 16384, memory_seq_rm [16384, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 8192, creating new checkpoint during processing at position 20480
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 20480, batch.n_tokens = 4096, progress = 0.317899
+slot create_check: id  0 | task 1460 | created context checkpoint 2 of 32 (pos_min = 16128, pos_max = 16383, n_tokens = 16384, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 20480, memory_seq_rm [20480, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 24576, batch.n_tokens = 4096, progress = 0.381479
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 24576, memory_seq_rm [24576, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 16384, creating new checkpoint during processing at position 28672
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 28672, batch.n_tokens = 4096, progress = 0.445058
+slot create_check: id  0 | task 1460 | created context checkpoint 3 of 32 (pos_min = 24320, pos_max = 24575, n_tokens = 24576, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 28672, memory_seq_rm [28672, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 32768, batch.n_tokens = 4096, progress = 0.508638
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 32768, memory_seq_rm [32768, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 24576, creating new checkpoint during processing at position 36864
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 36864, batch.n_tokens = 4096, progress = 0.572218
+slot create_check: id  0 | task 1460 | created context checkpoint 4 of 32 (pos_min = 32512, pos_max = 32767, n_tokens = 32768, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 36864, memory_seq_rm [36864, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 40960, batch.n_tokens = 4096, progress = 0.635798
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 40960, memory_seq_rm [40960, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 32768, creating new checkpoint during processing at position 45056
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 45056, batch.n_tokens = 4096, progress = 0.699378
+slot create_check: id  0 | task 1460 | created context checkpoint 5 of 32 (pos_min = 40704, pos_max = 40959, n_tokens = 40960, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 45056, memory_seq_rm [45056, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 49152, batch.n_tokens = 4096, progress = 0.762957
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 49152, memory_seq_rm [49152, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 40960, creating new checkpoint during processing at position 53248
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 53248, batch.n_tokens = 4096, progress = 0.826537
+slot create_check: id  0 | task 1460 | created context checkpoint 6 of 32 (pos_min = 48896, pos_max = 49151, n_tokens = 49152, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 53248, memory_seq_rm [53248, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 57344, batch.n_tokens = 4096, progress = 0.890117
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 57344, memory_seq_rm [57344, end)
+slot update_slots: id  0 | task 1460 | 8192 tokens since last checkpoint at 49152, creating new checkpoint during processing at position 61440
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 61440, batch.n_tokens = 4096, progress = 0.953697
+slot create_check: id  0 | task 1460 | created context checkpoint 7 of 32 (pos_min = 57088, pos_max = 57343, n_tokens = 57344, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 61440, memory_seq_rm [61440, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 64387, batch.n_tokens = 2947, progress = 0.999441
+decode: TurboPrefill requested=0 active=0 n_tokens=2947 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 64387, memory_seq_rm [64387, end)
+slot update_slots: id  0 | task 1460 | prompt processing progress, n_tokens = 64419, batch.n_tokens = 32, progress = 0.999938
+slot create_check: id  0 | task 1460 | created context checkpoint 8 of 32 (pos_min = 64131, pos_max = 64386, n_tokens = 64387, size = 9.003 MiB)
+decode: TurboPrefill requested=0 active=0 n_tokens=32 n_ubatch=32 full_ubatches=0 devices=10 pipeline=1 split_mode=1
+slot update_slots: id  0 | task 1460 | n_tokens = 64419, memory_seq_rm [64419, end)
+slot init_sampler: id  0 | task 1460 | init sampler, took 7.82 ms, tokens: text = 64423, total = 64423
+slot update_slots: id  0 | task 1460 | prompt processing done, n_tokens = 64423, batch.n_tokens = 4
+slot print_timing: id  0 | task 1460 | 
+prompt eval time = 1159884.70 ms / 64423 tokens (   18.00 ms per token,    55.54 tokens per second)
+       eval time =    3484.98 ms /    62 tokens (   56.21 ms per token,    17.79 tokens per second)
+      total time = 1163369.68 ms / 64485 tokens
+slot      release: id  0 | task 1460 | stop processing: n_tokens = 64484, truncated = 0
+srv  update_slots: all slots are idle
+srv  log_server_r: done request: POST /completion 127.0.0.1 200
+srv    operator(): operator(): cleaning up before exit...
+common_memory_breakdown_print: | memory breakdown [MiB] | total   free    self   model   context   compute    unaccounted |
+common_memory_breakdown_print: |   - CUDA0 (P104-100)   |  8116 = 2854 + (5149 =  4907 +     130 +     111) +         111 |
+common_memory_breakdown_print: |   - CUDA1 (P104-100)   |  8116 = 1140 + (6860 =  6542 +     260 +      58) +         114 |
+common_memory_breakdown_print: |   - CUDA2 (P104-100)   |  8116 = 1142 + (6860 =  6541 +     260 +      58) +         113 |
+common_memory_breakdown_print: |   - CUDA3 (P104-100)   |  8116 = 1142 + (6860 =  6541 +     260 +      58) +         113 |
+common_memory_breakdown_print: |   - CUDA4 (P104-100)   |  8116 = 1140 + (6860 =  6542 +     260 +      58) +         114 |
+common_memory_breakdown_print: |   - CUDA5 (P104-100)   |  8116 = 1142 + (6860 =  6541 +     260 +      58) +         113 |
+common_memory_breakdown_print: |   - CUDA6 (P104-100)   |  8116 = 1142 + (6860 =  6541 +     260 +      58) +         113 |
+common_memory_breakdown_print: |   - CUDA7 (P104-100)   |  8116 = 1140 + (6860 =  6542 +     260 +      58) +         114 |
+common_memory_breakdown_print: |   - CUDA8 (P104-100)   |  8116 = 2776 + (5225 =  4907 +     259 +      58) +         113 |
+common_memory_breakdown_print: |   - CUDA9 (P104-100)   |  8116 = 3936 + (4066 =  3858 +     130 +      77) +         113 |
+common_memory_breakdown_print: |   - Host               |                  477 =   379 +       0 +      98                |

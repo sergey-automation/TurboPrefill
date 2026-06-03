@@ -75,6 +75,184 @@ It is specifically designed for long single-request prefill workloads running in
 
 The idea behind TurboPrefill did not come from modifying the mathematical side of the model. It came from viewing multi-GPU inference as a production pipeline, where the primary focus is hardware utilization, reducing idle time, and improving overall system throughput.
 
+# Why TurboPrefill Works Only for Certain Workloads
+
+TurboPrefill was not designed as a universal acceleration path for every llama.cpp workload.
+
+Instead, it focuses on a specific scenario where the potential benefit is highest: long-context prefill of a single request running on multiple GPUs in layer-split mode.
+
+The reason is simple. TurboPrefill relies on the ability to observe and schedule a series of consecutive ubatches that belong to the same request. This allows multiple ubatches to be active within the pipeline at the same time and reduces idle periods between neighboring processing stages.
+
+Many other workloads do not provide the same opportunity.
+
+For example:
+
+* Decode workloads have stronger dependencies between consecutive tokens.
+* Single-GPU execution does not suffer from inter-GPU pipeline bubbles.
+* Embedding workloads follow a different execution pattern.
+* Multi-sequence batches introduce additional scheduling constraints.
+* Non-layer-split configurations do not expose the same pipeline structure.
+
+For this reason, TurboPrefill does not attempt to replace the standard llama.cpp scheduler.
+
+Instead, a dispatcher in `llama-context.cpp` evaluates each workload and decides whether it matches the conditions required for TurboPrefill. Workloads that do not match these conditions continue to use the standard execution path.
+
+This behavior is intentional.
+
+The goal of TurboPrefill is not to accelerate every possible workload. The goal is to improve utilization and throughput in a specific execution pattern where unused pipeline capacity is most visible.
+
+## Why Some Workloads Are Excluded
+
+| Workload             | Reason                                                     |
+| -------------------- | ---------------------------------------------------------- |
+| Decode               | Strong dependencies between consecutive tokens             |
+| Single GPU           | No inter-GPU pipeline to optimize                          |
+| Embeddings           | Different execution pattern                                |
+| Multi-sequence batch | Additional scheduling complexity                           |
+| Non-layer-split mode | No layer pipeline between GPUs                             |
+| Short prefill        | Insufficient number of ubatches to benefit from scheduling |
+
+
+TurboPrefill focuses on workloads where pipeline underutilization is most visible and where scheduling multiple ubatches can improve overall throughput.
+
+### Note about llama-bench
+
+The standard `llama-bench pp*` benchmark does not represent a pure long-context prefill workload.
+A token output is requested at the end of each benchmark prompt, which causes the request to follow the standard execution path instead of the TurboPrefill path.
+For this reason, dedicated benchmark scripts are used in this repository to measure TurboPrefill performance on long-context prefill workloads.
+
+# How TurboPrefill Works
+
+The standard llama.cpp scheduler processes each ubatch independently.
+
+A ubatch enters the pipeline, passes through all model layers, and only then the next ubatch begins its full journey through the pipeline.
+
+In layer-split mode this creates a familiar pipeline behavior: some GPUs are busy while others are waiting for work to arrive from previous stages.
+
+TurboPrefill introduces an alternative execution path for eligible long-context prefill workloads.
+
+The execution consists of two phases:
+
+### Capture Phase
+
+Instead of immediately executing each eligible ubatch through the entire pipeline, TurboPrefill temporarily stores information about a sequence of consecutive ubatches belonging to the same request.
+
+This creates a batch of work that can later be scheduled as a whole.
+
+### Replay Phase
+
+After the capture phase is complete, the stored ubatches are replayed through the multi-GPU pipeline.
+
+Instead of processing one ubatch completely before starting the next one, TurboPrefill plans execution so that multiple ubatches can be active at different pipeline stages at the same time.
+
+Conceptually:
+
+```text
+Standard:
+
+ubatch1 -> all layers
+ubatch2 -> all layers
+ubatch3 -> all layers
+```
+
+TurboPrefill:
+
+```text
+wave1: ubatch1
+wave2: ubatch2 + ubatch1
+wave3: ubatch3 + ubatch2 + ubatch1
+...
+```
+
+This allows more GPUs to remain active simultaneously and reduces idle periods between neighboring pipeline stages.
+
+The model, weights, attention algorithms, and numerical results remain unchanged.
+
+Only the execution schedule is different.
+
+# Architecture
+llama-context.cpp
+      |
+ dispatcher
+      |
++-----+-----+
+|           |
+standard   TurboPrefill
+              |
+           capture
+              |
+            replay
+              |
+         scheduler
+  
+## Additional Benchmarks
+
+# Context Length Scaling
+
+One of the main goals of TurboPrefill is to improve utilization of multi-GPU layer-split pipelines during long-context prefill workloads.
+
+The expected behavior is that the benefit grows as the prompt becomes longer. Longer prompts generate more ubatches, providing more opportunities to keep multiple stages of the pipeline active simultaneously.
+
+To evaluate this effect, GPT-OSS-120B was tested across multiple context lengths using the same hardware and execution settings.
+
+The results show that TurboPrefill provides limited benefit on shorter prompts and increasing benefit as context length grows.
+
+This behavior is consistent with the original design goal of reducing pipeline idle time during long-context prefill workloads.
+
+[graph here]
+
+The largest improvement observed in these tests was approximately 2.23× compared to the standard execution path.
+
+# Scaling with GPU Count
+
+TurboPrefill is designed for multi-GPU layer-split execution, therefore it is important to evaluate how its behavior changes as the number of GPUs changes.
+
+The tests below compare the same GPT-OSS-120B model running on 5 and 8 RTX 5060 Ti 16GB GPUs using identical execution settings.
+
+The results show two effects:
+
+1. Increasing the number of GPUs improves absolute prefill throughput.
+2. TurboPrefill continues to provide substantial acceleration on both configurations.
+
+The highest measured gains were:
+
+| Configuration | Peak Gain |
+| ------------- | --------- |
+| 5 GPUs        | 1.95×     |
+| 8 GPUs        | 2.23×     |
+
+This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
+
+## Validation Across GPU Generations
+
+TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
+
+Architecture	Hardware
+Pascal	NVIDIA P104-100
+Ampere	NVIDIA RTX 3090
+Blackwell	NVIDIA RTX 5060 Ti 16GB
+
+The goal of these tests was not to optimize for a specific GPU architecture, but to verify that the scheduling approach remains effective across different generations of hardware.
+
+TurboPrefill is based on pipeline utilization and execution scheduling principles rather than architecture-specific GPU optimizations. The same execution model was successfully validated on three different NVIDIA generations spanning several years of hardware evolution.
+
+The observed improvements therefore appear to be related to scheduler behavior and pipeline utilization rather than to features unique to a particular GPU family.
+
+This suggests that the approach should remain relevant for future GPU generations as long as multi-GPU layer-split execution continues to rely on similar pipeline and scheduling concepts.
+
+
+# Decode Performance
+
+TurboPrefill targets prefill workloads only.
+
+The decode execution path remains unchanged.
+
+Testing on multiple models and hardware configurations showed that decode throughput did not meaningfully depend on whether TurboPrefill was enabled or disabled.
+
+The measured improvements therefore come from changes in prefill scheduling rather than from modifications to decode execution.
+
+
+
 ## Tested llama.cpp base
 
 ```text
@@ -166,8 +344,7 @@ Check files:
 ls -lh /workspace/models
 ls -lh /workspace/models/Q4_K_M
 ```
-## Note
- llama-bench pp tests currently do not exercise TurboPrefill because they use a benchmark batch mode with n_outputs_all=1. TurboPrefill is enabled for real prompt prefill paths where n_outputs_all=0, such as llama-server long prompt processing.
+
 ## Benchmark scripts
 Benchmark scripts are designed to be copied into the llama.cpp checkout and executed from there.
 

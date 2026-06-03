@@ -462,10 +462,6 @@ cmake: 3.28.3
 git: 2.43.0 
 P2P: not supported
 NVLink: not present
-## Acknowledgements
-
-Special thanks to my son for technical assistance, testing support, and countless discussions during the development of TurboPrefill.
-https://de.linkedin.com/in/andrii-trykhlieb-826848323
 
 ## Acknowledgements
 Special thanks to Andrii Trykhlieb for technical assistance, testing support, benchmark validation, and countless discussions during the development of TurboPrefill.

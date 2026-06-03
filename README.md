@@ -4,6 +4,10 @@ Multi-GPU prefill acceleration for llama.cpp.
 
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
 
+## Performance Benchmark (GPT-OSS-120B)
+
+![TurboPrefill Benchmark](benchmarks/RTX5060ti_8x/Turboprefill_8xRTX5060ti.png)
+
 ## Tested llama.cpp base
 
 ```text

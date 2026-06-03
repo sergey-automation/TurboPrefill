@@ -236,7 +236,11 @@ TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware con
 Architecture	Hardware
 
 Pascal	NVIDIA P104-100
+
+Project: [gpt-oss-120b-p104-pascal](https://github.com/sergey-automation/gpt-oss-120b-p104-pascal)
+ 
 Ampere	NVIDIA RTX 3090
+
 Blackwell	NVIDIA RTX 5060 Ti 16GB
 
 The goal of these tests was not to optimize for a specific GPU architecture, but to verify that the scheduling approach remains effective across different generations of hardware.

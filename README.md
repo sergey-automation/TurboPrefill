@@ -157,22 +157,31 @@ This allows more GPUs to remain active simultaneously and reduces idle periods b
 The model, weights, attention algorithms, and numerical results remain unchanged.
 Only the execution schedule is different.
 
-# Architecture
-Request
-   |
-llama-context.cpp
-   |
-Dispatcher
-   |
-+-------------------+
-|                   |
-Standard Path       TurboPrefill Path
-                        |
-                    Capture
-                        |
-                     Replay
-                        |
-                 Modified Scheduler
+## Architecture Overview
+
+```text
+                 Request
+                    |
+                    v
+          llama-context.cpp
+                    |
+                    v
+               Dispatcher
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+   Standard Path     TurboPrefill Path
+                              |
+                              v
+                           Capture
+                              |
+                              v
+                            Replay
+                              |
+                              v
+                   Modified Scheduler
+```
   
 ## Additional Benchmarks
 

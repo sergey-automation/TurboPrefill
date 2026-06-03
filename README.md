@@ -117,13 +117,18 @@ TurboPrefill focuses on workloads where pipeline underutilization is most visibl
 ### Note about llama-bench
 
 The standard `llama-bench pp*` benchmark does not represent a pure long-context prefill workload.
+
 A token output is requested at the end of each benchmark prompt, which causes the request to follow the standard execution path instead of the TurboPrefill path.
+
 For this reason, dedicated benchmark scripts are used in this repository to measure TurboPrefill performance on long-context prefill workloads.
 
 # How TurboPrefill Works
 The standard llama.cpp scheduler processes each ubatch independently.
+
 A ubatch enters the pipeline, passes through all model layers, and only then the next ubatch begins its full journey through the pipeline.
+
 In layer-split mode this creates a familiar pipeline behavior: some GPUs are busy while others are waiting for work to arrive from previous stages.
+
 TurboPrefill introduces an alternative execution path for eligible long-context prefill workloads.
 The execution consists of two phases:
 
@@ -154,6 +159,7 @@ wave3: ubatch3 + ubatch2 + ubatch1
 ...
 ```
 This allows more GPUs to remain active simultaneously and reduces idle periods between neighboring pipeline stages.
+
 The model, weights, attention algorithms, and numerical results remain unchanged.
 Only the execution schedule is different.
 
@@ -187,21 +193,30 @@ Only the execution schedule is different.
 
 # Context Length Scaling
 
-One of the main goals of TurboPrefill is to improve utilization of multi-GPU layer-split pipelines during long-context prefill workloads.
-The expected behavior is that the benefit grows as the prompt becomes longer. Longer prompts generate more ubatches, providing more opportunities to keep multiple stages of the pipeline active simultaneously.
+One of the main goals of TurboPrefill is to improve utilization of multi-GPU layer-split pipelines during long-context prefill workloads. 
+
+The expected behavior is that the benefit grows as the prompt becomes longer. Longer prompts generate more ubatches, providing more opportunities to keep multiple stages of the pipeline active simultaneously. 
+
 To evaluate this effect, GPT-OSS-120B was tested across multiple context lengths using the same hardware and execution settings.
-The results show that TurboPrefill provides limited benefit on shorter prompts and increasing benefit as context length grows.
-This behavior is consistent with the original design goal of reducing pipeline idle time during long-context prefill workloads.
-The largest improvement observed in these tests was approximately 2.23× compared to the standard execution path.
+
+The results show that TurboPrefill provides limited benefit on shorter prompts and increasing benefit as context length grows. 
+
+This behavior is consistent with the original design goal of reducing pipeline idle time during long-context prefill workloads. 
+
+The largest improvement observed in these tests was approximately 2.23× compared to the standard execution path. 
+
 
 # Scaling with GPU Count
 
-TurboPrefill is designed for multi-GPU layer-split execution, therefore it is important to evaluate how its behavior changes as the number of GPUs changes.
-The tests below compare the same GPT-OSS-120B model running on 5 and 8 RTX 5060 Ti 16GB GPUs using identical execution settings.
+TurboPrefill is designed for multi-GPU layer-split execution, therefore it is important to evaluate how its behavior changes as the number of GPUs changes. 
+
+The tests below compare the same GPT-OSS-120B model running on 5 and 8 RTX 5060 Ti 16GB GPUs using identical execution settings. 
+
 The results show two effects:
 
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
+
 ![TurboPrefill Benchmark](benchmarks/RTX5060ti_5x/Turboprefill_5and8xRTX5060ti.png)
 The highest measured gains were:
 

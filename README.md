@@ -8,6 +8,22 @@ This repository contains a file overlay for llama.cpp and helper scripts for run
 
 ![TurboPrefill Benchmark](benchmarks/RTX5060ti_8x/Turboprefill_8xRTX5060ti.png)
 
+### Summary Results
+| Prompt Tokens | Baseline (8x GPU) tok/s | TurboPrefill tok/s | Speedup Gain |
+| :--- | :---: | :---: | :---: |
+| 255 | 1038| 1043 | **1.00x** |
+| 504 | 1609 | 1613 | **1.00x** |
+| 1017 | 1762 | 1765 | **1.00x** |
+| 2044 | 2021 | 2022 | **1.00x** |
+| 4076 | 2046 | 3180 | **1.55x** |
+| 6142 | 2122 | 3668 | **1.73x** |
+| 8164 | 2076 | 4111 | **1.98x** |
+| 12280 | 2035 | 4421 | **2.17x** |
+| 16373 | 1963 | 4380 | **2.23x** |
+| 24560 | 1853 | 3684 | **1.99x** |
+| 32761 | 1776 | 3359 | **1.89x** |
+
+
 ## Tested llama.cpp base
 
 ```text

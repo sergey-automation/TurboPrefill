@@ -213,7 +213,7 @@ The results show two effects:
 
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
-
+![TurboPrefill Benchmark](benchmarks/RTX5060ti_5x/Turboprefill_5and8xRTX5060ti.png)
 The highest measured gains were:
 
 | Configuration | Peak Gain |

@@ -1,5 +1,5 @@
 # TurboPrefill
-
+[![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
 Multi-GPU prefill acceleration for llama.cpp.
 
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.

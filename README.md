@@ -1,5 +1,11 @@
 # TurboPrefill
 [![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
+
+TurboPrefill is a Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+
+For a detailed architectural discussion, see:
+[RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)
+
 Multi-GPU prefill acceleration for llama.cpp.
 
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
@@ -166,27 +172,31 @@ Only the execution schedule is different.
 ## Architecture Overview
 
 ```text
-                 Request
-                    |
-                    v
-          llama-context.cpp
-                    |
-                    v
-               Dispatcher
-                    |
-          +---------+---------+
-          |                   |
-          v                   v
-   Standard Path     TurboPrefill Path
-                              |
-                              v
-                           Capture
-                              |
-                              v
-                            Replay
-                              |
-                              v
-                   Modified Scheduler
+Request
+   |
+   v
+Prefill Phase
+   |
+   v
+UBatch Classification
+   |
+   +--------------------------+
+   |                          |
+   v                          v
+Standard Path         Intra-Prompt Pipeline
+                      Scheduling
+                               |
+                               v
+                       UBatch Accumulation
+                               |
+                               v
+                       Capture / Replay
+                               |
+                               v
+                      Layer-Split GPU Pipeline
+                               |
+                               v
+                      ggml-backend-sched
 ```
   
 ## Additional Benchmarks
@@ -217,7 +227,7 @@ The results show two effects:
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
 
-![TurboPrefill Benchmark](benchmarks/RTX5060ti_5x/Turboprefill_RTX5060ti_5x8.png)
+![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 The highest measured gains were:
 
 | Configuration | Peak Gain |
@@ -229,7 +239,7 @@ This suggests that TurboPrefill is not tied to a specific GPU count. The schedul
 
 ## Validation Across GPU Generations
 
-![TurboPrefill Benchmark](benchmarks/RTX3090_4x/4xRTX3090.png)
+![Prefill Throughput on 4× RTX 3090](graphs/ipps_prefill_4gpu_rtx3090.png)
 
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
 

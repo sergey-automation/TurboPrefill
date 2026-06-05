@@ -227,7 +227,7 @@ The results show two effects:
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
 
-![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
+![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling]([img](doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 The highest measured gains were:
 
 | Configuration | Peak Gain |
@@ -239,7 +239,7 @@ This suggests that TurboPrefill is not tied to a specific GPU count. The schedul
 
 ## Validation Across GPU Generations
 
-![Prefill Throughput on 4× RTX 3090](graphs/ipps_prefill_4gpu_rtx3090.png)
+![Prefill Throughput on 4× RTX 3090]([img](doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
 

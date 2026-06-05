@@ -85,7 +85,7 @@ All measurements in this section were performed using GPT-OSS-120B Q4_K_M.
 
 ### Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling
 
-![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
+![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](https://raw.githubusercontent.com/sergey-automation/TurboPrefill/main/doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 
 *5× and 8× NVIDIA RTX 5060 Ti 16GB, UB=768.*
 
@@ -93,7 +93,7 @@ All measurements in this section were performed using GPT-OSS-120B Q4_K_M.
 
 ### Prefill Throughput: Baseline vs Intra-Prompt Pipeline Scheduling (4× RTX 3090)
 
-![Prefill Throughput on 4× RTX 3090](graphs/ipps_prefill_4gpu_rtx3090.png)
+![Prefill Throughput on 4× RTX 3090](https://raw.githubusercontent.com/sergey-automation/TurboPrefill/main/doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
 *4× NVIDIA RTX 3090, UB=768.*
 
@@ -101,7 +101,7 @@ All measurements in this section were performed using GPT-OSS-120B Q4_K_M.
 
 ### Prefill Throughput on 10× NVIDIA P104-100 (Pascal)
 
-![Prefill Throughput on 10× NVIDIA P104-100 (Pascal)](graphs/ipps_prefill_p104_pascal_ub32_vs_ub512.png)
+![Prefill Throughput on 10× NVIDIA P104-100 (Pascal)](https://raw.githubusercontent.com/sergey-automation/TurboPrefill/main/doc/graphs/ipps_prefill_p104_pascal_ub32_vs_ub512.png)
 
 *10× NVIDIA P104-100 (Pascal). Baseline UB=32, Baseline UB=512, Intra-Prompt Pipeline Scheduling UB=32.*
 

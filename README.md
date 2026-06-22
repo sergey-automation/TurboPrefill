@@ -87,6 +87,8 @@ TurboPrefill was not designed as a universal acceleration path for every llama.c
 
 Instead, it focuses on a specific scenario where the potential benefit is highest: long-context prefill of a single request running on multiple GPUs in layer-split mode.
 
+TurboPrefill can be used in multi-user servers; the scheduling logic operates on individual requests, rather than users.
+
 The reason is simple. TurboPrefill relies on the ability to observe and schedule a series of consecutive ubatches that belong to the same request. This allows multiple ubatches to be active within the pipeline at the same time and reduces idle periods between neighboring processing stages.
 
 Many other workloads do not provide the same opportunity.

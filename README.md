@@ -242,6 +242,8 @@ This suggests that TurboPrefill is not tied to a specific GPU count. The schedul
 
 ![Prefill Throughput on 4× RTX 3090](doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
+![Prefill Throughput on 4× RTX 3090](benchmarks/RTX1080_2x/2xRTX1080.png)
+
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
 
 Architecture	Hardware
@@ -249,7 +251,7 @@ Architecture	Hardware
 Pascal	NVIDIA P104-100
 
 Project: [gpt-oss-120b-p104-pascal](https://github.com/sergey-automation/gpt-oss-120b-p104-pascal)
- 
+
 Ampere	NVIDIA RTX 3090
 
 Blackwell	NVIDIA RTX 5060 Ti 16GB

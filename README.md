@@ -483,6 +483,20 @@ git: 2.43.0
 P2P: not supported
 NVLink: not present
 
+## Ongoing Development
+
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+https://github.com/ggml-org/llama.cpp/pull/24219
+
+Initial Proof-of-Concept implementation:
+https://github.com/sergey-automation/TurboPrefill
+
+Continued development and new functionality:
+https://github.com/sergey-automation/TurboPrefill-VLM-Validation
+
+Reference implementation branch:
+https://github.com/sergey-automation/llama.cpp/tree/turboprefill-vlm-support
+
 ## Acknowledgements
 Special thanks to Andrii Trykhlieb for technical assistance, testing support, benchmark validation, and countless discussions during the development of TurboPrefill.
 LinkedIn: https://de.linkedin.com/in/andrii-trykhlieb-826848323

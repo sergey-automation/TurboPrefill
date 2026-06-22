@@ -231,10 +231,15 @@ The results show two effects:
 
 The highest measured gains were:
 
-| Configuration | Peak Gain |
-| ------------- | --------- |
-| 5 GPUs        | 1.95×     |
-| 8 GPUs        | 2.23×     |
+### Speedup at 16373 Context Tokens
+
+| Configuration | Model | Baseline (tok/s) | TurboPrefill (tok/s) | Speedup |
+|---------------|-------|-----------------:|---------------------:|---------:|
+| **2**× GTX 1080 Ti | GPT-OSS-20B | 836 | 1302 | **1.6×** |
+| **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
+| **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
+| **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
+| **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
 
 This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
 

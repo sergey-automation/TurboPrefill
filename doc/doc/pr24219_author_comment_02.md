@@ -13,19 +13,19 @@ Comparison of TurboPrefill (Pipeline Parallel + Intra-Prompt Pipeline Scheduling
 
 Figure 1. Comparison with the optimal ubatch for Pipeline Parallel and SM Tensor, but not the optimal ubatch for TurboPrefill.
 
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output tokens128/Ub1024/ub1024_TurboPrefill_sm_tensor_pipeline.png)
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/Ub1024/ub1024_TurboPrefill_sm_tensor_pipeline.png)
 
 
 Figure 2. Comparison with an optimal ubatch for TurboPrefill, but not the optimal ubatch for Pipeline Parallel and SM Tensor.
 
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output tokens128/Ub128/ub128_TurboPrefill_sm_tensor_pipeline.png)
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/Ub128/ub128_TurboPrefill_sm_tensor_pipeline.png)
 
 
 Figure 3. Comparison with the optimal ubatches for Pipeline Parallel, SM Tensor, and TurboPrefill.
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
 
 Figure 4. TurboPrefill speedup relative to Pipeline Parallel and SM Tensor.
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output tokens128/speedup_TurboPrefill_sm_tensor_pipeline_best_ub.png)
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/speedup_TurboPrefill_sm_tensor_pipeline_best_ub.png)
 
 
 **Reproducibility**

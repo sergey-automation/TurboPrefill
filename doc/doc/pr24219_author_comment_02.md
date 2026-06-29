@@ -25,8 +25,26 @@ Figure 3. Comparison with the optimal ubatches for Pipeline Parallel, SM Tensor,
 ![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
 
 Figure 4. TurboPrefill speedup relative to Pipeline Parallel and SM Tensor.
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/speedup_TurboPrefill_sm_tensor_pipeline_best_ub.png)
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/speedup_3090_TurboPrefill_sm_tensor_pipeline_best_ub.png)
 
+Compared to SM Tensor, the amount of data transferred between GPUs is significantly lower with TurboPrefill. This allows TurboPrefill to provide acceleration in cases where the effective performance of SM Tensor is limited by interconnect bandwidth, for example when the GPUs are physically connected through an interface slower than the one supported by the GPUs themselves.
+
+Figure 5. 12 × P104 GPUs connected through PCIe x1 Gen1.
+
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/P104_12x/P104_TurboPrefill_sm_tensor_pipeline_.png)
+
+The available bandwidth is insufficient for SM Tensor to operate efficiently, but TurboPrefill provides up to 5× speedup over Pipeline Parallel during the prefill phase.
+
+The P104-100 GPU is a mining variant based on the GP104 chip. Among other changes, it was limited to a PCIe 1.0 ×4 interface to discourage its use as a replacement for other GP104-based graphics cards, such as the GTX 1080, , GTX 1070, Quadro P5000, and Tesla P4, which feature a PCIe 3.0 ×16 interface.
+
+A situation similar to that shown in Figure 5 can also occur with modern GPUs featuring high-bandwidth interfaces when they are connected through a bandwidth-limited link. For example, when connecting four RTX 5070 GPUs to a standard PC motherboard using a passive PCIe x16 to 4× PCIe x4 splitter.
+
+Or when building a multi-GPU server where there are not enough PCIe lanes for every GPU to operate at its full interface bandwidth.
+
+Thus, in some scenarios, TurboPrefill not only enables multi-GPU memory scaling, but also delivers higher prefill throughput than Pipeline Parallel and SM Tensor.
+
+
+**Note**: TurboPrefill is not an alternative to Pipeline Parallel. It operates on top of Pipeline Parallel and is active when using Layer Split with Pipeline Parallel.
 
 **Reproducibility**
 

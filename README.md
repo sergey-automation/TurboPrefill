@@ -249,6 +249,9 @@ This suggests that TurboPrefill is not tied to a specific GPU count. The schedul
 
 ![Prefill Throughput on 4× RTX 3090](doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
+
+
 ![Prefill Throughput on 4× RTX 3090](benchmarks/RTX1080_2x/2xRTX1080.png)
 
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.

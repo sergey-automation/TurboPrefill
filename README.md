@@ -1,7 +1,9 @@
 # TurboPrefill
 [![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
 
-TurboPrefill is a Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+TurboPrefill is the first public Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+
+Further development of the project supports multi-user mode, Vision Language Models (VLM), and has been validated on modern high-performance GPUs. The latest version is available [here](https://github.com/sergey-automation/TurboPrefill-VLM-Validation/tree/turboprefill-vlm-support).
 
 For a detailed architectural discussion, see:
 [RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)

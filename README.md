@@ -231,19 +231,35 @@ The results show two effects:
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
 
+2× NVIDIA **RTX PRO 5000 (Blackwell)** 
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/NVIDIA_RTX_PRO_5000_Blackwell_2x/parallel_1_output_tokens128/Ub512/RTX5000_2x.png)
+
 ![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 
 The highest measured gains were:
 
-### Speedup at 16373 Context Tokens
+### TurboPrefill Speedup over Pipeline Parallel at 16k Context Tokens
 
 | Configuration | Model | Baseline (tok/s) | TurboPrefill (tok/s) | Speedup |
 |---------------|-------|-----------------:|---------------------:|---------:|
+| **2**× RTX PRO 5000  | Llama-3-70B | 923 | 1572 | **1.7×** |
 | **2**× GTX 1080 Ti | GPT-OSS-20B | 836 | 1302 | **1.6×** |
 | **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
+| **4**× RTX 3090 |Llama-3-70B  | 400 | 1208 | **3.0×** |
 | **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
 | **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
 | **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
+| **12**× P104-100 (Pascal) |Llama-3-70B | 37 | 199 | **5.3×** |
+
+
+### TurboPrefill Speedup over Tensor Split at 16K Context Tokens
+
+| Configuration | Model | Baseline (tok/s) | TurboPrefill (tok/s) | Speedup |
+|---------------|-------|-----------------:|---------------------:|---------:|
+| **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
+| **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
+
+
 
 This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
 

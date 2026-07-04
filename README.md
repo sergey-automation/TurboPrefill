@@ -31,15 +31,17 @@ For a detailed architectural discussion, see:
 |---------------|-------|-----------------:|---------------------:|---------:|
 | **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
 | **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
+| **12**× P104-100 (Pascal) |Llama-3-70B | 1.18* | 199 | **168×** |
+
+* split_mode=tensor became bandwidth-limited on PCIe Gen1 ×1 due to its significantly higher inter-GPU bandwidth requirements, while TurboPrefill operated on the much less bandwidth-demanding split_mode=layer.
+
 
 ## Low Inter-GPU Bandwidth Requirements
 
-TurboPrefill operates on top of split_mode=layer (-sm layer), which is significantly less demanding on inter-GPU communication bandwidth than split_mode=tensor (-sm tensor). The theoretical difference in the required communication bandwidth is up to 320×. In configurations where the performance of -sm tensor was limited by inter-GPU communication bandwidth, TurboPrefill achieved up to 161× practical speedup.
+TurboPrefill operates on top of split_mode=layer (-sm layer), which is significantly less demanding on inter-GPU communication bandwidth than split_mode=tensor (-sm tensor). The theoretical difference in the required communication bandwidth is up to **320×**. In bandwidth-limited configurations, TurboPrefill achieved up to **168× practical speedup** over -sm tensor.
 
 Thus, the proposed approach enables faster computation in cases where the computational performance of current and future GPUs exceeds the capabilities of the communication link between them, including PCIe, NVLink, Infinity Fabric, network interconnects, and any other interconnect technologies.
 
-
-This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
 
 ## Performance Benchmark (GPT-OSS-120B)
 

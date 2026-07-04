@@ -1,6 +1,9 @@
 # TurboPrefill
 [![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
 
+Multi-GPU prefill acceleration for llama.cpp.
+This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
+
 TurboPrefill is the first public Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
 
 Further development of the project supports multi-user mode, Vision Language Models (VLM), and has been validated on modern high-performance GPUs. The latest version is available [here](https://github.com/sergey-automation/TurboPrefill-VLM-Validation).
@@ -8,7 +11,33 @@ Further development of the project supports multi-user mode, Vision Language Mod
 For a detailed architectural discussion, see:
 [RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)
 
-Multi-GPU prefill acceleration for llama.cpp.
+### TurboPrefill Speedup over Pipeline Parallel at 16k Context Tokens
+
+| Configuration | Model | Pipeline Parallel (tok/s) | TurboPrefill (tok/s) | Speedup |
+|---------------|-------|-----------------:|---------------------:|---------:|
+| **2**× RTX PRO 5000  | Llama-3-70B | 923 | 1572 | **1.7×** |
+| **2**× GTX 1080 Ti | GPT-OSS-20B | 836 | 1302 | **1.6×** |
+| **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
+| **4**× RTX 3090 | Llama-3-70B  | 400 | 1208 | **3.0×** |
+| **4**× RTX 5060 | Qwen2.5-VL-72B  | 303 | 604 | **1.9×** |
+| **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
+| **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
+| **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
+| **12**× P104-100 (Pascal) |Llama-3-70B | 37 | 199 | **5.3×** |
+
+### TurboPrefill Speedup over Tensor Split at 16K Context Tokens
+
+| Configuration | Model | Tensor Split (tok/s) | TurboPrefill (tok/s) | Speedup |
+|---------------|-------|-----------------:|---------------------:|---------:|
+| **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
+| **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
+
+## Low Inter-GPU Bandwidth Requirements
+
+TurboPrefill operates on top of split_mode=layer (-sm layer), which is significantly less demanding on inter-GPU communication bandwidth than split_mode=tensor (-sm tensor). The theoretical difference in the required communication bandwidth is up to 320×. In configurations where the performance of -sm tensor was limited by inter-GPU communication bandwidth, TurboPrefill achieved up to 161× practical speedup.
+
+Thus, the proposed approach enables faster computation in cases where the computational performance of current and future GPUs exceeds the capabilities of the communication link between them, including PCIe, NVLink, Infinity Fabric, network interconnects, and any other interconnect technologies.
+
 
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
 
@@ -235,31 +264,6 @@ The results show two effects:
 ![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/NVIDIA_RTX_PRO_5000_Blackwell_2x/parallel_1_output_tokens128/Ub512/RTX5000_2x.png)
 
 ![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
-
-The highest measured gains were:
-
-### TurboPrefill Speedup over Pipeline Parallel at 16k Context Tokens
-
-| Configuration | Model | Baseline (tok/s) | TurboPrefill (tok/s) | Speedup |
-|---------------|-------|-----------------:|---------------------:|---------:|
-| **2**× RTX PRO 5000  | Llama-3-70B | 923 | 1572 | **1.7×** |
-| **2**× GTX 1080 Ti | GPT-OSS-20B | 836 | 1302 | **1.6×** |
-| **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
-| **4**× RTX 3090 |Llama-3-70B  | 400 | 1208 | **3.0×** |
-| **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
-| **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
-| **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
-| **12**× P104-100 (Pascal) |Llama-3-70B | 37 | 199 | **5.3×** |
-
-
-### TurboPrefill Speedup over Tensor Split at 16K Context Tokens
-
-| Configuration | Model | Baseline (tok/s) | TurboPrefill (tok/s) | Speedup |
-|---------------|-------|-----------------:|---------------------:|---------:|
-| **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
-| **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
-
-
 
 This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
 

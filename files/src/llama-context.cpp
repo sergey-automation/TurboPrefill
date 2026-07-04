@@ -1,3 +1,4 @@
+// TurboPrefill VLM Validation v0.3.2.3
 #include "llama-context.h"
 
 #include "ggml.h"
@@ -1601,13 +1602,12 @@ int llama_context::decode(const llama_batch & batch_inp) {
     GGML_ASSERT((cparams.causal_attn || cparams.n_ubatch >= n_tokens_all) && "non-causal attention requires n_ubatch >= n_tokens");
 
     // TurboPrefill eligibility for this logical batch.
-    const uint32_t turboprefill_threshold = cparams.n_ubatch;
+//  const uint32_t turboprefill_threshold = cparams.n_ubatch;
+    const uint32_t turboprefill_threshold = 2 * cparams.n_ubatch;
 
     const llama_batch & batch = balloc->get_batch();
 
-    bool turboprefill_has_tokens = batch.token != nullptr;
-    bool turboprefill_single_seq = true;
-    bool turboprefill_positions_contiguous = true;
+//  bool turboprefill_single_seq = true;
 
     bool turboprefill_requested = false;
     const char * turboprefill_env = std::getenv("TURBOPREFILL");
@@ -1619,40 +1619,51 @@ int llama_context::decode(const llama_batch & batch_inp) {
 
     bool turboprefill_enabled =
             turboprefill_requested &&
-            n_tokens_all >= turboprefill_threshold &&
-            n_outputs_all == 0 &&
+            n_tokens_all >= turboprefill_threshold &&           
+  //        n_outputs_all == 0 &&
+            n_outputs_all <= cparams.n_seq_max &&
             !cparams.embeddings &&
             cparams.causal_attn &&
             cparams.pipeline_parallel &&
             model.split_mode() == LLAMA_SPLIT_MODE_LAYER &&
-            model.n_devices() > 1 &&
-            turboprefill_has_tokens;
+            model.n_devices() > 1;
 
-    if (turboprefill_enabled) {
-        const llama_seq_id seq0 = batch.seq_id[0][0];
-        const llama_pos    pos0 = batch.pos[0];
+    if (turboprefill_enabled && n_outputs_all > 1) {
+        std::vector<int32_t> seq_token_count(n_seq_max, 0);
 
         for (uint32_t i = 0; i < n_tokens_all; ++i) {
-            if (batch.n_seq_id[i] != 1 || batch.seq_id[i][0] != seq0) {
-                turboprefill_single_seq = false;
-                break;
+            const int ns = batch.n_seq_id ? batch.n_seq_id[i] : 1;
+
+            for (int32_t s = 0; s < ns; ++s) {
+                const llama_seq_id seq_id = batch.seq_id ? batch.seq_id[i][s] : 0;
+                seq_token_count[seq_id]++;
             }
         }
 
-        for (uint32_t i = 0; i < n_tokens_all; ++i) {
-            if (batch.pos[i] != pos0 + (llama_pos) i) {
-                turboprefill_positions_contiguous = false;
+        for (uint32_t seq_id = 0; seq_id < n_seq_max; ++seq_id) {
+            if (seq_token_count[seq_id] == 1) {
+                turboprefill_enabled = false;
                 break;
             }
         }
-
-        turboprefill_enabled =
-                turboprefill_single_seq &&
-                turboprefill_positions_contiguous;
     }
 
-    turboprefill.begin_batch(turboprefill_enabled, n_tokens_all, cparams.n_ubatch);
+//  if (turboprefill_enabled) {
+//      const llama_seq_id seq0 = batch.seq_id[0][0];
 
+//      for (uint32_t i = 0; i < n_tokens_all; ++i) {
+//          if (batch.n_seq_id[i] != 1 || batch.seq_id[i][0] != seq0) {
+//              turboprefill_single_seq = false;
+//              break;
+//          }
+//      }
+//
+//      turboprefill_enabled =
+//          turboprefill_single_seq;
+//
+//  }
+
+    turboprefill.begin_batch(turboprefill_enabled, n_tokens_all, cparams.n_ubatch);
     if (n_tokens_all >= turboprefill_threshold) {
         LLAMA_LOG_INFO(
                 "%s: TurboPrefill requested=%d active=%d n_tokens=%u n_ubatch=%u full_ubatches=%u devices=%d pipeline=%d split_mode=%d\n",
@@ -3900,4 +3911,3 @@ void llama_opt_epoch(
 llama_memory_breakdown llama_get_memory_breakdown(const struct llama_context * ctx) {
     return ctx->memory_breakdown();
 }
-

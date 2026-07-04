@@ -262,19 +262,20 @@ The results show two effects:
 1. Increasing the number of GPUs improves absolute prefill throughput.
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
 
-2× NVIDIA **RTX PRO 5000 (Blackwell)** 
-![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/NVIDIA_RTX_PRO_5000_Blackwell_2x/parallel_1_output_tokens128/Ub512/RTX5000_2x.png)
 
+5× and 8× NVIDIA RTX5060 (Blackwell)
 ![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 
 This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
 
 ## Validation Across GPU Generations
 
+2× NVIDIA **RTX PRO 5000 (Blackwell)** 
+![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/NVIDIA_RTX_PRO_5000_Blackwell_2x/parallel_1_output_tokens128/Ub512/RTX5000_2x.png)
+
 ![Prefill Throughput on 4× RTX 3090](doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
 ![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
-
 
 ![Prefill Throughput on 4× RTX 3090](benchmarks/RTX1080_2x/2xRTX1080.png)
 
@@ -289,6 +290,9 @@ Project: [gpt-oss-120b-p104-pascal](https://github.com/sergey-automation/gpt-oss
 Ampere	NVIDIA RTX 3090
 
 Blackwell	NVIDIA RTX 5060 Ti 16GB
+
+Blackwell   RTX PRO 5000 
+
 
 The goal of these tests was not to optimize for a specific GPU architecture, but to verify that the scheduling approach remains effective across different generations of hardware.
 

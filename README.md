@@ -263,20 +263,25 @@ The results show two effects:
 2. TurboPrefill continues to provide substantial acceleration on both configurations.
 
 
-5× and 8× NVIDIA RTX5060 (Blackwell)
+5× and 8× NVIDIA RTX5060 (Blackwell) gpt-oss-120b
 ![Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling](doc/graphs/ipps_prefill_scaling_5gpu_8gpu_rtx5060ti.png)
 
 This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
 
 ## Validation Across GPU Generations
 
-2× NVIDIA **RTX PRO 5000 (Blackwell)** 
+2× **NVIDIA RTX PRO 5000 (Blackwell)** Llama3-70b
 ![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/NVIDIA_RTX_PRO_5000_Blackwell_2x/parallel_1_output_tokens128/Ub512/RTX5000_2x.png)
+
+4× RTX3090 gpt-oss-120b
 
 ![Prefill Throughput on 4× RTX 3090](doc/graphs/ipps_prefill_4gpu_rtx3090.png)
 
+4× RTX3090 Llama3-70b
+
 ![VLM Response Latency](https://raw.githubusercontent.com/sergey-automation/TurboPrefill-VLM-Validation/main/benchmarks/Llama-3-70B-Dense/RTX3090_4x/parallel_1_output_tokens128/TurboPrefill_sm_tensor_pipeline_best_ub.png)
 
+2× GTX1080 gpt-oss-20b
 ![Prefill Throughput on 4× RTX 3090](benchmarks/RTX1080_2x/2xRTX1080.png)
 
 TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
@@ -308,52 +313,25 @@ The decode execution path remains unchanged.
 Testing on multiple models and hardware configurations showed that decode throughput did not meaningfully depend on whether TurboPrefill was enabled or disabled.
 The measured improvements therefore come from changes in prefill scheduling rather than from modifications to decode execution.
 
-## Tested llama.cpp base
-
-```text
-2e97c5f96
-```
-
 ## Install
 
-
-Clone TurboPrefill:
-
-```bash
-cd /workspace
-git clone https://github.com/sergey-automation/TurboPrefill.git
-chmod +x /workspace/TurboPrefill/install.sh
-```
-
-Clone llama.cpp and check out the tested base:
+Clone the validated TurboPrefill PoC implementation:
 
 ```bash
 mkdir -p /workspace/projects
 cd /workspace/projects
 
-git clone https://github.com/ggml-org/llama.cpp.git
+git clone -b turboprefill-rfc-poc \
+https://github.com/sergey-automation/llama.cpp.git
 cd llama.cpp
-git checkout 2e97c5f96
-git rev-parse HEAD
 ```
 
-Copy TurboPrefill files into the llama.cpp tree:
-The benchmark scripts are not installed automatically.
-Copy the benchmark files you want to use into the llama.cpp root directory.
-```bash
-chmod +x /workspace/TurboPrefill/install.sh
-/workspace/TurboPrefill/install.sh /workspace/projects/llama.cpp
-```
-Benchmark scripts (GPT-OSS-20B):
-```bash
-cp -r /workspace/TurboPrefill/benchmarks/gpt20b/* \
-/workspace/projects/llama.cpp/
-```
-Benchmark scripts (GPT-OSS-120B):
+Clone the TurboPrefill repository (benchmark scripts, context files and documentation):
 
 ```bash
-cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* \
-/workspace/projects/llama.cpp/
+cd /workspace
+
+git clone https://github.com/sergey-automation/TurboPrefill.git
 ```
 
 ## Build
@@ -387,6 +365,12 @@ hf download unsloth/gpt-oss-20b-GGUF \
   gpt-oss-20b-Q4_K_M.gguf \
   --local-dir /workspace/models
 ```
+or
+
+```bash
+wget -c --content-disposition "https://huggingface.co/unsloth/gpt-oss-20b-GGUF/resolve/main/gpt-oss-20b-Q4_K_M.gguf"
+```
+
 GPT-OSS 120B:
 ```bash
 hf download unsloth/gpt-oss-120b-GGUF \
@@ -394,6 +378,18 @@ hf download unsloth/gpt-oss-120b-GGUF \
   Q4_K_M/gpt-oss-120b-Q4_K_M-00002-of-00002.gguf \
   --local-dir /workspace/models
 ```
+
+or
+
+```bash
+mkdir -p /workspace/models/Q4_K_M
+cd /workspace/models
+
+wget -c --content-disposition "https://huggingface.co/unsloth/gpt-oss-120b-GGUF/resolve/main/Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf" -P /workspace/models/Q4_K_M
+
+wget -c --content-disposition "https://huggingface.co/unsloth/gpt-oss-120b-GGUF/resolve/main/Q4_K_M/gpt-oss-120b-Q4_K_M-00002-of-00002.gguf" -P /workspace/models/Q4_K_M
+```
+
 Check files:
 ```bash
 ls -lh /workspace/models
@@ -413,6 +409,23 @@ Copy GPT-OSS 120B scripts:
 ```bash
 cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* /workspace/projects/llama.cpp/
 ```
+
+Copy context files:
+
+```bash
+cp -r /workspace/TurboPrefill/benchmarks/contexts_gpt_tokenizer \
+/workspace/projects/llama.cpp/
+```
+
+## Configuration
+
+Before running the benchmarks, review and adjust the settings in:
+
+- server_config_20b.sh
+- server_config_gpt120b.sh
+
+Verify and adjust the model paths, context directory, output directory, GPU configuration, tensor split, context size, batch size (B), and micro-batch size (UB) as needed.
+
 ## Run benchmarks
 GPT-OSS 20B baseline:
 ```bash
@@ -434,17 +447,7 @@ GPT-OSS 120B with TurboPrefill:
 cd /workspace/projects/llama.cpp
 TURBOPREFILL=1 python3 bench_server_gpt120b.py
 ```
-Reports are saved to the OUTPUT_DIR configured in:
-- server_config_20b.sh
-- server_config_gpt120b.sh
-If you see:
-```text
-$'\r': command not found
-```
-convert shell scripts to Unix format:
-```bash
-sed -i 's/\r$//' *.sh
-```
+
 ## Run server UI
 GPT-OSS 20B:
 ```bash

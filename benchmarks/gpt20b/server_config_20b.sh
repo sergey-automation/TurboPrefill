@@ -9,7 +9,7 @@ OUTPUT_DIR="$SCRIPT_DIR/bench_reports_gpt-20b"
 
 # For 4 identical GPUs use: 1/1/1/1
 # For 10 P104-100 GPUs used in early tests: 2/4/4/4/4/4/4/4/3/3
-TENSOR_SPLIT="1/1/1/1"
+TENSOR_SPLIT="1/1/1/1/1/1"
 
 HOST="0.0.0.0"
 PORT=8081

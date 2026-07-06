@@ -430,6 +430,7 @@ Verify and adjust the model paths, context directory, output directory, GPU conf
 - **The batch size should be significantly larger than the micro-batch size, typically by 4–64×;** for example, B=4096 and UB=128.
 - **The context length should be at least 4× larger than the micro-batch size (UB); otherwise, there is insufficient work for TurboPrefill to optimize.**
 - Do not run the standard llama-bench benchmark. Base your performance evaluation on the server statistics. **Use either the provided TurboPrefill benchmark scripts or your own benchmarking script.**
+- TurboPrefill typically achieves the best performance with a smaller micro-batch size (UB) than standard -sm layer. For example, a configuration that peaks at B=8192, UB=1024 in the baseline may perform best at B=8192, UB=128 with TurboPrefill, while also reserving less memory for compute buffers.
 
 ## Run benchmarks
 GPT-OSS 20B baseline:

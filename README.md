@@ -6,7 +6,8 @@ This repository contains a file overlay for llama.cpp and helper scripts for run
 
 TurboPrefill is the first public Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
 
-Further development of the project supports multi-user mode, Vision Language Models (VLM), and has been validated on modern high-performance GPUs. The latest version is available [here](https://github.com/sergey-automation/TurboPrefill-VLM-Validation).
+Further development of the project adds support for multi-user mode, Vision Language Models (VLM), and Multi-Token Prediction (MTP) models. And has been validated on modern high-performance GPUs.
+How to launch the latest version. [here](https://github.com/sergey-automation/TurboPrefill-MTP/blob/main/READMI.md).
 
 For a detailed architectural discussion, see:
 [RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)
@@ -21,6 +22,7 @@ For a detailed architectural discussion, see:
 | **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
 | **4**× RTX 3090 | Llama-3-70B  | 400 | 1208 | **3.0×** |
 | **4**× RTX 5060 | Qwen2.5-VL-72B  | 303 | 604 | **1.9×** |
+| **4**× RTX 5070 Ti | Qwen3.6-72B-MPT  | 735 | 1611 | **2.1×** |
 | **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
 | **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
 | **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
@@ -31,6 +33,7 @@ For a detailed architectural discussion, see:
 | Configuration | Model | Tensor Split (tok/s) | TurboPrefill (tok/s) | Speedup |
 |---------------|-------|-----------------:|---------------------:|---------:|
 | **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
+| **4**× RTX 5070 Ti | Qwen3.6-72B-MPT  | 794| 1611 | **2.0×** |
 | **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
 | **12**× P104-100 (Pascal) |Llama-3-70B | 1.18* | 199 | **168×** |
 

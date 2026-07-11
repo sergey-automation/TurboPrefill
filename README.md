@@ -22,6 +22,7 @@ For a detailed architectural discussion, see:
 | **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
 | **4**× RTX 3090 | Llama-3-70B  | 400 | 1208 | **3.0×** |
 | **4**× RTX 5060 | Qwen2.5-VL-72B  | 303 | 604 | **1.9×** |
+| **4**× RTX 5070 Ti | Llama-3-70B   | 301 | 919 | **3.0×** |
 | **4**× RTX 5070 Ti | Qwen3.6-72B-MPT  | 735 | 1611 | **2.1×** |
 | **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
 | **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
@@ -33,9 +34,10 @@ For a detailed architectural discussion, see:
 | Configuration | Model | Tensor Split (tok/s) | TurboPrefill (tok/s) | Speedup |
 |---------------|-------|-----------------:|---------------------:|---------:|
 | **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
+| **4**× RTX 5070 Ti | Llama-3-70B   | 417  | 919 | **2.2×** |
 | **4**× RTX 5070 Ti | Qwen3.6-72B-MPT  | 794| 1611 | **2.0×** |
 | **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
-| **12**× P104-100 (Pascal) |Llama-3-70B | 1.18* | 199 | **168×** |
+| **12**× P104-100 (Pascal) |Llama-3-70B | 1.18*  | 199 | **168×** |
 
 * split_mode=tensor became bandwidth-limited on PCIe Gen1 ×1 due to its significantly higher inter-GPU bandwidth requirements, while TurboPrefill operated on the much less bandwidth-demanding split_mode=layer.
 

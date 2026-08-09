@@ -28,9 +28,9 @@ For a detailed architectural discussion, see:
 | **4**× GTX 1080 Ti | GPT-OSS-20B | 778 | 1320 | **1.7×** |
 | **4**× RTX 3090 | GPT-OSS-120B | 1477 | 2758 | **1.9×** |
 | **4**× RTX 3090 | Llama-3-70B  | 400 | 1208 | **3.0×** |
-| **4**× RTX 5060 | Qwen2.5-VL-72B  | 303 | 604 | **1.9×** |
+| **4**× RTX 5060 Ti | Qwen2.5-VL-72B  | 303 | 604 | **1.9×** |
 | **4**× RTX 5070 Ti | Llama-3-70B   | 301 | 919 | **3.0×** |
-| **4**× RTX 5070 Ti | Qwen3.6-27B-MPT  | 735 | 1611 | **2.1×** |
+| **4**× RTX 5070 Ti | Qwen3.6-27B-MTP  | 735 | 1611 | **2.1×** |
 | **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
 | **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
 | **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
@@ -42,7 +42,7 @@ For a detailed architectural discussion, see:
 |---------------|-------|-----------------:|---------------------:|---------:|
 | **2**× RTX PRO 5000  | Llama-3-70B | 1287 | 1572 | **1.22×** |
 | **4**× RTX 5070 Ti | Llama-3-70B   | 417  | 919 | **2.2×** |
-| **4**× RTX 5070 Ti | Qwen3.6-27B-MPT  | 794| 1611 | **2.0×** |
+| **4**× RTX 5070 Ti | Qwen3.6-27B-MTP  | 794| 1611 | **2.0×** |
 | **4**× RTX 3090 |Llama-3-70B  | 647 | 1208 | **1.87×** |
 | **12**× P104-100 (Pascal) |Llama-3-70B | 1.18*  | 199 | **168×** |
 
@@ -82,6 +82,8 @@ For more than 20 years, I worked on the design, construction, and optimization o
 While experimenting with running local AI models using llama.cpp on multi-GPU systems in layer-split mode, I noticed a well-known characteristic of long-context prefill execution.
 
 In layer-split mode, the model is distributed across multiple GPUs by layers. Under the standard execution path, each ubatch passes sequentially through all model layers. As a result, some GPUs remain idle while waiting for the previous ubatch to complete processing through the remaining layers.
+
+TurboPrefill is applicable when the built-in pipeline parallelism still produces this sawtooth GPU-utilization pattern during prefill.
 
 While analyzing the scheduler's behavior, I began asking a simple question: does prefill really require waiting for the previous ubatch to traverse the entire model before the next ubatch can begin?
 
@@ -123,15 +125,13 @@ As a result, idle time between processing stages can be reduced and higher prefi
 
 TurboPrefill is not intended to be a universal accelerator for all llama.cpp workloads.
 
-It is specifically designed for long single-request prefill workloads running in multi-GPU layer-split mode, where underutilization of available hardware is most visible.
+It is specifically designed for long prefill workloads running in multi-GPU layer-split mode, where underutilization of available hardware is most visible.
 
 The idea behind TurboPrefill did not come from modifying the mathematical side of the model. It came from viewing multi-GPU inference as a production pipeline, where the primary focus is hardware utilization, reducing idle time, and improving overall system throughput.
 
 # Why TurboPrefill Works Only for Certain Workloads
 
-TurboPrefill was not designed as a universal acceleration path for every llama.cpp workload.
-
-Instead, it focuses on a specific scenario where the potential benefit is highest: long-context prefill of a single request running on multiple GPUs in layer-split mode.
+Instead, it focuses on a specific scenario where the potential benefit is highest: long-context prefill workloads running on multiple GPUs in layer-split mode.
 
 TurboPrefill can be used in multi-user servers; the scheduling logic operates on individual requests, rather than users.
 

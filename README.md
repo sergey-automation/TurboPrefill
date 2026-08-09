@@ -1,13 +1,20 @@
 # TurboPrefill
-[![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
 
-Multi-GPU prefill acceleration for llama.cpp.
+**Multi-GPU prefill acceleration for llama.cpp** (MIT License)
+
+Author: Serhii Trykhlieb
+
+The core implementation is fully open source. Commercial engineering services are available from the author for validated porting to new llama.cpp releases, numerical-equivalence and regression testing, hardware-specific optimization, and production deployment.
+
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
 
-TurboPrefill is the first public Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+TurboPrefill is the first public proof-of-concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
 
-Further development of the project adds support for multi-user mode, Vision Language Models (VLM), and Multi-Token Prediction (MTP) models. And has been validated on modern high-performance GPUs.
-How to launch the latest version. [here](https://github.com/sergey-automation/TurboPrefill-MTP/blob/main/READMI.md).
+[![Release](https://img.shields.io/github/v/release/sergey-automation/TurboPrefill)](https://github.com/sergey-automation/TurboPrefill/releases)
+
+Further development has added support for multi-user workloads, Vision Language Models (VLM), and Multi-Token Prediction (MTP) models. The implementation has also been validated on modern high-performance GPUs.
+
+See [how to launch the latest version](https://github.com/sergey-automation/TurboPrefill-MTP/blob/main/READMI.md).
 
 For a detailed architectural discussion, see:
 [RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)

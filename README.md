@@ -55,6 +55,17 @@ TurboPrefill operates on top of split_mode=layer (-sm layer), which is significa
 
 Thus, the proposed approach enables faster computation in cases where the computational performance of current and future GPUs exceeds the capabilities of the communication link between them, including PCIe, NVLink, Infinity Fabric, network interconnects, and any other interconnect technologies.
 
+### How TurboPrefill Differs from Pipeline Parallel
+
+Pipeline parallelism and TurboPrefill differ in their implementation.
+
+I experimented with the built-in pipeline parallelism in llama.cpp, but I did not always get the expected results.
+
+A situation often occurs on different systems, including those rented through VAST, where "llama_context: pipeline parallelism enabled" is reported, but the nvidia-smi graph shows a “sawtooth” pattern: at any given moment, only one GPU is active.
+
+I did not modify the existing code. Instead, I added code branches that are executed only when TurboPrefill=1.
+
+Then I wrote code implementing this logic as I understand it.
 
 ## Performance Benchmark (GPT-OSS-120B)
 
@@ -177,7 +188,7 @@ A token output is requested at the end of each benchmark prompt, which causes th
 For this reason, dedicated benchmark scripts are used in this repository to measure TurboPrefill performance on long-context prefill workloads.
 
 # How TurboPrefill Works
-The standard llama.cpp scheduler processes each ubatch independently.
+There are cases where the standard llama.cpp scheduler processes each ubatch independently, even when pipeline parallelism is reported as active.
 
 A ubatch enters the pipeline, passes through all model layers, and only then the next ubatch begins its full journey through the pipeline.
 
@@ -338,6 +349,8 @@ git clone -b turboprefill-rfc-poc \
 https://github.com/sergey-automation/llama.cpp.git
 cd llama.cpp
 ```
+
+Current base: llama.cpp `b10335` (August 10, 2026).
 
 Clone the TurboPrefill repository (benchmark scripts, context files and documentation):
 

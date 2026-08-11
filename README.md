@@ -4,7 +4,13 @@
 
 Author: Serhii Trykhlieb
 
-The core implementation is fully open source. Commercial engineering services are available from the author for validated porting to new llama.cpp releases, numerical-equivalence and regression testing, hardware-specific optimization, and production deployment.
+The core implementation is fully open source. 
+
+Support for new llama.cpp releases, hardware-specific optimization, AMD ROCm development and optimization, and validation with specific models are not part of the public MIT release.
+
+A separate AMD ROCm project aims to reduce GPU infrastructure cost per unit of inference capacity, building on TurboPrefill results already demonstrated on NVIDIA systems.
+
+We are looking for a partner for its commercialization, B2B development, and IP protection.
 
 This repository contains a file overlay for llama.cpp and helper scripts for running `llama-server` benchmarks.
 

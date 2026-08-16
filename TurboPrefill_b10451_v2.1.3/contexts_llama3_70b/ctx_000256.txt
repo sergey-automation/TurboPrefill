@@ -1,0 +1,25 @@
+Read the following text.
+
+After reaching the end of the text, output 100 numbered lines.
+
+Each line must contain at least two words.
+
+Do not provide any explanations.
+
+Beginning of the text:
+TurboPrefill is a Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+
+For a detailed architectural discussion, see: RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+
+Multi-GPU prefill acceleration for llama.cpp.
+
+This repository contains a file overlay for llama.cpp and helper scripts for running llama-server benchmarks.
+
+How TurboPrefill Was Created
+For more than 20 years, I worked on the design, construction, and optimization of custom industrial production lines and control systems.
+
+While experimenting with running local AI models using llama.cpp on multi-GPU systems in layer-split mode, I noticed a well-known characteristic of long-context prefill execution.
+
+In layer-split mode, the model is distributed across multiple GPUs by layers. Under the standard execution path, each ubatch passes sequentially through all model layers. As a result, some GPUs remain idle while waiting for the previous ubatch to complete processing through the remaining layers.
+
+While analyzing the scheduler's behavior,End of the text. Start your response.

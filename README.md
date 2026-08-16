@@ -20,7 +20,8 @@ TurboPrefill is the first public proof-of-concept implementation of Intra-Prompt
 
 Further development has added support for multi-user workloads, Vision Language Models (VLM), and Multi-Token Prediction (MTP) models. The implementation has also been validated on modern high-performance GPUs.
 
-See [how to launch the latest version](https://github.com/sergey-automation/TurboPrefill-MTP/blob/main/READMI.md).
+See [how to launch the latest version](https://github.com/sergey-automation/TurboPrefill-MTP/blob/main/READMI.md). Ready-to-use fork based on llama.cpp b10451 (August 16, 2026):
+https://github.com/sergey-automation/llama.cpp/tree/turboprefill-mtp
 
 For a detailed architectural discussion, see:
 [RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill](doc/rfc_turboprefill.md)
@@ -40,7 +41,8 @@ For a detailed architectural discussion, see:
 | **5**× RTX 5060 Ti | GPT-OSS-120B | 1993 | 3886 | **1.9×** |
 | **8**× RTX 5060 Ti | GPT-OSS-120B | 1963 | 4380 | **2.2×** |
 | **10**× P104-100 (Pascal) | GPT-OSS-120B | 77 | 345 | **4.5×** |
-| **12**× P104-100 (Pascal) |Llama-3-70B | 37 | 199 | **5.3×** |
+| **12**× P104-100 (Pascal) | Llama-3-70B | 37 | 199 | **5.3×** |
+| **6**× P104-100 (Pascal) | Qwen3.8-27b_Q8 | 99 | 315 | **3.1×** |
 
 ### TurboPrefill Speedup over Tensor Split at 16K Context Tokens
 

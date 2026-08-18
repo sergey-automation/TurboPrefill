@@ -1,0 +1,75 @@
+Read the following text.
+
+After reaching the end of the text, output 100 numbered lines.
+
+Each line must contain at least two words.
+
+Do not provide any explanations.
+
+Beginning of the text:
+Determining the efficiency of restored photovoltaic modules under natural lighting conditions
+Authors
+Iryna Shvedchykova 
+Kyiv National University of Technologies and Design, Ukraine
+https://orcid.org/0000-0003-3005-7385
+Andrii Trykhlieb
+Kyiv National University of Technologies and Design, Ukraine
+https://orcid.org/0009-0005-9457-7349
+Serhii Trykhlieb
+LLC “GoldWood”, Ukraine
+https://orcid.org/0009-0009-5498-9452
+Svitlana Demishonkova
+Kyiv National University of Technologies and Design, Ukraine
+https://orcid.org/0000-0001-5678-8114
+Volodymyr Pavlenko
+National University of Life and Environmental Sciences of Ukraine, Ukraine
+https://orcid.org/0000-0003-2163-8508
+DOI: https://doi.org/10.15587/1729-4061.2024.317829
+Keywords: photovoltaic module, potential-induced degradation, photovoltaic generation, SCADA system, restoration efficiency
+Abstract
+The object of this study is thin-film photovoltaic modules without physical damage, manufactured by CIGS technology, affected by potential-induced degradation, after restoration. The possibility of improving the efficiency of the array of restored photovoltaic modules of the Q.SMART UF L 105 type has been established experimentally, under natural lighting conditions, up to 50 % and higher with respect to the new reference photovoltaic panel. An expression for evaluating the efficiency of restored photovoltaic panels has been derived. It is proposed to use a relative indicator – the efficiency index, which is calculated based on the specific generation data of photovoltaic modules. During the experiment, photovoltaic panels were connected to the OpenSCADA dispatch control and data collection system. Experimental studies were carried out in the autumn-winter period under three weather scenarios: clear day, variable cloudiness, continuous cloudiness. The specific monthly generation of photovoltaic modules was defined as the amount of energy produced during the month per unit of power, which is 100 W. During the experiment, minute and hourly fluctuations in the generation of photovoltaic modules were recorded. Based on the results of calculating the efficiency index, it was concluded that the generation of electrical energy by exhausted photovoltaic modules after restoration under real operating conditions allows for the possibility of their secondary application.
+
+The results of the research could be used as a basis for evaluating the efficiency of restored photovoltaic modules while the resulting statistical data on their performance could be used to devise rules and standards for the secondary application of exhausted photovoltaic panels
+
+Author Biographies
+Iryna Shvedchykova, Kyiv National University of Technologies and Design
+Doctor of Technical Sciences, Professor
+
+Department of Computer Engineering and Electromechanics
+
+Andrii Trykhlieb, Kyiv National University of Technologies and Design
+PhD Student
+
+Department of Computer Engineering and Electromechanics
+
+Serhii Trykhlieb, LLC “GoldWood”
+Chief Engineer
+
+Svitlana Demishonkova, Kyiv National University of Technologies and Design
+PhD, Associate Professor
+
+Department of Computer Engineering and Electromechanics
+
+Volodymyr Pavlenko, National University of Life and Environmental Sciences of Ukraine
+PhD, Associate Professor
+
+Department of Heat and Power Engineering
+
+References
+Transforming our world: The 2030 Agenda for Sustainable Development. Available at: https://sdgs.un.org/2030agenda
+Shavolkin, O., Shvedchykova, I., Gerlici, J., Kravchenko, K., Pribilinec, F. (2022). Use of Hybrid Photovoltaic Systems with a Storage Battery for the Remote Objects of Railway Transport Infrastructure. Energies, 15 (13), 4883. https://doi.org/10.3390/en15134883
+Shavolkin, O., Shvedchykova, I., Lishchuk, V., Stanovskyi, Y. (2023). Improving a model of the hybrid photovoltaic system with a storage battery for local object’s self-consumption involving the setting of power consumed from the grid. Eastern-European Journal of Enterprise Technologies, 3 (8 (123)), 6–16. https://doi.org/10.15587/1729-4061.2023.280053
+Installed solar energy capacity (2024). Our World in Data. Retrieved. Available at: https://ourworldindata.org/grapher/installed-solar-pv-capacity
+Domínguez, A., Geyer, R. (2019). Photovoltaic waste assessment of major photovoltaic installations in the United States of America. Renewable Energy, 133, 1188–1200. https://doi.org/10.1016/j.renene.2018.08.063
+Weckend, S., Wade, A., Heath, G. (2016). End of Life Management: Solar Photovoltaic Panels. Office of Scientific and Technical Information (OSTI). https://doi.org/10.2172/1561525
+Yu, H. F., Hasanuzzaman, Md., Rahim, N. A., Amin, N., Nor Adzman, N. (2022). Global Challenges and Prospects of Photovoltaic Materials Disposal and Recycling: A Comprehensive Review. Sustainability, 14 (14), 8567. https://doi.org/10.3390/su14148567
+Solarpark Ammerland. GP JOULE. Available at: https://www.gp-joule.com/en/references/solar/solarpark-ammerland
+Pundiev, V., Rieztsov, V., Surzhyk, T., Shevchuk, V., SheikoІ. (2020). Disposal of photovoltaic modules. Problems and international experience. Vidnovluvana Energetika, 3 (62), 27–34. https://doi.org/10.36296/1819-8058.2020.3(62).27-34
+Rahman, T., Mansur, A., Hossain Lipu, M., Rahman, Md., Ashique, R., Houran, M. et al. (2023). Investigation of Degradation of Solar Photovoltaics: A Review of Aging Factors, Impacts, and Future Directions toward Sustainable Energy Management. Energies, 16 (9), 3706. https://doi.org/10.3390/en16093706
+Pavlík, M., Beňa, L., Medved’, D., Čonka, Z., Kolcun, M. (2023). Analysis and Evaluation of Photovoltaic Cell Defects and Their Impact on Electricity Generation. Energies, 16 (6), 2576. https://doi.org/10.3390/en16062576
+Ohdaira, K., Komatsu, Y., Yamaguchi, S., Masuda, A. (2023). Second-stage potential-induced degradation of n-type front-emitter crystalline silicon photovoltaic modules and its recovery. Japanese Journal of Applied Physics, 62 (SK), SK1033. https://doi.org/10.35848/1347-4065/accb60
+Yilmaz, P., Schmitz, J., Theelen, M. (2022). Potential induced degradation of CIGS PV systems: A literature review. Renewable and Sustainable Energy Reviews, 154, 111819. https://doi.org/10.1016/j.rser.2021.111819
+Zhang, J., Cao, D., Cui, Y., Wang, F., Putson, C., Song, C. (2019). Influence of potential induced degradation phenomena on electrical insulating backsheet in photovoltaic modules. Journal of Cleaner Production, 208, 333–339. https://doi.org/10.1016/j.jclepro.2018.10.057
+Krýsová, H., Neumann-Spallart, M., Tarábková, H., Paušová, Š., Janda, P., Maixner, J. et al. (2021). Reconstruction of SnO2 after cathodic polarization of FTO films - A simple way of fabricating orthorhombic SnO2. Materials Chemistry and Physics, 273, 125038. https://doi.org/10.1016/j.matchemphys.2021.125038
+Yu, J., Li, J., Zhao, Y., Lambertz, A., Chen, T., Duan, W., Liu, W. et al. (2021). Copper metallization of electrodes for silicon heterojunction solar cells: Process, reliability and challenges. Solar Energy Materials and Solar Cells, 224, 110993. https://doi.org/10.1016/j.solmat.2021.110993
+Kazem, H. A., Chaichan, M. T., Al-Waeli, A. H. A., Aloqab, W. T., Alnaser, W. E. (2024). Causes, consequences, and treatments of induced degradation of solar PV: a comprehensive review. Arab Journal of Basic and Applied Sciences, 31 (1), 177–191. https://doi.org/10.1080/25765299End of the text. Start your response.

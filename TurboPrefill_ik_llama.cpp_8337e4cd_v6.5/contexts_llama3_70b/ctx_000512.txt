@@ -1,0 +1,56 @@
+Read the following text.
+
+After reaching the end of the text, output 100 numbered lines.
+
+Each line must contain at least two words.
+
+Do not provide any explanations.
+
+Beginning of the text:
+
+RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+#24219
+Open
+sergey-automation
+wants to merge 1 commit into
+ggml-org:master
+from
+sergey-automation:turboprefill-rfc-poc
++862
+-16
+Lines changed: 862 additions & 16 deletions
+Conversation1 (1)
+Commits1 (1)
+Checks1 (1)
+Files changed5 (5)
+Open
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill#24219
+sergey-automation
+wants to merge 1 commit into
+ggml-org:master
+from
+sergey-automation:turboprefill-rfc-poc
+Conversation
+@sergey-automation
+sergey-automation
+commented
+3 weeks ago
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+1. Status: Proof of Concept (PoC)
+This RFC describes an experimental scheduling mechanism implemented in the TurboPrefill project and intended for discussion of the architectural approach.
+
+2. The Problem
+With split_mode = layer, processing of a single request during the prefill phase is performed by passing each ubatch sequentially through the GPU pipeline.
+
+When processing a single ubatch, GPU stages are utilized sequentially: early GPUs become idle after completing their work, while later GPUs remain idle waiting for input data.
+
+This limits GPU utilization efficiency and reduces performance scaling as the number of devices increases.
+
+3. Proposed Approach
+Within the scope of this RFC, the term Intra-Prompt Pipeline Scheduling refers to the request-internal scheduling mechanism for the prefill phase described below.
+
+The proposed approach does not modify the division of a request into ubatch units.
+
+During the prefill phase, ubatch instances are pre-classified. ubatch instances requiring the standard execution order continue to be processed by the existing scheduling mechanism. ubatch instances suitable for pipeline execution are routed to the Intra-Prompt Pipeline Scheduling mode implemented in TurboPrefill.
+
+In this mode, ubatch instances are accumulated until the final ubatch of the current batch is received, after which they are executed sequentiallyEnd of the text. Start your response.

@@ -1,0 +1,753 @@
+Read the following text.
+
+After reaching the end of the text, output 100 numbered lines.
+
+Each line must contain at least two words.
+
+Do not provide any explanations.
+
+Beginning of the text:
+
+Validation of the applicability of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill to Vision Language Models (VLMs).
+
+Application of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill nearly halved the waiting time before answer generation: from 9.1 s to 4.6 s.
+
+**************
+
+TurboPrefill is a Proof-of-Concept implementation of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill.
+
+For a detailed architectural discussion, see: RFC: Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+
+Multi-GPU prefill acceleration for llama.cpp.
+
+This repository contains a file overlay for llama.cpp and helper scripts for running llama-server benchmarks.
+
+How TurboPrefill Was Created
+For more than 20 years, I worked on the design, construction, and optimization of custom industrial production lines and control systems.
+
+While experimenting with running local AI models using llama.cpp on multi-GPU systems in layer-split mode, I noticed a well-known characteristic of long-context prefill execution.
+
+In layer-split mode, the model is distributed across multiple GPUs by layers. Under the standard execution path, each ubatch passes sequentially through all model layers. As a result, some GPUs remain idle while waiting for the previous ubatch to complete processing through the remaining layers.
+
+While analyzing the scheduler's behavior, I began asking a simple question: does prefill really require waiting for the previous ubatch to traverse the entire model before the next ubatch can begin?
+
+For decode, such a dependency does exist. However, during prefill, the next ubatch can start processing on a layer immediately after the previous ubatch has finished on that layer, without waiting for it to complete the entire model.
+
+To test this idea, I created an experimental execution path that later became TurboPrefill.
+
+The core idea is not to modify the model, mathematical computations, or attention algorithms. TurboPrefill changes only the scheduling strategy used to process a series of ubatches inside the scheduler.
+
+If GPUs are viewed as stations on a production line, the standard approach sends one workpiece through every station before starting the next one. As a result, parts of the equipment periodically sit idle while waiting for previous stages to finish.
+
+TurboPrefill is intended to keep multiple ubatches active within the pipeline simultaneously. This allows each GPU to begin processing the next ubatch as soon as its own work is complete, without waiting for the previous ubatch to finish across the entire GPU chain.
+
+In simplified form:
+
+Standard scheduler:
+
+step    1234567890123
+GPU(1)  #000#000#0000
+GPU(2)  0#000#000#000
+GPU(3)  00#000#000#00
+GPU(4)  000#000#000#0
+TurboPrefill:
+
+step    1234567
+GPU(1)  ###0000
+GPU(2)  0###000
+GPU(3)  00###00
+GPU(4)  000###0
+TurboPrefill does not modify model weights, computations, or inference results. Only the execution order of prefill workloads inside the scheduler is changed.
+
+As a result, idle time between processing stages can be reduced and higher prefill performance can be achieved on long contexts while preserving identical model outputs.
+
+TurboPrefill is not intended to be a universal accelerator for all llama.cpp workloads.
+
+It is specifically designed for long single-request prefill workloads running in multi-GPU layer-split mode, where underutilization of available hardware is most visible.
+
+The idea behind TurboPrefill did not come from modifying the mathematical side of the model. It came from viewing multi-GPU inference as a production pipeline, where the primary focus is hardware utilization, reducing idle time, and improving overall system throughput.
+
+Why TurboPrefill Works Only for Certain Workloads
+TurboPrefill was not designed as a universal acceleration path for every llama.cpp workload.
+
+Instead, it focuses on a specific scenario where the potential benefit is highest: long-context prefill of a single request running on multiple GPUs in layer-split mode.
+
+TurboPrefill can be used in multi-user servers; the scheduling logic operates on individual requests, rather than users.
+
+The reason is simple. TurboPrefill relies on the ability to observe and schedule a series of consecutive ubatches that belong to the same request. This allows multiple ubatches to be active within the pipeline at the same time and reduces idle periods between neighboring processing stages.
+
+Many other workloads do not provide the same opportunity.
+
+For example:
+
+Decode workloads have stronger dependencies between consecutive tokens.
+Single-GPU execution does not suffer from inter-GPU pipeline bubbles.
+Embedding workloads follow a different execution pattern.
+Multi-sequence batches introduce additional scheduling constraints.
+Non-layer-split configurations do not expose the same pipeline structure.
+For this reason, TurboPrefill does not attempt to replace the standard llama.cpp scheduler.
+
+Instead, a dispatcher in llama-context.cpp evaluates each workload and decides whether it matches the conditions required for TurboPrefill. Workloads that do not match these conditions continue to use the standard execution path.
+
+This behavior is intentional.
+
+The goal of TurboPrefill is not to accelerate every possible workload. The goal is to improve utilization and throughput in a specific execution pattern where unused pipeline capacity is most visible.
+
+Why Some Workloads Are Excluded
+Workload	Reason
+Decode	Strong dependencies between consecutive tokens
+Single GPU	No inter-GPU pipeline to optimize
+Embeddings	Different execution pattern
+Multi-sequence batch	Additional scheduling complexity
+Non-layer-split mode	No layer pipeline between GPUs
+Short prefill	Insufficient number of ubatches to benefit from scheduling
+TurboPrefill focuses on workloads where pipeline underutilization is most visible and where scheduling multiple ubatches can improve overall throughput.
+
+Note about llama-bench
+The standard llama-bench pp* benchmark does not represent a pure long-context prefill workload.
+
+A token output is requested at the end of each benchmark prompt, which causes the request to follow the standard execution path instead of the TurboPrefill path.
+
+For this reason, dedicated benchmark scripts are used in this repository to measure TurboPrefill performance on long-context prefill workloads.
+
+How TurboPrefill Works
+The standard llama.cpp scheduler processes each ubatch independently.
+
+A ubatch enters the pipeline, passes through all model layers, and only then the next ubatch begins its full journey through the pipeline.
+
+In layer-split mode this creates a familiar pipeline behavior: some GPUs are busy while others are waiting for work to arrive from previous stages.
+
+TurboPrefill introduces an alternative execution path for eligible long-context prefill workloads. The execution consists of two phases:
+
+Capture Phase
+Instead of immediately executing each eligible ubatch through the entire pipeline, TurboPrefill temporarily stores information about a sequence of consecutive ubatches belonging to the same request. This creates a batch of work that can later be scheduled as a whole.
+
+Replay Phase
+After the capture phase is complete, the stored ubatches are replayed through the multi-GPU pipeline. Instead of processing one ubatch completely before starting the next one, TurboPrefill plans execution so that multiple ubatches can be active at different pipeline stages at the same time.
+
+Conceptually:
+
+Standard:
+
+ubatch1 -> all layers
+ubatch2 -> all layers
+ubatch3 -> all layers
+TurboPrefill:
+
+wave1: ubatch1
+wave2: ubatch2 + ubatch1
+wave3: ubatch3 + ubatch2 + ubatch1
+...
+This allows more GPUs to remain active simultaneously and reduces idle periods between neighboring pipeline stages.
+
+The model, weights, attention algorithms, and numerical results remain unchanged. Only the execution schedule is different.
+
+Architecture Overview
+Request
+   |
+   v
+Prefill Phase
+   |
+   v
+UBatch Classification
+   |
+   +--------------------------+
+   |                          |
+   v                          v
+Standard Path         Intra-Prompt Pipeline
+                      Scheduling
+                               |
+                               v
+                       UBatch Accumulation
+                               |
+                               v
+                       Capture / Replay
+                               |
+                               v
+                      Layer-Split GPU Pipeline
+                               |
+                               v
+                      ggml-backend-sched
+Additional Benchmarks
+Context Length Scaling
+One of the main goals of TurboPrefill is to improve utilization of multi-GPU layer-split pipelines during long-context prefill workloads.
+
+The expected behavior is that the benefit grows as the prompt becomes longer. Longer prompts generate more ubatches, providing more opportunities to keep multiple stages of the pipeline active simultaneously.
+
+To evaluate this effect, GPT-OSS-120B was tested across multiple context lengths using the same hardware and execution settings.
+
+The results show that TurboPrefill provides limited benefit on shorter prompts and increasing benefit as context length grows.
+
+This behavior is consistent with the original design goal of reducing pipeline idle time during long-context prefill workloads.
+
+The largest improvement observed in these tests was approximately 2.23× compared to the standard execution path.
+
+Scaling with GPU Count
+TurboPrefill is designed for multi-GPU layer-split execution, therefore it is important to evaluate how its behavior changes as the number of GPUs changes.
+
+The tests below compare the same GPT-OSS-120B model running on 5 and 8 RTX 5060 Ti 16GB GPUs using identical execution settings.
+
+The results show two effects:
+
+Increasing the number of GPUs improves absolute prefill throughput.
+TurboPrefill continues to provide substantial acceleration on both configurations.
+Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling
+
+The highest measured gains were:
+
+Speedup at 16373 Context Tokens
+Configuration	Model	Baseline (tok/s)	TurboPrefill (tok/s)	Speedup
+2× GTX 1080 Ti	GPT-OSS-20B	836	1302	1.6×
+4× RTX 3090	GPT-OSS-120B	1477	2758	1.9×
+5× RTX 5060 Ti	GPT-OSS-120B	1993	3886	1.9×
+8× RTX 5060 Ti	GPT-OSS-120B	1963	4380	2.2×
+10× P104-100 (Pascal)	GPT-OSS-120B	77	345	4.5×
+This suggests that TurboPrefill is not tied to a specific GPU count. The scheduling approach remains effective across different multi-GPU layer-split configurations.
+
+Validation Across GPU Generations
+Prefill Throughput on 4× RTX 3090
+
+Prefill Throughput on 4× RTX 3090
+
+TurboPrefill has been tested on multiple NVIDIA GPU generations and hardware configurations.
+
+Architecture Hardware
+
+Pascal NVIDIA P104-100
+
+Project: gpt-oss-120b-p104-pascal
+
+Ampere NVIDIA RTX 3090
+
+Blackwell NVIDIA RTX 5060 Ti 16GB
+
+The goal of these tests was not to optimize for a specific GPU architecture, but to verify that the scheduling approach remains effective across different generations of hardware.
+
+TurboPrefill is based on pipeline utilization and execution scheduling principles rather than architecture-specific GPU optimizations. The same execution model was successfully validated on three different NVIDIA generations spanning several years of hardware evolution.
+
+The observed improvements therefore appear to be related to scheduler behavior and pipeline utilization rather than to features unique to a particular GPU family.
+
+This suggests that the approach should remain relevant for future GPU generations as long as multi-GPU layer-split execution continues to rely on similar pipeline and scheduling concepts.
+
+Decode Performance
+TurboPrefill targets prefill workloads only. The decode execution path remains unchanged. Testing on multiple models and hardware configurations showed that decode throughput did not meaningfully depend on whether TurboPrefill was enabled or disabled. The measured improvements therefore come from changes in prefill scheduling rather than from modifications to decode execution.
+
+Tested llama.cpp base
+2e97c5f96
+Install
+Clone TurboPrefill:
+
+cd /workspace
+git clone https://github.com/sergey-automation/TurboPrefill.git
+chmod +x /workspace/TurboPrefill/install.sh
+Clone llama.cpp and check out the tested base:
+
+mkdir -p /workspace/projects
+cd /workspace/projects
+
+git clone https://github.com/ggml-org/llama.cpp.git
+cd llama.cpp
+git checkout 2e97c5f96
+git rev-parse HEAD
+Copy TurboPrefill files into the llama.cpp tree: The benchmark scripts are not installed automatically. Copy the benchmark files you want to use into the llama.cpp root directory.
+
+chmod +x /workspace/TurboPrefill/install.sh
+/workspace/TurboPrefill/install.sh /workspace/projects/llama.cpp
+Benchmark scripts (GPT-OSS-20B):
+
+cp -r /workspace/TurboPrefill/benchmarks/gpt20b/* \
+/workspace/projects/llama.cpp/
+Benchmark scripts (GPT-OSS-120B):
+
+cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* \
+/workspace/projects/llama.cpp/
+Build
+cd /workspace/projects/llama.cpp
+
+cmake -B build \
+  -DGGML_CUDA=ON \
+  -DGGML_CUDA_FA=ON \
+  -DGGML_CUDA_GRAPHS=ON \
+  -DCMAKE_BUILD_TYPE=Release
+
+cmake --build build -j4 --target llama-server
+Python dependency
+Benchmark scripts require requests:
+
+pip install requests
+Download models
+Create model directory:
+
+mkdir -p /workspace/models
+cd /workspace/models
+GPT-OSS 20B:
+
+hf download unsloth/gpt-oss-20b-GGUF \
+  gpt-oss-20b-Q4_K_M.gguf \
+  --local-dir /workspace/models
+GPT-OSS 120B:
+
+hf download unsloth/gpt-oss-120b-GGUF \
+  Q4_K_M/gpt-oss-120b-Q4_K_M-00001-of-00002.gguf \
+  Q4_K_M/gpt-oss-120b-Q4_K_M-00002-of-00002.gguf \
+  --local-dir /workspace/models
+Check files:
+
+ls -lh /workspace/models
+ls -lh /workspace/models/Q4_K_M
+Benchmark scripts
+Benchmark scripts are designed to be copied into the llama.cpp checkout and executed from there.
+
+Benchmark files must be copied into the llama.cpp root directory. Benchmark scripts must be executed from the llama.cpp root directory. Copy GPT-OSS 20B scripts:
+
+cp -r /workspace/TurboPrefill/benchmarks/gpt20b/* /workspace/projects/llama.cpp/
+Copy GPT-OSS 120B scripts:
+
+cp -r /workspace/TurboPrefill/benchmarks/gpt120b/* /workspace/projects/llama.cpp/
+Run benchmarks
+GPT-OSS 20B baseline:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=0 python3 bench_server_gpt20b.py
+GPT-OSS 20B with TurboPrefill:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=1 python3 bench_server_gpt20b.py
+GPT-OSS 120B baseline:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=0 python3 bench_server_gpt120b.py
+GPT-OSS 120B with TurboPrefill:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=1 python3 bench_server_gpt120b.py
+Reports are saved to the OUTPUT_DIR configured in:
+
+server_config_20b.sh
+server_config_gpt120b.sh If you see:
+$'\r': command not found
+convert shell scripts to Unix format:
+
+sed -i 's/\r$//' *.sh
+Run server UI
+GPT-OSS 20B:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=1 bash run_server_gpt20b.sh
+GPT-OSS 120B:
+
+cd /workspace/projects/llama.cpp
+TURBOPREFILL=1 bash run_server_gpt120b.sh
+On VAST, use SSH tunnel from your local Windows CMD:
+
+ssh -L 8081:127.0.0.1:8081 -p YOUR_SSH_PORT root@YOUR_SSH_HOST
+Example:
+
+ssh -L 8081:127.0.0.1:8081 -p 26865 root@ssh4.vast.ai
+Open in browser:
+
+http://127.0.0.1:8081
+Do not expose llama-server directly to the public internet without access control.
+
+Notes for Windows / WinSCP users
+If you edit .sh files from Windows, save them with Unix line endings: LF, not CRLF.
+
+If you see this error: $'\r': command not found
+
+fix the files:
+
+cd /workspace/projects/llama.cpp
+
+sed -i 's/\r$//' *.sh
+Enable or disable TurboPrefill
+TurboPrefill is controlled at runtime.
+
+Enable:
+
+TURBOPREFILL=1 ./build/bin/llama-server ...
+Disable:
+
+unset TURBOPREFILL
+./build/bin/llama-server ...
+Disabled values are: unset, 0, false, off.
+
+Tested VAST configuration
+VAST Template: NVIDIA CUDA Container disk: 200 GB OS: Ubuntu 24.04.4 LTS GPU: 8x RTX 5060 Ti 16GB Driver: 580.159.03 CUDA: 13.0 nvcc: 13.0.88 gcc: 13.3.0 cmake: 3.28.3 git: 2.43.0 P2P: not supported NVLink: not present
+
+Ongoing Development
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill ggml-org/llama.cpp#24219
+
+Initial Proof-of-Concept implementation: https://github.com/sergey-automation/TurboPrefill
+
+Continued development and new functionality: https://github.com/sergey-automation/TurboPrefill-VLM-Validation
+
+Reference implementation branch: https://github.com/sergey-automation/llama.cpp/tree/turboprefill-vlm-support/
+
+Acknowledgements
+Special thanks to Andrii Trykhlieb for technical assistance, testing support, benchmark validation, and countless discussions during the development of TurboPrefill. LinkedIn: https://de.linkedin.com/in/andrii-trykhlieb-826848323
+
+***********************************************************************************
+
+TurboPrefill VLM Validation
+Validation of the applicability of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill to Vision Language Models (VLMs).
+
+TurboPrefill cut the waiting time before answer generation nearly in half: from 9.0 s to 4.6 s.
+
+VLM Response Latency
+FHD giraffe sample
+
+Example model answer
+Eight giraffes are walking across a grassy wetland near a river. The animals are light brown with darker patches. The leading giraffe appears to guide the group. Clues: front position, direction of movement, spacing, head orientation, and group alignment.
+
+Key Result
+Validation on Vision Language Models demonstrates that Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill can significantly reduce user waiting time before answer generation without changing model weights, architecture, quantization, prompts, or inference mathematics.
+
+The observed improvement was achieved solely through changes in execution scheduling during the prefill stage.
+
+Test Configuration
+Parameter	Value
+Model	Qwen2.5-VL-72B-Instruct-Q4_K_M
+Task	Vision-language question answering
+Input	Single Full HD image (1920×1080)
+GPUs	4× RTX 5060 Ti 16 GB
+UBatch size	128
+Split mode	Layer
+Result
+Metric	Baseline	TurboPrefill	Speedup
+Waiting time before the response started	9.1 s	4.6 s	1.98× faster
+Prefill throughput	303 tok/s	604 tok/s	1.99× higher
+Generation throughput	8.6 tok/s	8.6 tok/s	No change (1.00×)
+TurboPrefill nearly halved the waiting time before the model started responding, while leaving answer generation speed unchanged.
+
+Future Relevance
+Validation on NVIDIA Pascal GPUs also demonstrated an approximately 2.2× reduction in prefill latency, suggesting that this optimization opportunity is not tied to a particular class of hardware and will likely remain relevant for future GPU generations.
+
+Background
+The original scheduling mechanism was proposed in:
+
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+
+ggml-org/llama.cpp#24219
+
+The original proof-of-concept implementation is available at:
+
+https://github.com/sergey-automation/TurboPrefill
+
+Purpose
+This repository validates the applicability of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill to Vision Language Models.
+
+The objective is not to introduce a new scheduling mechanism, but to demonstrate that the original mechanism is applicable beyond text-only LLM workloads.
+
+Validation Implementation
+Reference implementation branch:
+
+https://github.com/sergey-automation/llama.cpp/tree/turboprefill-vlm-support
+
+Scope of the Current Implementation
+The original TurboPrefill PoC intentionally used a conservative dispatcher and left some eligible workloads on the standard llama.cpp execution path.
+
+The current validation implementation enables additional workloads that are still within the original concept of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill, but were not enabled in the first PoC.
+
+Additional workloads currently enabled for the TurboPrefill execution path:
+
+Execution of Text LLM workloads.
+Execution of Vision Language Model (VLM) workloads.
+Execution of multiple concurrent requests in multi-user server mode, provided that requests from different users are not mixed within the same TurboPrefill batch.
+Status
+Work in progress.
+
+Implementation files, scripts, input samples, and benchmark logs are published in this repository.
+
+Experimental work in progress.
+
+The reported results are based on the current prototype implementation. Text-model validation has been completed successfully. VLM support is still under active investigation.
+
+Repository Structure
+files/ — modified llama.cpp source files used for the validation branch.
+scripts/ — scripts used to run the VLM server and resolution tests.
+resolution_samples/ — input images used for validation.
+benchmarks/ — raw benchmark reports and server logs.
+Reproducing the Validation
+1. Obtain the reference implementation
+The validation was performed using the following reference implementation branch:
+
+https://github.com/sergey-automation/llama.cpp/tree/turboprefill-vlm-support
+
+git clone https://github.com/sergey-automation/llama.cpp.git
+cd llama.cpp
+git checkout turboprefill-vlm-support
+2. Build llama.cpp
+Build the reference implementation.
+
+2.1 Download the Qwen2.5-VL-72B GGUF model
+The validation uses the following model files:
+
+Qwen2.5-VL-72B-Instruct-Q4_K_M.gguf
+mmproj-Qwen2.5-VL-72B-Instruct-Q8_0.gguf
+Create the expected model directory:
+
+mkdir -p /workspace/models/Qwen2.5-VL-72B
+cd /workspace/models/Qwen2.5-VL-72B
+Download the main model:
+
+wget -c --content-disposition \
+"https://huggingface.co/ggml-org/Qwen2.5-VL-72B-Instruct-GGUF/resolve/main/Qwen2.5-VL-72B-Instruct-Q4_K_M.gguf"
+Download the multimodal projector:
+
+wget -c --content-disposition \
+"https://huggingface.co/ggml-org/Qwen2.5-VL-72B-Instruct-GGUF/resolve/main/mmproj-Qwen2.5-VL-72B-Instruct-Q8_0.gguf"
+Check the files:
+
+ls -lh /workspace/models/Qwen2.5-VL-72B
+3. Baseline measurement
+Start the VLM server with TurboPrefill disabled:
+
+TURBOPREFILL=0 ./run_vlm_server.sh
+Run the benchmark:
+
+python3 run_vlm_resolution.py
+4. TurboPrefill measurement
+Start the VLM server with TurboPrefill enabled:
+
+TURBOPREFILL=1 ./run_vlm_server.sh
+Run the benchmark:
+
+python3 run_vlm_resolution.py
+5. Compare results
+Input images:
+
+resolution_samples/
+Reference benchmark reports and logs:
+
+benchmarks/
+Compare generated reports against the published benchmark logs included in this repository.
+
+Attribution
+If this work is useful for future implementations of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill, please cite the original RFC proposal:
+
+ggml-org/llama.cpp#24219
+
+*******************************************************************************
+
+RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+#24219
+Open
+sergey-automation
+wants to merge 1 commit into
+ggml-org:master
+from
+sergey-automation:turboprefill-rfc-poc
++862
+-16
+Lines changed: 862 additions & 16 deletions
+Conversation1 (1)
+Commits1 (1)
+Checks1 (1)
+Files changed5 (5)
+Open
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill#24219
+sergey-automation
+wants to merge 1 commit into
+ggml-org:master
+from
+sergey-automation:turboprefill-rfc-poc
+Conversation
+@sergey-automation
+sergey-automation
+commented
+3 weeks ago
+[RFC][PoC] Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+1. Status: Proof of Concept (PoC)
+This RFC describes an experimental scheduling mechanism implemented in the TurboPrefill project and intended for discussion of the architectural approach.
+
+2. The Problem
+With split_mode = layer, processing of a single request during the prefill phase is performed by passing each ubatch sequentially through the GPU pipeline.
+
+When processing a single ubatch, GPU stages are utilized sequentially: early GPUs become idle after completing their work, while later GPUs remain idle waiting for input data.
+
+This limits GPU utilization efficiency and reduces performance scaling as the number of devices increases.
+
+3. Proposed Approach
+Within the scope of this RFC, the term Intra-Prompt Pipeline Scheduling refers to the request-internal scheduling mechanism for the prefill phase described below.
+
+The proposed approach does not modify the division of a request into ubatch units.
+
+During the prefill phase, ubatch instances are pre-classified. ubatch instances requiring the standard execution order continue to be processed by the existing scheduling mechanism. ubatch instances suitable for pipeline execution are routed to the Intra-Prompt Pipeline Scheduling mode implemented in TurboPrefill.
+
+In this mode, ubatch instances are accumulated until the final ubatch of the current batch is received, after which they are executed sequentially through the layer-split GPU pipeline.
+
+The next ubatch begins processing immediately after the previous ubatch completes execution on the corresponding GPU stage. It is therefore not necessary to wait for the previous ubatch to pass through all GPUs before starting execution of the next one.
+
+As a result, the number of GPUs simultaneously performing useful work increases.
+
+4. Scope
+Intra-Prompt Pipeline Scheduling is intended to accelerate the prefill phase when processing large single requests on multi-GPU configurations.
+
+The approach is designed for Single-User Mode, where compute resources are dedicated to a single active request.
+
+5. Limitations
+Intra-Prompt Pipeline Scheduling is a request-internal scheduling mechanism. It does not introduce parallelism between independent requests and does not replace existing multi-user batching mechanisms.
+
+The approach is intended to accelerate the prefill phase and does not affect decode performance.
+
+Intra-Prompt Pipeline Scheduling is applied only to ubatch instances that do not contain logits output requests.
+
+For this reason, the standard llama-bench tool is not suitable for evaluating this mode, since its prefill tests contain logits output requests and therefore continue to be processed by the standard scheduling path.
+
+6. PoC Results
+Results for a context length of 16,373 tokens. Full results for all tested context lengths are provided below and are available in the repository.
+
+Platform                      GPU   Baseline   TurboPrefill   Gain
+------------------------------------------------------------------
+10x P104-100                  10       77          181        +135%
+4x RTX 3090                    4     1477         2758         +87%
+5x RTX 5060 Ti                 5     1993         3886         +95%
+8x RTX 5060 Ti                 8     1963         4380        +123%
+7. Computational Correctness
+Intra-Prompt Pipeline Scheduling does not modify the mathematical computation model.
+
+The execution order of individual layers and the order of data propagation through each layer remain unchanged.
+
+Only the execution scheduling order between GPU stages is modified.
+
+8. Discussion Topics
+Possible integration into ggml-backend-sched.
+Applicability to other split modes.
+Applicability to systems with P2P/NVLink support.
+This RFC is published for discussion of the architectural approach and for collecting feedback on possible future directions of development.
+
+9. Implementation Status
+The current implementation is provided as an isolated overlay module and does not require modifications to the model architecture.
+
+The mode can be enabled through the TURBOPREFILL=1 environment variable.
+
+Source code, installation scripts, benchmark data, and measurement results are available in the separate TurboPrefill repository.
+
+10. Full Benchmark Results
+All measurements in this section were performed using GPT-OSS-120B Q4_K_M.
+
+Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling
+Multi-GPU Scaling with and without Intra-Prompt Pipeline Scheduling
+
+5× and 8× NVIDIA RTX 5060 Ti 16GB, UB=768.
+
+Prefill Throughput: Baseline vs Intra-Prompt Pipeline Scheduling (4× RTX 3090)
+Prefill Throughput on 4× RTX 3090
+
+4× NVIDIA RTX 3090, UB=768.
+
+Prefill Throughput on 10× NVIDIA P104-100 (Pascal)
+Prefill Throughput on 10× NVIDIA P104-100 (Pascal)
+
+10× NVIDIA P104-100 (Pascal). Baseline UB=32, Baseline UB=512, Intra-Prompt Pipeline Scheduling UB=32.
+
+Author: Serhii Trykhlieb
+
+Proposed mechanism:
+Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill
+
+PoC implementation:
+TurboPrefill
+
+Repository:
+https://github.com/sergey-automation/TurboPrefill
+
+@sergey-automation
+RFC PoC: Intra-Prompt Pipeline Scheduling for prefill
+4a364d0
+@sergey-automation sergey-automation requested a review from ggerganov as a code owner 3 weeks ago
+@github-actions github-actions Bot added the ggml label 3 weeks ago
+@sergey-automation
+sergey-automation
+commented
+5 days ago
+Author
+TurboPrefill-VLM-Validation represents a subsequent implementation of the proposed mechanism in which:
+
+multi-user operation was enabled;
+support for Vision-Language Model (VLM) processing was added.
+Validation of the applicability of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill to Vision Language Models (VLMs).
+
+Application of Intra-Prompt Pipeline Scheduling for Multi-GPU Prefill nearly halved the waiting time before answer generation: from 9.1 s to 4.6 s.
+
+VLM Response Latency
+
+The model was asked:
+
+to describe the scene, estimate the number of animals, identify which animal appeared to be the leader, and explain why using five visual clues.
+
+The waiting time before answer generation was derived from the prompt_eval_ms values reported by llama.cpp.
+
+Example answer:
+
+Eight giraffes are walking across a grassy wetland near a river. The animals are light brown with darker patches. The leading giraffe appears to guide the group. Clues: front position, direction of movement, spacing, head orientation, and group alignment.
+
+Result
+Metric	Baseline	TurboPrefill	Speedup
+Waiting time before the response started	9.1 s	4.6 s	1.98× faster
+Prefill throughput	303 tok/s	604 tok/s	1.99× higher
+Generation throughput	8.6 tok/s	8.6 tok/s	No change (1.00×)
+Validation Repository
+
+*******************************************************************
+
+Report by Sergey Tryklieb.
+What▓s wrong with solar energy?
+
+Physical limitations:
+
+1. Clouds and fog block sunlight; panels cannot generate more energy than the amount of light they receive (adjusted for efficiency).
+At the latitude of Kyiv, between March and October, there are days when the panels generate only 5√30% of the output they would produce under clear skies.
+While generation "dips" during the course of a single day can be smoothed out using a reasonable number of batteries, compensating for the low output of "bad" days using batteries is costly.
+Legal restrictions.
+
+2. It is prohibited to have a solar power system with a capacity exceeding the capacity of the grid connection.
+
+Combining points 1 and 2, it turns out we cannot offset even our daytime consumption using solar power, because we are constrained by law regarding the number of panels and by physics≈specifically, the fact that panels operate at a fraction of their rated capacity most of the time.
+
+Solutions:
+
+3. Physical solution: We need a solar power system with a panel array rated at 5√10 times the capacity we actually require.
+
+4. How to bypass legal restrictions. A poor option: setting up a grid connection with 5√10 times the capacity actually needed.
+5. How to bypass legal restrictions. A suggested option: if the solar power system operates as an "energy island"≈meaning it is not connected to the external grid and cannot feed energy into it≈then there are no restrictions.
+
+Consequences of installing a solar system with 5√10 times the panel capacity.
+
+Potential downsides:
+
+6. It is more expensive, but the panels themselves account for only a small fraction of the total solar system cost. Currently, the price is under $100 per kW of rated capacity. All other things being equal, the batteries, controllers, and inverters remain the same in terms of capacity and price; only the panels and their installation cost more.
+
+7. Technically, different equipment (controllers) will be required, but the price will be comparable.
+Pleasant outcomes.
+
+8. Solar power will cover electricity needs for a significantly greater number of days.
+
+9. There will be many days when the energy generated far exceeds our needs.
+
+What to do with the "surplus" energy
+10. Physically, no action is required; the panels and the system function perfectly well even if no electricity is drawn from them.
+
+11. By installing additional controllers, the "surplus" energy can be utilized for industrial processes that allow for interruptions≈such as supplementary air conditioning and ventilation, reverse osmosis water purification, ice making, hydrometallurgy, electrolytic metal refining (separation), and others.
+
+A brief overview of the design of power supply units, solar controllers, and inverters.
+
+12. Modern server power supplies consist (in simplified terms) of the following: a rectifier (with PFC), which converts 220V AC into 400V DC, and a DC/DC unit, which converts the 400V DC bus voltage into, for example, 12V DC.
+
+13. A solar controller (MPPT) converts the fluctuating DC voltage from the panels into a stable 400V DC bus voltage. An inverter converts the 400V bus voltage into 220V AC.
+
+14. To eliminate two redundant conversions≈first from the solar bus to 220V AC and then to the DC bus of the power supply units≈it is possible to power the DC/DC power supply units directly from the off-grid solar station's DC bus. This same bus can be supplemented by the external power grid when there is insufficient sunlight. Thus, within the system, the off-grid solar station acts as a consumer rather than a generator.
+
+
+I intentionally omitted details regarding the possibility of different DC bus voltages or 380V three-phase AC, as well as specifics concerning batteries and controllers.
+
+******************************************************************************
+
+DETERMINING THE EFFICIENCY OF RESTORED PHOTOVOLTAIC MODULES UNDER NATURAL LIGHTING CONDITIONSIryna ShvedchykovaCorresponding authorDoctor of Technical Sciences, Professor*E-mail: shvedchykova.io@knutd.edu.uaAndrii TrykhliebPhD Student*Serhii TrykhliebChief Engineer LLC "GoldWood"Pestelia str., 6a, Odesa, Ukraine, 65031Svitlana DemishonkovaPhD, Associate Professor*Volodymyr PavlenkoPhD, Associate ProfessorDepartment of Heat and Power EngineeringNational University of Life and Environmental Sciences of UkraineHeroyiv Oborony str., 15, Kyiv, Ukraine, 03041*Department of Computer Engineering and ElectromechanicsKyiv National University of Technologies and DesignMala Shyianovska str., 2, Kyiv, Ukraine, 01011The object of this study is thin­film photovol taic modules without physical damage, manufactured by CIGS technology, affected by potential­induced deg­radation, after restoration. The possibility of improv­ing the efficiency of the array of restored photovol­taic modules of the Q.SMART UF L 105 type has been established experimentally, under natural lighting conditions, up to 50 % and higher with respect to the new reference photovoltaic panel. An expression for evaluating the efficiency of restored photovoltaic panels has been derived. It is proposed to use a rela­tive indicator – the efficiency index, which is calcu­lated based on the specific generation data of photo­voltaic modules. During the experiment, photovoltaic panels were connected to the OpenSCADA dispatch control and data collection system. Experimental studies were carried out in the autumn­winter period under three weather scenarios: clear day, variable cloudiness, continuous cloudiness. The specific month­ly generation of photovoltaic modules was defined as the amount of energy produced during the month per unit of power, which is 100 W. During the experi­ment, minute and hourly fluctuations in the genera­tion of photovoltaic modules were recorded. Based on the results of calculating the efficiency index, it was concluded that the generation of electrical energy by exhausted photovoltaic modules after restoration under real operating conditions allows for the possi­bility of their secondary application.The results of the research could be used as a basis for evaluating the efficiency of restored photovoltaic modules while the resulting statistical data on their performance could be used to devise rules and stan­dards for the secondary application of exhausted photovoltaic panelsKeywords: photovoltaic module, potential­induced degradation, photovoltaic generation, SCADA system, restoration efficiency UDC 535.2DOI: 10.15587/1729-4061.2024.317829How to Cite: Shvedchykova, I., Trykhlieb, A., Trykhlieb, S., Demishonkova, S., Pavlenko, V. (2024). Determining the efficiency of restored photovoltaic modules under natural lighting conditions. Eastern-European Journal of Enterprise Technologies, 6 (8 (132)), 16–24. https://doi.org/10.15587/1729-4061.2024.317829Received 27.09.2024Received in revised form 19.11.2024Accepted 02.12.2024Published 30.12.20241. Introduction Under modern conditions, most countries of the world are moving towards decarbonization of their energy systems. The European Union has taken a course on the green transition, the goal of which is to achieve climate neutrality by 2050 with the replacement of fossil fuels with renewable energy sources by 2035 [1]. In view of this, in various branches of industry, agriculture, transport, as well as in the private sector, there is a rather rapid increase in the capacities of installed photovoltaic systems (IPSs) [2, 3]. At the end of 2018, the total installed capacity of IPSs was 515 GW; at the end of 2022, it reached a value of 1050 GW [4], continuing to grow until now.In most developed countries, large-scale photovoltaic in-stallations appeared around the beginning of the 2000s. Given that photovoltaic modules (PVMs) are designed for a service life of 20 to 30 years, a significant part of them is at the end of its operational life cycle. It is expected that after 2030 a con-siderable volume of photovoltaic waste will appear [5]. The International Renewable Energy Agency (IRENA) [6] pre-dicts that by 2030 there will be from 1.7 to 8 million tons, and by 2050 – from 60 to 78 million tons of photovoltaic waste.Quite a large amount of waste from solar cells is a conse-quence of the delay between the moment of installation and the final stage of the PVM life cycle [7], so often FMs do not meet the stated service life. As an example, we could note the So-larpark Ammerland solar power plant, built in the fall of 2011 by GP JOULE in Germany. About 196,000 thin-film modu-les Q-Cells CIGS, type Q.SMART, with an installed capacity of 21 MW were placed on an area of 57 hectares [8]. However, in 2017, the operation of the solar park stopped, all FMs were replaced by the owners with 80,000 new silicon panels because the thin film modules did not have the stated warranty period of 25 years of operation. Thus, the actual volume of photovol-taic waste may turn out to be higher than predicted, and the waste may appear earlier than expected.
+Energy-saving technologies and equipment17All over the world, exhausted PVMs are traditionally either destroyed or landfilled, resulting in the loss of valuable metals and environmental degradation due to leakage of toxic materials. It is possible to reduce the negative impact on the environment by recycling photovoltaic waste or further exploitation of PVMs. Complete recycling of PVMs is a prob-lematic task. In Ukraine, there are no PVM processing enter-prises, as well as special requirements for their disposal [9]. At the same time, extending the service life of PVMs has not only significant environmental advantages but also makes it possible to obtain a certain economic effect. Thus, secondary use IPSs could be used as backup power sources at small business enterprises, reducing the cost of purchasing new equipment. Extending PVM operation could prove useful for the private sector as well. Therefore, under these conditions, the development of technologies for the recovery of exhausted PVMs with the extension of their service life appears to be promising. And assessing the effectiveness of PVMs in secon-dary use is a relevant area of scientific research.2. Literature review and problem statementIn [10], a comprehensive review of the degradation factors that are associated with the aging of PVMs and that signifi-cantly affect the performance and service life of IPSs is given. In particular, factors such as surface contamination with soil particles, dust, snow, building materials, as well as discolo-ration, cracks, and delamination were considered. High tem-peratures, ultraviolet radiation, high air humidity, extreme weather conditions (hail, heavy snowfall, or wind) that could lead to physical damage to the panels are also included in [11] as factors that impair PVM operation. But questions related to how these factors affect the development of potentially in-duced degradation (PID) remained unresolved because of the complexity of studying the mechanism of this phenomenon.The physical basis of the mechanism of PID occurrence is considered in [12]. During PID, there is a gradual loss of PVM performance because of the high potential difference between the cell (semiconductor) and other grounded parts of the module, e.g., frame, glass. This leads to current leakage and ion migration, which weakens the photoelectric effect and causes a gradual loss of PVM power. However, in work [12], the main emphasis is on the physical features of the degrada-tion process of PVM based on crystalline silicon. The PID mechanism for thin film modules was not considered.Studies of the PID effect show varying levels of degrada-tion impact on photovoltaic technologies such as crystalline silicon and copper indium gallium selenide (CIGS). Thus, in [13], it was concluded that photovoltaic systems based on CIGS have a higher resistance to PID compared to crys-talline silicon under identical test conditions. Possible stra-tegies for mitigating degradation are also presented in [13]. However, a thorough analysis of PID prevention issues is lacking. This problem is also complicated by the gradual in-crease in the rated power of PVM (more than 600 W).An option to mitigate or prevent PID is to use new ma-terials and design solutions. An important role in protecting sensitive solar cells from degradation and damage belongs to the film material of the back sheet of the solar panel. Work [14] reports the study of the relationship between PID and a change in the degree of crystallinity of the back layer of the solar module during degradation tests. The research results in [14] are aimed at mitigating the consequences of degradation. At the same time, issues related to the preven-tion of PID have been neglected by researchers.Research results reported in [15] showed that the use of materials with higher resistance to moisture penetration, such as fluorine-doped tin oxide (SnO2) (FTO), is an effec-tive means of preventing PID. This material is used as the front electrode material in PVM. The risk of PID could be reduced, as shown in [16], by glass with a metallic coating applied by sputtering, the thickness of which could be con-trolled. However, it should be noted that the methods for preventing degradation, presented in [15, 16], were used during the manufacture of PVMs.In [17], several strategies for PID mitigation that could be used during the operation of a IPS are defined. Specifically, strategies such as sealing PVM edges, using ventilation to reduce temperature, avoiding the use of certain chemicals, and using proper grounding techniques during PVM installa-tion. At the same time, it is important for solar IPS owners to maintain and monitor PVMs to reduce the negative effects of PID and extend the life of PVMs. In work [17], these issues were not considered. A monitoring system for detecting surface or structural damage to solar panels during their installation and oper-ation using drones is proposed in [18]. In this case, PVMs are checked for defects and measures are taken to improve electricity production, for example, through a panel cleaning mechanism. Artificial intelligence methods are proposed for image processing, in particular, pattern recognition. However, the system proposed in [18] should be used only at large in-dustrial solar IPSs.Maximum power point tracking (MPPT) algorithms are also used to detect PVM faults [19]; wavelet transform for analyzing the frequency spectrum of microgrid photovoltaic system data and detecting anomalies that may indicate a mal-function [20]. However, in [19], there are no practical recom-mendations for using the proposed MPPT tracking algorithm under conditions of partial PVM shading. In [20], a method of protection against short circuits in a microgrid is proposed, which is suitable for detecting short circuits in limited cases. Insufficient attention to the study of technical monitoring issues is due to the fact that PVMs are usually sold as energy sources that do not require additional maintenance. There is also a lack of scientific research on end-of-life PVM management, including recycling, reclamation, repair, recovery, and reuse of end-of-life PVMs, which is reviewed in [21]. It is concluded that research and development for the recovery of end-of-life PVMs remains scarce, and best practices and commercial services for reliability testing and re-certification, as well as for the trade of secondary PVMs, are not standardized.An analysis of methods for restoring degraded PVMs is given in [12]; the authors suggested using a reduction of the applied voltage; reverse voltage; active or passive methods of thermal management; decrease in current density; PVM stor-age in a dark place. As noted in [22], most research on PVM recovery is related to standard modules based on crystalline silicon because they dominate the IPS market. In [22] it was shown that thermal recovery, reverse voltage, and their com-binations are able to restore the efficiency of PVMs based on crystalline silicon, and could also be applied to other photo-voltaic technologies, in particular, CIGS. However, a serious problem is that most of the proposed methods and technical solutions for PVM recovery do not provide the desired effi-ciency or increase the cost of recovered PVMs.
+Eastern-European Journal of Enterprise Technologies ISSN 1729-3774 6/8 ( 132 ) 202418In [23], the scenarios of PVM recycling at the end of their life cycle are considered, in particular: reuse of the mo-dule, extraction of components, and extraction of material. The work concludes that the reuse of PVM is distinguished by the least number of processing stages and could bring the highest income. The main problem is to find sales markets for the reuse of exhausted PVMs after their recovery.Thus, our review of the literature [10–23] demonstrated that current research mostly tackles the influence of various factors on the performance of PVMs under which they could enter the waste stream. Peculiarities of the mechanism of degradation and issues related to the use of new materials and structural solutions to mitigate the consequences of degrada-tion are also considered. At the same time, there is a certain lack of research and publications on technical monitoring and recovery of exhausted PVMs for the purpose of their fur-ther use under cyclical economy conditions. Without proper maintenance, PVMs could experience reduced efficiency, increased downtime, and equipment failure. In turn, the restoration of decommissioned PVMs is complicated by the lack of a procedure for checking (certification) of secondary PVMs and, as a result, the difficulty of implementing them for reuse. There is also a lack of actual (experimental) data on the effectiveness of the secondary application of various types of PVMs after restoration. All this allows us to state that the issues of assessing the functionality and efficiency of PVMs under real operating conditions after their restoration require additional investigation and generalization.3. The aim and objectives of the studyThe purpose of our study is to determine experimentally under actual natural lighting conditions the effectiveness of PVMs prone to potentially induced degradation, after their restoration. The results of the research will make it possible to evaluate the functionality of recovered PVMs with respect to new solar panels and justify the expediency of their secondary use. This will ensure the extension of the service life and, as a result, an increase in the environmental sustainability of PVMs through the reduction of photovol-taic waste and its negative impact on the environment. In addition, statistical data on the performance of recovered PVMs could be used to devise rules and standards for the reuse of PVMs.To achieve the goal, the following tasks were set:– to obtain an expression for calculating the efficiency of restored photovoltaic panels;– to conduct experimental studies to determine the func-tionality of restored PVMs under natural lighting conditions.4. The study materials and methodsExhausted thin-film PVMs without physical damage, produced by CIGS technology, affected by PID degrada-tion were chosen as the object of our research. The subject of the study is a comparative analysis of the performance of degraded PVMs after their restoration with respect to new monocrystalline panels under different natural lighting conditions. The main hypothesis of the study assumes that the generation of electrical energy by exhausted PVMs after recovery under real operating conditions could be sufficient for their reuse.During the experiment, photovoltaic panels were connected to the OpenSCADA supervisory control and data acquisition system, which is an open implementation of SCADA (Supervi-sory Control And Data Acquisition) and HMI (Human-Ma-chine Interface) systems. OpenSCADA is built on the princi-ples of modularity, cross-platform, and scalability [24].For experimental research, 24 exhausted photoelectric thin film modules (CIGS) of the Q.SMART UF L 105 type, produced in 2011, were purchased. According to the data gi-ven in [25], in 2011 similar panels were produced in the world with a total capacity of more than 3000 MW and a weight of more than 500 thousand tons. In 2011, First Solar, Inc. (USA) became the largest producer of thin-film PVMs in the world in terms of capacity (1,981 MW) [25].Thin-film modules of the Q.SMART type, because of the damage from PID degradation, produced at the initial stage from 2 to 10 % of the rated power Pmax = 105 W for standard test conditions (STC) [11]. Standardized conditions assume a solar radiation intensity of 1000 W/m2 at a module tem-perature of 25 °C in the absence of wind. In this case, the photovoltaic panel must be oriented southwards.As mentioned above, PID-prone PVM recovery methods provide an opportunity to restore the functionality of failed modules. Using the method described in [26], by tracking the change in the volt-ampere characteristic of PVM on a specially built bench, it was possible to increase the per-formance of some panels. Studies on the restoration of PVM productivity were conducted in 2022 over 3 months. The maximum PVM power after recovery was 30 % (33.5 W) of the STC-declared rated power Pmax (105 W) and was obtai-ned for a sun-facing PV panel on a sunny, windless day (Oc-tober 16, 2022).PVM efficiency ηef is determined from the following expression [11]:ηefradPPPES==⋅()maxmax//,(1)where Prad is the power of incident radiation; E – intensity of solar radiation according to STC (1000 W/m2); S is the PVM area.The efficiency ηef of the Q.SMART UF L 105 module un-der standardized conditions is 11.2 % [27], and the efficiency of the restored module was 3.57 %, respectively. Comparison of the technical characteristics of restored PVMs with pa-rameters of PVMs according to STC is not correct. Stan-dardized conditions are ideal conditions that do not reflect the real pattern of PVM electrical energy generation. The performance of exhausted PVMs after restoration should be evaluated with new solar panels of a similar configuration under real operating conditions.It should be noted that at the time of the experiment, the new PVM Q.SMART UF L 105 were not available for order. Therefore, for observation under real natural lighting conditions, together with an array of restored Q.SMART UF L 105 panels, an available new monocrystalline panel Risen Energy RSM110-8-545 was installed, which served as a reference. Specifications, according to STC, of the re-stored Q.SMART UF L 105 [27] and reference Risen Energy RSM110-8-545 [28] panels are compared in Table 1.Thus, taking into account the features and technical cha-racteristics of the restored panels Q.SMART UF L 105, selected for our experiment, it is proposed to determine the efficiency of the array of restored panels in comparison with the reference monocrystalline panel Risen Energy RSM110-8-545.
+Energy-saving technologies and equipment195. Results of analyzing the generation of electrical energy by photovoltaic modules prone to degradation after restoration5. 1. Expression for calculating the efficiency of re-stored photovoltaic panelsEvaluation of the efficiency of restored PVMs was car-ried out using a relative indicator – the IE efficiency index. The calculation of the IE indicator was carried out through the value of the specific generation of the array of restored Q.SMART UF L 105 modules and the reference photovoltaic panel Risen Energy RSM110-8-545.The specific generation of PVM was defined as the amount of energy produced during a certain period of time per unit of base power, which is chosen for convenience as 100 W. Recalculation of PVM power was carried out in re-lation to 100 W of the installed rated power Pmax according to STC (Table 1). The power conversion factor k = Pmax/100 was, respectively: k = 545/100 W = 5.45 – for PVM of type Risen Energy RSM110-8-545; k = 105n/100 = 1.05n = 25.2 (n = 24 – the number of solar panels in the array) – for re-stored PVMs of the Q.SMART UF L 105 type.Specific indicators of hourly pPV and monthly wPV (for a period of time T) of electric energy generation, reduced to 100 W of the installed rated power of PVM, were deter-mined as follows:pPkPVPVi=/,wpTPTkPVPVPVi=⋅=⋅/,(2)where PPVi is the PVM generation power at the i-th time point.With the help of the IE efficiency index, the energy of the array of restored panels generated during the month of observation wPVD is compared with the specific indicator wPVEfor the generation of the reference PVM. The value of the IEis calculated from the following formula:IwwPVDPVE=⋅100%.(3)If the condition IE ≥ 50 % is met, the efficiency of restored photovoltaic panels could be considered sufficient to ensure the possibility of their reuse.5. 2. Experimental studies on the functionality of restored photovoltaic modules under natural lighting conditionsTo determine the real data on the generated PVM ener-gy of the Q-Cells Q.SMART UF L-105 type, an array of 24 parallel-connected restored panels with a total rated power of 2520 W was assembled. The Q-Cells Q.SMART UF L-105 PV array and the new Risen Energy RSM110-8-545 panel were installed at the same angle of 68° and azimuth of 206° (southwest).The experiment was conducted in the Kyiv oblast, the average annual insolation rate for which, according to NASA observations, is 3.1 kWh/m2/day. PVM generation was mea-sured from October 2023 to February 2024. This is a period of low solar activity when the average value of the insolation index does not exceed 1.35 kWh/m2/day.Research into the generation of solar panels was carried out in the winter period, which is the worst in terms of solar insolation. For the region of the city of Kyiv, the indicators of solar insolation in winter, respectively, are [29] as follows: December – 0.86, January – 1.07, February – 1.87 kWh/m2/day. Days with different cloudiness coefficient values (Table 2) were chosen, which corresponded to the following three weather scenarios:– scenario 1 – a clear day (January 30, 2024), the cloudi-ness factor changes from 0 to 2;– scenario 2 – variable cloudiness (January 31, 2024), the cloudiness factor changes from 4 to 7;– scenario 3 – solid cloudiness (December 6, 2023, January 11, 2024, February 1, 2024), the cloudiness factor changes from 7 to 8.On the days of observations given in Table 2, wind speed and air temperature were approximately the same: wind speed varied from 2 to 4 m/s, air temperature ranged from –2 to +4 °C. There was no precipitation during the day. Under different weather scenarios (30.01.2024, 31.01.2024, and 01.02.2024), the restored PVMs Q-Cells Q. SMART UF L-105 were installed both at an angle and horizontally. PVM generation schedules with hourly and minute averaging were registered. Table 2 gives values of specific peak power for each type of PVM based on an hourly average.As mentioned above, during the experiment PVMs were connected to the OpenSCADA dispatch control and data collection system [24].Table 1Specifications of restored Q.SMART UF L 105 and reference Risen Energy RSM110-8-545 photovoltaic panelsParameterRSM110-8-545MQ.SMART UF L 105Rated power Pmax, W545105Idle voltage Uoc, V 38.0293.1Short-circuit current lsc, A18.231.63Voltage at the point of maximum power Umpp, V31.6671.5Current at the point of maximum power lmpp, A17.221.47Module efficiency, %20.911.2Solar cellsMonocrystallineThin-film (CIGS)Module dimensions, mm2384×1096×351190×789×7.3Weight, kg2916.5
+Eastern-European Journal of Enterprise Technologies ISSN 1729-3774 6/8 ( 132 ) 202420PVM generation was measured with minute and hourly averaging under the following weather scenarios.Weather scenario 1. Fig. 1 shows plots for the specific generation of PVM per light day for the conditions of a clear winter day (January 30, 2024). On this day, the maximum generation of PVM was observed. The specific hourly peak power was 74.98 W – for Risen Energy RSM110-8-545; 35.73 W and 7.5 W – for an array of restored Q-Cells Q.SMART UF L-105 panels installed at an angle and hori-zontally, respectively.112323abFig. 1. Specific generation pPVover a light day on January 30, 2024: a– minute averaging; b– hourly averaging;1 – new Risen Energy RSM110-8-545 monocrystalline panel; 2 – restored Q-Cells Q.SMART UF L-105 panels, located at an angle; 3 – restored panels Q-Cells Q.SMART UF L-105, located horizontallyDuring the day on January 30, 2024, there were some small clouds, the cloudiness coefficient varied from 0 to 2 points. When the cloud density changes, fluctuations in the gene ration of Risen Energy RSM110-8-545 (Fig. 1, a) are noticeable, which are not visible on the generation plot for Q-Cells Q.SMART UF L-105. This is due to the fact that the array of Q-Cells Q.SMART UF L-105 consists of many panels and occupies a large area compared to the area of the new PVMs, so the effect of cloud shading is averaged out.Weather scenario 2. Fig. 2 shows plots of the specific generation by PVMs over a light day for variable cloudiness conditions (January 31, 2024), when the cloudiness factor varied from 4 to 7 points.123123abFig. 2. Specific generation pPVover a light day on January 31, 2024: a– minute averaging; b–hourlyaveraging; 1 – new Risen Energy RSM110-8-545 monocrystalline panel; 2 – restored Q-Cells Q.SMART UF L-105 panels, located at an angle; 3 – restored panels Q-Cells Q.SMART UF L-105, located horizontallyTable 2Specific peak powers of the array of restored Q.SMART UF L 105 and reference Risen Energy RSM110-8-545 photovoltaic panels under different weather conditionsNo.DateCloudiness in points during the daytimeSpecific hourly peak power of PVM, WRisen Energy RSM110-8-545Q-Cells Q.SMART UF L-105Installed at an angleInstalled horizontally106.12.20237–87.53.55–211.01.202483.51.48–330.01.20240–2 74.9835.737.5431.01.20244–772.533.77.6501.02.2024 7–85.62.453.2
+Energy-saving technologies and equipment21On January 31, 2024, reasonably high generation was also observed. The specific hourly peak power was 72.5 W – for Risen Energy RSM110-8-545; 33.7 W and 7.6 W – for an array of restored Q-Cells Q.SMART UF L-105 panels installed at an angle and horizontally, respectively. Compa-red to the previous plots (Fig. 1, a), the impact of clouds on both arrays of panels (Fig. 2, a) could be observed with mi-nute averaging.Weather scenario 3. Fig. 3–5 show plots for the specific ge-neration by PVMs pPV over a light day for the conditions of con-tinuous cloudiness (06.12.2023, 11.01.2024, 01.02.24), when the cloudiness coefficient was the highest, varying from 7 to 8 points.12121212abFig. 3. Specific generation pPVover a light day of 06.12.2023: a– minute-by-minute averaging; b– hourly averaging; 1 – new Risen Energy RSM110-8-545 monocrystalline panel; 2 – restored Q-Cells Q.SMART UF L-105 panels, located at an angle1212a1212bFig. 4. Specific generation pPVover a light day of January 11, 2024: a– minute-by-minute averaging; b– hourly averaging; 1 – new Risen Energy RSM110-8-545 monocrystalline panel; 2 – restored Q-Cells Q.SMART UF L-105 panels, located at an angleab123132123132Fig. 5. Specific generation pPVover a light day of February 1, 2024: a– minute averaging; b– hourly averaging; 1 – new Risen Energy RSM110-8-545 monocrystalline panel; 2 – restored Q-Cells Q.SMART UF L-105 panels, located at an angle; 3 – restored panels Q-Cells Q.SMART UF L-105, located horizontally
+Eastern-European Journal of Enterprise Technologies ISSN 1729-3774 6/8 ( 132 ) 202422As could be seen from Fig. 3, generation on a gloomy win-ter day on December 6, 2023, was low enough without sharp jumps. Specific hourly peak power was 7.5 W – for Risen Energy RSM110-8-545; 3.55 W – for an array of Q-Cells Q.SMART UF L-105 panels installed at an angle.Fig. 4 shows PVM generation on a cloudy winter day on January 11, 2024, when it was completely cloudy with dif-ferent cloud densities. Low generation was observed, but no-ticeable changes in generation with changes in cloud density. The specific hourly peak power was 3.5 W – for Risen Energy RSM110-8-545; 1.48 W – for an array of Q-Cells Q.SMART UF L-105 panels installed at an angle.Fig. 5 also shows a plot with low PVM generation on a cloudy winter day on February 1, 2024; there are noticeable changes in generation with changes in cloud density. How-ever, in Fig. 5, one can see that a horizontally located array of restored PVMs generates more energy under diffused lighting than panels installed at an angle. Specific hourly peak power was 2.45 W and 3.2 W for an array of Q-Cells Q.SMART UF L-105 restored panels installed at an angle and horizontally, respectively. The horizontal arrangement of the panels is inferior in direct sunlight, but provides an advantage in dif-fused lighting, which is often seen in the winter months or on cloudy days. This could be useful for stand-alone IPSs when energy is needed under all lighting conditions.The general statistics on the generation by renewable photovoltaic panels Q-Cells Q.SMART UF L-105 and the new panel, as well as the IE efficiency index of recovered PVMs, are given in Table 3 for two characteristic months of the fall (October 2023) and winter (January 2024) seasons. Table 3 also gives specific monthly generation of electrical en-ergy, reduced to 100 W of the installed rated power of PVM.Table 3Indicators of electric energy generation by the reference monocrystalline panel Risen Energy RSM110-8-545 and the array of restored panels Q-Cells Q.SMART UF L-105IndicatorMonthOctoberJanuaryRisen Energy RSM110-8-545Monthly electricity generation, kWh31.47613.852Specific monthly generation wPVE, kWh5.7752.542Q-Cells Q. SMART UF L-105Monthly electricity generation, kWh72.53532.55Specific monthly generation wPVD, kWh2.8781.292Efficiency Index ІE, %5051Thus, our experimental studies have shown that exhaus-ted PVMs manufactured by CIGS technology and without physical damage could provide IE efficiency at the level of 50 % and higher compared to new PVMs.6. Discussion of results based on the research on electricity generation by photovoltaic modules under natural lighting conditionsIn our work, the main efforts were focused on conducting experimental studies to evaluate the generation of electri-cal energy by restored thin-film PVMs of the Q.SMART UF L 105 type under natural lighting conditions. It should be noted that in most works, in particular in [22], the issue of PVM recovery based on crystalline silicon is considered due to their dominance in the IPS market.This work is a continuation of the research started in [26]. The results of the process of restoration of thin-film PVMs, highlighted in [26], showed that the highest generation power of the photovoltaic system could be obtained under conditions close to ideal according to STC. Under real operating condi-tions, the generation indicators of recovered PVMs should be compared with the generation indicators of the reference photo-voltaic panel, which could be selected according to two options: – option 1 – a new photovoltaic panel of the same type (Q.SMART UF L 105), as it is done, for example, in [11], or a new panel with similar technical parameters is taken as a reference;– option 2 – a new photovoltaic panel with arbitrary pa-rameters, which is available, is accepted as a standard. The practical implementation of the first option turned out to be problematic because the newly available monocrystalline panel of the Risen Energy RSM110-8-545 type [28] with the parameters listed in Table 1 was chosen as the reference.In the work, an expression was derived for determining the efficiency of restored PVMs. The proposed quantitative indicator is the IE efficiency index, which is calculated using the indicators for specific PVM generation according to ex-pressions (2), (3). It is recommended to consider the condi-tion IE ≥ 50 % reasonable to ensure the possibility of reusing the recovered PVMs, for example, for small manufacturing enterprises or for domestic purposes ay private households.During the experimental research, an array of 24 paral-lel-connected restored PVMs of the Q.SMART UF L 105 type with a total power of 2520 W was assembled. Different modes of operation of restored and reference photovolta-ic panels were studied depending on weather conditions. In particular, in the winter period on a clear day (fluctuations of the cloudiness coefficient from 0 to 2), a high enough ge-neration was observed, as shown in Table 2 and Fig. 1. No-ticeable are minute-by-minute fluctuations in the generation by Risen Energy RSM110-8-545 (Fig. 1, a), which are not visible on the generation plot for restored Q-Cells Q.SMART UF L-105 panels. Under conditions of variable cloudiness, as shown in Table 2, a reasonably high generation is also observed, but clouds affect both arrays of panels (Fig. 2, a) during minute averaging. Finally, under conditions of contin-uous cloud cover, as could be seen from Table 2 and Fig. 3–5, PVM generation significantly decreases. However, as could be seen from Fig. 5, a horizontally located array of recovered PVMs under diffused lighting generates more energy than panels installed at an angle, which must be taken into account in the autonomous power supply to local consumers.The results of our calculation of the IE efficiency index that are given in Table 3 satisfy the condition IE ≥ 50 %. Therefore, the generation of electrical energy by exhausted PVMs after recovery under real operating conditions is sufficient for their reuse. In addition, recovered PVMs will continue to contribute to the decarbonization of the energy sector instead of filling landfills.Our results are similar to the findings reported in [30], in which the authors confirm in practice that the PVM power loss under the influence of PID could be up to 40 % in an open area. In [22], degradation exceeding 50 % is defined as significant.Certain limitations of this study are:– the choice of a monocrystalline panel of the Risen Energy RSM110-8-545 type as a benchmark because of the 
+Energy-saving technologies and equipment23difficulty of ordering a new PVM with parameters similar to the renewable PVM of the Q.SMART UF L 105 type;– the insufficient validity of the IE ≥ 50 % condition due to the lack of a secondary PVM certification procedure; this condition was determined based on the practical experience of using IPS.The main drawback of our study is that it does not take into account the influence of different photovoltaic techno-logies (crystalline silicon or CIGS) on the results of compa-rative analysis of PVM generation.Further prospects for this research involve determining experimentally the efficiency of renewable PVM generation, taking into account the influence of ambient temperature in the spring-summer period.7. Conclusions1. To evaluate the efficiency of restored photovoltaic panels, a relative indicator – the IE efficiency index – has been proposed. An expression for calculating the IE indica-tor using specific PVM generation data has been derived. A conversion factor of the generated PVM power with re-spect to 100 W of the installed rated power of photovoltaic panels has been determined, which is 5.45 for the Risen Ener-gy RSM110-8-545 type PVM; 25.2 for an array of restored panels of the Q.SMART UF L 105 type, respectively.2. Experimental studies were conducted to determine the functionality of restored PVMs under real lighting condi-tions in the autumn-winter period under three weather sce-narios: clear day, variable cloudiness, continuous cloudiness. It has been established that the IE efficiency index of pho-tovoltaic panels of the Q.SMART UF L 105 type restored without physical damage, manufactured according to CIGS technology, satisfies the condition IE≥50 %. Ensuring the efficiency of exhausted PVMs at the level of 50 % and higher with respect to the reference solar panel is the basis for mak-ing a decision to extend the service life of exhausted PVMs.Conflicts of interestThe authors declare that they have no conflicts of interest in relation to the current study, including financial, personal, authorship, or any other, that could affect the study, as well as the results reported in this paper.FundingThe study was conducted without financial support.Data availabilityThe data will be provided upon reasonable request.Use of artificial intelligenceThe authors confirm that they did not use artificial intel-ligence technologies when creating the current work.References1. Transforming our world: The 2030 Agenda for Sustainable Development. Available at: https://sdgs.un.org/2030agenda2. Shavolkin, O., Shvedchykova, I., Gerlici, J., Kravchenko, K., Pribilinec, F. (2022). Use of Hybrid Photovoltaic Systems with a Storage Battery for the Remote Objects of Railway Transport Infrastructure. Energies, 15 (13), 4883. https://doi.org/10.3390/en15134883 3. Shavolkin, O., Shvedchykova, I., Lishchuk, V., Stanovskyi, Y. (2023).End of the text. Start your response.

@@ -1,0 +1,1496 @@
+INFO [                    main] build info | tid="123339453882368" timestamp=1787065766 build=4840 commit="8337e4cd"
+INFO [                    main] system info | tid="123339453882368" timestamp=1787065766 n_threads=4 n_threads_batch=-1 total_threads=4 system_info="AVX = 1 | AVX_VNNI = 0 | AVX2 = 1 | AVX512 = 0 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | AVX512_BF16 = 0 | FMA = 1 | NEON = 0 | SVE = 0 | ARM_FMA = 0 | F16C = 1 | FP16_VA = 0 | WASM_SIMD = 0 | SSE3 = 1 | SSSE3 = 1 | VSX = 0 | MATMUL_INT8 = 0 | "
+ggml_cuda_init: found 12 CUDA devices:
+  Device 0: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 1: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 2: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 3: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 4: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 5: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 6: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 7: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 8: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 9: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 10: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+  Device 11: NVIDIA P104-100, compute capability 6.1, VMM: yes, VRAM: 8116 MiB
+CUDA0: using device CUDA0 - 8026 MiB free
+CUDA1: using device CUDA1 - 8026 MiB free
+CUDA2: using device CUDA2 - 8026 MiB free
+CUDA3: using device CUDA3 - 8026 MiB free
+CUDA4: using device CUDA4 - 8026 MiB free
+CUDA5: using device CUDA5 - 8026 MiB free
+CUDA6: using device CUDA6 - 8026 MiB free
+CUDA7: using device CUDA7 - 8026 MiB free
+CUDA8: using device CUDA8 - 8026 MiB free
+CUDA9: using device CUDA9 - 8026 MiB free
+CUDA10: using device CUDA10 - 8026 MiB free
+CUDA11: using device CUDA11 - 8026 MiB free
+llama_model_loader: loaded meta data with 37 key-value pairs and 459 tensors from /home/serg/workspace/models/gpt-oss-20b-Q4_K_M.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = gpt-oss
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = Gpt-Oss-20B
+llama_model_loader: - kv   3:                           general.basename str              = Gpt-Oss-20B
+llama_model_loader: - kv   4:                       general.quantized_by str              = Unsloth
+llama_model_loader: - kv   5:                         general.size_label str              = 20B
+llama_model_loader: - kv   6:                            general.license str              = apache-2.0
+llama_model_loader: - kv   7:                           general.repo_url str              = https://huggingface.co/unsloth
+llama_model_loader: - kv   8:                               general.tags arr[str,2]       = ["vllm", "text-generation"]
+llama_model_loader: - kv   9:                        gpt-oss.block_count u32              = 24
+llama_model_loader: - kv  10:                     gpt-oss.context_length u32              = 131072
+llama_model_loader: - kv  11:                   gpt-oss.embedding_length u32              = 2880
+llama_model_loader: - kv  12:                gpt-oss.feed_forward_length u32              = 2880
+llama_model_loader: - kv  13:               gpt-oss.attention.head_count u32              = 64
+llama_model_loader: - kv  14:            gpt-oss.attention.head_count_kv u32              = 8
+llama_model_loader: - kv  15:                     gpt-oss.rope.freq_base f32              = 150000.000000
+llama_model_loader: - kv  16:   gpt-oss.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  17:                       gpt-oss.expert_count u32              = 32
+llama_model_loader: - kv  18:                  gpt-oss.expert_used_count u32              = 4
+llama_model_loader: - kv  19:               gpt-oss.attention.key_length u32              = 64
+llama_model_loader: - kv  20:             gpt-oss.attention.value_length u32              = 64
+llama_model_loader: - kv  21:           gpt-oss.attention.sliding_window u32              = 128
+llama_model_loader: - kv  22:         gpt-oss.expert_feed_forward_length u32              = 2880
+llama_model_loader: - kv  23:                  gpt-oss.rope.scaling.type str              = yarn
+llama_model_loader: - kv  24:                gpt-oss.rope.scaling.factor f32              = 32.000000
+llama_model_loader: - kv  25: gpt-oss.rope.scaling.original_context_length u32              = 4096
+llama_model_loader: - kv  26:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  27:                         tokenizer.ggml.pre str              = gpt-4o
+llama_model_loader: - kv  28:                      tokenizer.ggml.tokens arr[str,201088]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  29:                  tokenizer.ggml.token_type arr[i32,201088]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  30:                      tokenizer.ggml.merges arr[str,446189]  = ["Ġ Ġ", "Ġ ĠĠĠ", "ĠĠ ĠĠ", "...
+llama_model_loader: - kv  31:                tokenizer.ggml.bos_token_id u32              = 199998
+llama_model_loader: - kv  32:                tokenizer.ggml.eos_token_id u32              = 200002
+llama_model_loader: - kv  33:            tokenizer.ggml.padding_token_id u32              = 200017
+llama_model_loader: - kv  34:                    tokenizer.chat_template str              = {# Chat template fixes by Unsloth #}\n...
+llama_model_loader: - kv  35:               general.quantization_version u32              = 2
+llama_model_loader: - kv  36:                          general.file_type u32              = 15
+llama_model_loader: - type  f32:  289 tensors
+llama_model_loader: - type q5_0:   61 tensors
+llama_model_loader: - type q8_0:   13 tensors
+llama_model_loader: - type q4_K:   24 tensors
+llama_model_loader: - type mxfp4:   72 tensors
+load: 0 unused tokens
+load: setting token '<|message|>' (200008) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|start|>' (200006) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|constrain|>' (200003) attribute to USER_DEFINED (16), old attributes: 8
+load: setting token '<|channel|>' (200005) attribute to USER_DEFINED (16), old attributes: 8
+load: printing all EOG tokens:
+load:   - 199999 ('<|endoftext|>')
+load:   - 200002 ('<|return|>')
+load:   - 200007 ('<|end|>')
+load:   - 200012 ('<|call|>')
+load: special_eog_ids contains both '<|return|>' and '<|call|>', or '<|calls|>' and '<|flush|>' tokens, removing '<|end|>' token from EOG list
+load: special tokens cache size = 21
+load: token to piece cache size = 1.3332 MB
+llm_load_print_meta: format           = GGUF V3 (latest)
+llm_load_print_meta: arch             = gpt-oss
+llm_load_print_meta: n_ctx_train      = 131072
+llm_load_print_meta: n_embd           = 2880
+llm_load_print_meta: n_layer          = 24
+llm_load_print_meta: n_head           = 64
+llm_load_print_meta: n_head_kv        = 8
+llm_load_print_meta: n_rot            = 64
+llm_load_print_meta: n_swa            = 128
+llm_load_print_meta: n_swa_pattern    = 1
+llm_load_print_meta: n_embd_head_k    = 64
+llm_load_print_meta: n_embd_head_v    = 64
+llm_load_print_meta: n_gqa            = 8
+llm_load_print_meta: n_embd_k_gqa     = 512
+llm_load_print_meta: n_embd_v_gqa     = 512
+llm_load_print_meta: f_norm_eps       = 0.0e+00
+llm_load_print_meta: f_norm_rms_eps   = 1.0e-05
+llm_load_print_meta: f_clamp_kqv      = 0.0e+00
+llm_load_print_meta: f_max_alibi_bias = 0.0e+00
+llm_load_print_meta: f_logit_scale    = 0.0e+00
+llm_load_print_meta: n_ff             = 2880
+llm_load_print_meta: n_expert         = 32
+llm_load_print_meta: n_expert_used    = 4
+llm_load_print_meta: causal attn      = 1
+llm_load_print_meta: pooling type     = 0
+llm_load_print_meta: rope type        = 2
+llm_load_print_meta: rope scaling     = yarn
+llm_load_print_meta: freq_base_train  = 150000.0
+llm_load_print_meta: freq_scale_train = 0.03125
+llm_load_print_meta: n_ctx_orig_yarn  = 4096
+llm_load_print_meta: rope_finetuned   = unknown
+llm_load_print_meta: ssm_d_conv       = 0
+llm_load_print_meta: ssm_d_inner      = 0
+llm_load_print_meta: ssm_d_state      = 0
+llm_load_print_meta: ssm_dt_rank      = 0
+llm_load_print_meta: ssm_n_group      = 0
+llm_load_print_meta: model type       = ?B
+llm_load_print_meta: model ftype      = Q4_K - Medium
+llm_load_print_meta: model params     = 20.915 B
+llm_load_print_meta: model size       = 10.814 GiB (4.442 BPW) 
+llm_load_print_meta: repeating layers = 9.870 GiB (4.292 BPW, 19.756 B parameters)
+llm_load_print_meta: general.name     = Gpt-Oss-20B
+llm_load_print_meta: n_ff_exp         = 2880
+print_info: vocab type            = BPE
+print_info: n_vocab               = 201088
+print_info: n_merges              = 446189
+print_info: BOS token             = 199998 '<|startoftext|>'
+print_info: EOS token             = 200002 '<|return|>'
+print_info: EOT token             = 199999 '<|endoftext|>'
+print_info: PAD token             = 200017 '<|reserved_200017|>'
+print_info: LF token              = 198 'Ċ'
+print_info: EOG token             = 199999 '<|endoftext|>'
+print_info: EOG token             = 200002 '<|return|>'
+print_info: EOG token             = 200012 '<|call|>'
+print_info: max token length      = 256
+======================================= HAVE_FANCY_SIMD is NOT defined
+------------------- Layer sizes:
+Layer  0:    421.40,    256.00,    677.40        4.92  MiB
+Layer  1:    421.40,    256.00,    677.40        4.92  MiB
+Layer  2:    421.40,    256.00,    677.40        4.92  MiB
+Layer  3:    420.87,    256.00,    676.87        4.92  MiB
+Layer  4:    420.87,    256.00,    676.87        4.92  MiB
+Layer  5:    421.40,    256.00,    677.40        4.92  MiB
+Layer  6:    420.87,    256.00,    676.87        4.92  MiB
+Layer  7:    420.87,    256.00,    676.87        4.92  MiB
+Layer  8:    421.40,    256.00,    677.40        4.92  MiB
+Layer  9:    420.87,    256.00,    676.87        4.92  MiB
+Layer 10:    420.87,    256.00,    676.87        4.92  MiB
+Layer 11:    421.40,    256.00,    677.40        4.92  MiB
+Layer 12:    420.87,    256.00,    676.87        4.92  MiB
+Layer 13:    420.87,    256.00,    676.87        4.92  MiB
+Layer 14:    421.40,    256.00,    677.40        4.92  MiB
+Layer 15:    420.87,    256.00,    676.87        4.92  MiB
+Layer 16:    420.87,    256.00,    676.87        4.92  MiB
+Layer 17:    421.40,    256.00,    677.40        4.92  MiB
+Layer 18:    420.87,    256.00,    676.87        4.92  MiB
+Layer 19:    420.87,    256.00,    676.87        4.92  MiB
+Layer 20:    421.40,    256.00,    677.40        4.92  MiB
+Layer 21:    421.40,    256.00,    677.40        4.92  MiB
+Layer 22:    421.40,    256.00,    677.40        4.92  MiB
+Layer 23:    421.40,    256.00,    677.40        4.92  MiB
+Layer 24:    586.82,     19.62,    606.45 MiB (output layer)
+--------------------------------------------------------------------------
+Total   :  10107.28,   6163.62,  16270.91 MiB
+Memory required for model tensors + cache: 16858 MiB
+Memory available on all devices - compute: 83975 MiB
+Setting default device in layer  0 to 0
+Setting default device in layer  1 to 1
+Setting default device in layer  2 to 1
+Setting default device in layer  3 to 1
+Setting default device in layer  4 to 2
+Setting default device in layer  5 to 2
+Setting default device in layer  6 to 3
+Setting default device in layer  7 to 3
+Setting default device in layer  8 to 3
+Setting default device in layer  9 to 4
+Setting default device in layer 10 to 4
+Setting default device in layer 11 to 5
+Setting default device in layer 12 to 5
+Setting default device in layer 13 to 6
+Setting default device in layer 14 to 6
+Setting default device in layer 15 to 6
+Setting default device in layer 16 to 7
+Setting default device in layer 17 to 7
+Setting default device in layer 18 to 8
+Setting default device in layer 19 to 8
+Setting default device in layer 20 to 8
+Setting default device in layer 21 to 9
+Setting default device in layer 22 to 9
+Setting default device in layer 23 to 10
+Setting default device in layer 24 to 10
+llm_load_tensors: ggml ctx size =   38.87 MiB
+llm_load_tensors: offloading 24 repeating layers to GPU
+llm_load_tensors: offloading non-repeating layers to GPU
+llm_load_tensors: offloaded 25/25 layers to GPU
+llm_load_tensors:        CPU buffer size =   379.71 MiB
+llm_load_tensors:      CUDA0 buffer size =   421.40 MiB
+llm_load_tensors:      CUDA1 buffer size =  1263.68 MiB
+llm_load_tensors:      CUDA2 buffer size =   842.28 MiB
+llm_load_tensors:      CUDA3 buffer size =  1263.15 MiB
+llm_load_tensors:      CUDA4 buffer size =   841.75 MiB
+llm_load_tensors:      CUDA5 buffer size =   842.28 MiB
+llm_load_tensors:      CUDA6 buffer size =  1263.15 MiB
+llm_load_tensors:      CUDA7 buffer size =   842.28 MiB
+llm_load_tensors:      CUDA8 buffer size =  1263.15 MiB
+llm_load_tensors:      CUDA9 buffer size =   842.80 MiB
+llm_load_tensors:     CUDA10 buffer size =  1008.24 MiB
+............................................................................
+llama_init_from_model: n_ctx         = 131072
+llama_init_from_model: n_batch       = 4096
+llama_init_from_model: n_ubatch      = 32
+llama_init_from_model: flash_attn    = 1
+llama_init_from_model: attn_max_b    = 256
+llama_init_from_model: fused_moe     = 1
+llama_init_from_model: grouped er    = 0
+llama_init_from_model: fused_up_gate = 1
+llama_init_from_model: fused_mmad    = 1
+llama_init_from_model: rope_cache    = 0
+llama_init_from_model: graph_reuse   = 1
+llama_init_from_model: k_cache_hadam = 0
+llama_init_from_model: v_cache_hadam = 0
+llama_init_from_model: split_mode_graph_scheduling = 0
+llama_init_from_model: reduce_type   = f16
+llama_init_from_model: sched_async   = 0
+llama_init_from_model: ser           = -1, 0
+llama_init_from_model: freq_base     = 150000.0
+llama_init_from_model: freq_scale    = 0.03125
+llama_kv_cache_init:      CUDA0 KV buffer size =   256.00 MiB
+llama_kv_cache_init:      CUDA1 KV buffer size =   768.00 MiB
+llama_kv_cache_init:      CUDA2 KV buffer size =   512.00 MiB
+llama_kv_cache_init:      CUDA3 KV buffer size =   768.00 MiB
+llama_kv_cache_init:      CUDA4 KV buffer size =   512.00 MiB
+llama_kv_cache_init:      CUDA5 KV buffer size =   512.00 MiB
+llama_kv_cache_init:      CUDA6 KV buffer size =   768.00 MiB
+llama_kv_cache_init:      CUDA7 KV buffer size =   512.00 MiB
+llama_kv_cache_init:      CUDA8 KV buffer size =   768.00 MiB
+llama_kv_cache_init:      CUDA9 KV buffer size =   512.00 MiB
+llama_kv_cache_init:     CUDA10 KV buffer size =   256.00 MiB
+llama_init_from_model: KV self size  = 6144.00 MiB, K (f16): 3072.00 MiB, V (f16): 3072.00 MiB
+llama_init_from_model:  CUDA_Host  output buffer size =     0.77 MiB
+llama_init_from_model: pipeline parallelism enabled (n_copies=1)
+llama_init_from_model:      CUDA0 compute buffer size =     9.83 MiB
+llama_init_from_model:      CUDA1 compute buffer size =    20.02 MiB
+llama_init_from_model:      CUDA2 compute buffer size =    17.83 MiB
+llama_init_from_model:      CUDA3 compute buffer size =    20.02 MiB
+llama_init_from_model:      CUDA4 compute buffer size =    17.83 MiB
+llama_init_from_model:      CUDA5 compute buffer size =    17.83 MiB
+llama_init_from_model:      CUDA6 compute buffer size =    20.02 MiB
+llama_init_from_model:      CUDA7 compute buffer size =    17.83 MiB
+llama_init_from_model:      CUDA8 compute buffer size =    20.02 MiB
+llama_init_from_model:      CUDA9 compute buffer size =    17.83 MiB
+llama_init_from_model:     CUDA10 compute buffer size =    25.25 MiB
+llama_init_from_model:  CUDA_Host compute buffer size =    16.35 MiB
+llama_init_from_model: graph nodes  = 941
+llama_init_from_model: graph splits = 12
+llama_init_from_model: enabling only_active_experts scheduling
+INFO [                    init] initializing slots | tid="123339453882368" timestamp=1787065844 n_slots=1
+INFO [                    init] new slot | tid="123339453882368" timestamp=1787065844 id_slot=0 n_ctx_slot=131072
+srv          init: Exclude reasoning tokens when selecting slot based on similarity: start: <think>, end: </think>
+use `--reasoning-tokens none` to disable.
+prompt cache is enabled, size limit: 8192 MiB
+use `--cache-ram 0` to disable the prompt cache
+INFO [                    main] model loaded | tid="123339453882368" timestamp=1787065844
+init: chat template, example_format: '<|start|>system<|message|>You are a helpful assistant<|end|><|start|>user<|message|>Hello<|end|><|start|>assistant<|message|>Hi there<|return|><|start|>user<|message|>How are you?<|end|><|start|>assistant'
+INFO [                    main] HTTP server listening | tid="123339453882368" timestamp=1787065844 n_threads_http="3" port="8081" hostname="0.0.0.0"
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065844
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=53816 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=41778 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=41794 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=41798 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=57852 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=57868 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=57870 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38774 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38776 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38786 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38794 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=55554 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=55564 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=55578 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=51098 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=51112 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=53826 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=51118 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38390 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38398 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38412 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=37094 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=37102 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=37114 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=58340 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065844 remote_addr="127.0.0.1" remote_port=38396 status=200 method="GET" path="/v1/models" params={}
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065845 remote_addr="127.0.0.1" remote_port=58356 status=200 method="GET" path="/v1/models" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\nВыведи только результат без пояснений.соприкосновения и до начала взаимного притяжения т е при достаточно больших расстояниях между атомами При этом остаточная связь между атомами уничтожается Этот пример показывает что остаточная связь возникает в результате небольшого перераспределения электронов в соприкасающихся атомах иначе никак не связанных которое соответствует переходу. текст закончен - считай.",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 0, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.00, cache_ram_similarity: 0.50
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065845 id_slot=0 id_task=0
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065845 id_slot=0 id_task=0 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=255 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=255 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token: 
+
+
+slot log_first_to: id  0 | task 0 | first-token-debug: prompt_tokens=255 prompt_hash=0xee905fd3be173255 target_logits_hash=0xda58335168563fc9 top16_logits=[{"token_id":1202,"piece":" \n\n","logit":11.882846832},{"token_id":793,"piece":" \n","logit":11.588778496},{"token_id":279,"piece":"\n\n","logit":11.481037140},{"token_id":4707,"piece":"\n\n\n\n","logit":11.173547745},{"token_id":220,"piece":" ","logit":10.789300919},{"token_id":256,"piece":"  ","logit":10.706001282},{"token_id":5310,"piece":" ","logit":10.121963501},{"token_id":350,"piece":" (","logit":9.982625961},{"token_id":4066,"piece":"  \n","logit":9.921281815},{"token_id":2550,"piece":" ...","logit":9.879348755},{"token_id":369,"piece":"с","logit":9.875587463},{"token_id":11691,"piece":"  \n\n","logit":9.854932785},{"token_id":485,"piece":"..","logit":9.773920059},{"token_id":6240,"piece":" **","logit":9.636297226},{"token_id":666,"piece":"п","logit":9.429456711},{"token_id":7244,"piece":"З","logit":9.216800690}]
+token:We
+token: need
+token: to
+token: output
+token: 
+token:30
+token: most
+token: frequent
+token: nouns
+token: (
+token:full
+token: nouns
+token:)
+token: and
+token: 
+token:300
+token: most
+token: frequent
+token: expressions
+token: (
+token:2
+token:-
+token:3
+token: words
+token:).
+token: We
+token: have
+token: to
+token: approximate
+token: frequency
+token:.
+token: The
+token: OCR
+token: text
+token: is
+token: short
+token::
+token: "
+token:Вы
+token:вед
+token:и
+token: только
+token: результат
+token: без
+token: пояс
+token:нений
+token:.
+token:с
+token:оп
+token:рик
+token:ос
+token:новения
+token: и
+token: до
+token: начала
+token: взаим
+token:ного
+token: прит
+token:яж
+token:ения
+token: т
+token: е
+token: при
+token: достаточно
+token: больших
+token: расстоя
+token:ни
+token:ях
+token: между
+token: атом
+token:ами
+token: При
+token: этом
+token: остат
+token:очная
+token: связь
+token: между
+token: атом
+token:ами
+token: уничтож
+token:ается
+token: Этот
+token: пример
+token: показывает
+token: что
+token: остат
+token:очная
+token: связь
+token: возникает
+token: в
+token: результате
+token: небольш
+token:ого
+token: перера
+token:сп
+token:редел
+token:ения
+token: электрон
+token:ов
+token: в
+token: соп
+token:рика
+token:са
+token:ющихся
+token: атом
+token:ах
+token: иначе
+token: не
+token: связанные
+token: которое
+token: соответствует
+token: переход
+token:у
+token:.
+token: текст
+token: закон
+token:чен
+token: -
+token: сч
+token:итай
+token:."
+
+
+token:We
+token: need
+token: to
+token: parse
+token: words
+token:.
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065850 id_slot=0 id_task=0 n_ctx=131072 n_past=382 n_system_tokens=0 n_cache_tokens=382 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065850
+slot print_timing: id  0 | task 0 | 
+prompt eval time =    1462.24 ms /   255 tokens (    5.73 ms per token,   174.39 tokens per second)
+       eval time =    3205.34 ms /   128 tokens (   25.04 ms per token,    39.93 tokens per second)
+      total time =    4667.59 ms /   383 tokens
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065850 remote_addr="127.0.0.1" remote_port=58362 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\nВыведи только результат без пояснений.ной энергии Остаточная связь обнаруживается у многих газов в жидком и твердом состоянии например у кислорода азота водорода двуокиси углерода Молекулы о которых идет речь обладают значительным сходством с молекулами благородных газов хотя они являются многоатомными а не одноатомными Остаточная связь в этих газах конечно имеет место между атомами соприкасающихся молекул а не между атомами внутри одной и той же молекулы Иногда говорят что остаточная связь возникает на основе сил Ван дер Ваальса В этом названии также содержится указание на эффект взаимной\nВаальса В этом названии также содержится указание на эффект взаимной атомной поляризации связанной с отклонением от закона Бойля для идеального газа1 PV RT 1 где Р V Т соответственно давление объем и температура газа R универсальная газовая постоянная Эти отклонения весьма заметные в сжатых газах впервые были изучены голландским физиком Ван дер Ваальсом Введя в закон идеального газа поправки учитывающие молекулярное притяжение и собственный объем молекул Ван дер Ваальс получил уравнение состояния газа в виде Р nb nRT 2 где Р давление V объем п число молей газа в объеме V R газовая постоянная Т абсолютная температура а постоянная характеризующая данный газ b уменьшение эффективного объема обусловленное собственным объемом молекул газа. текст закончен - считай",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 382, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.47, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 382, total state size = 17.910 MiB
+prompt cache save took 101.98 ms
+ - looking for better prompt, base f_keep = 0.471, sim = 0.406, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 1 prompts, 17.910 MiB (limits: 8192.000 MiB, 0 tokens, 174728 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+prompt cache load took 0.13 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065850 id_slot=0 id_task=129
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065850 id_slot=0 id_task=129 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=504 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=504 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token: 
+slot log_first_to: id  0 | task 129 | first-token-debug: prompt_tokens=504 prompt_hash=0x237a5cc5d3c4d68e target_logits_hash=0x534418dea39c1ba1 top16_logits=[{"token_id":220,"piece":" ","logit":12.929229736},{"token_id":4707,"piece":"\n\n\n\n","logit":12.376176834},{"token_id":30,"piece":"?","logit":12.232931137},{"token_id":7530,"piece":"те","logit":12.163967133},{"token_id":793,"piece":" \n","logit":12.020975113},{"token_id":913,"piece":" о","logit":11.986186981},{"token_id":0,"piece":"!","logit":11.675465584},{"token_id":279,"piece":"\n\n","logit":11.668423653},{"token_id":669,"piece":" с","logit":11.573818207},{"token_id":558,"piece":".\n","logit":11.565896988},{"token_id":12624,"piece":" же","logit":11.561592102},{"token_id":485,"piece":"..","logit":11.500606537},{"token_id":743,"piece":" в","logit":11.471399307},{"token_id":1008,"piece":"...","logit":11.424610138},{"token_id":198,"piece":"\n","logit":11.408211708},{"token_id":6220,"piece":" как","logit":11.400459290}]
+token:в
+token:с
+token:
+
+token:We
+token: need
+token: to
+token: produce
+token: list
+token: of
+token: 
+token:30
+token: most
+token: frequent
+token: nouns
+token: (
+token:full
+token: nouns
+token:)
+token: from
+token: OCR
+token: text
+token:.
+token: Also
+token: 
+token:300
+token: most
+token: frequent
+token: expressions
+token: of
+token: 
+token:2
+token:-
+token:3
+token: words
+token:.
+token: We
+token: ignore
+token: pre
+token:positions
+token:,
+token: conjunction
+token:s
+token:,
+token: service
+token: words
+token:.
+token: OCR
+token: errors
+token: count
+token: as
+token: separate
+token: words
+token:/
+token:express
+token:ions
+token:.
+token: Not
+token: combine
+token: similar
+token: words
+token:.
+token: Not
+token: correct
+token: OCR
+token: errors
+token:.
+token: So
+token: we
+token: just
+token: parse
+token: the
+token: text
+token: as
+token: given
+token:,
+token: treat
+token: words
+token: separated
+token: by
+token: spaces
+token: and
+token: punctuation
+token:.
+token: We
+token: need
+token: to
+token: count
+token: frequencies
+token: of
+token: nouns
+token: only
+token:.
+token: But
+token: we
+token: don't
+token: have
+token: part
+token:-of
+token:-s
+token:peech
+token: tagging
+token:.
+token: We
+token: need
+token: to
+token: approximate
+token::
+token: choose
+token: nouns
+token: that
+token: appear
+token: frequently
+token:.
+token: We
+token: can
+token: approximate
+token: by
+token: selecting
+token: words
+token: that
+token: look
+token: like
+token: nouns
+token::
+token: capital
+token:ized
+token:?
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065856 id_slot=0 id_task=129 n_ctx=131072 n_past=631 n_system_tokens=0 n_cache_tokens=631 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065856
+slot print_timing: id  0 | task 129 | 
+prompt eval time =    2677.01 ms /   504 tokens (    5.31 ms per token,   188.27 tokens per second)
+       eval time =    3369.53 ms /   128 tokens (   26.32 ms per token,    37.99 tokens per second)
+      total time =    6046.53 ms /   632 tokens
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065856 remote_addr="127.0.0.1" remote_port=58374 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\nВыведи только результат без пояснений.ающихся различных типов связи между атомами 1 Термином остаточная связь автор обозначает неполярную связь обусловленную дисперсионным и поляризационным эффектами Прим ред\nТаблица 2 Типы связи между атомами Тип Способ образования связи Главные особенности Примеры Ковалентная Ионная Металлическая Остаточная Обмен электронами Передача электронов С помощью свободных электронов Слабое смещение электронов Очень сильная локализованная ориентированная Сильная нелокализо ванная неориентированная Сильная нелокализо ваниая неориентированная Слабая нелок лизован ная неориентированная Кислород кислород хлор хлор углерод углерод алм 3 Каменная соль твердая или жидкая известь твердая Ртуть жидкая медь твердая Жидкие или кристаллические благородные газы постоянные газы углеводороды Газовая фаза Газовая фаза играет очень большую роль во флотации что связано с плавучестью пузырьков воздуха с помощью которых минеральные частицы переносятся в пену Возможно однако что эта роль преувеличивается Это станет понятным если учесть что воздух или другой газ при давлении равном атмосферному или близком к нему существенно не отличается от вакуума Г Так 1 л воды весит примерно в 800 раз больше чем 1л воздуха 1 моль пара при 100 и 760 мм рт ст занимает в\nпара при 100 и 760 мм рт ст занимает в 1700 раз больший объем чем 1 л воды Иными словами сродство которым вода обладает по отношению к какому либо веществу должно в гораздо большей мере быть заметным в жидкой фазе нежели в газовой Это может быть продемонстрирсвано при флотации с парой в качестве газовой фазы и прокипяченной свободной от воздуха водой в качестве среды для пульпы Эксперимент свидетельствует о том что при соответствующей обработке поверхность минералов прилипает к пузырькам пара в присутствии воды доказывая этим что прилипание к пузырькам зависит пе только от химического состава обеих текучих сред газа и жидкости но также от концентрации молекул в них Аналогичность результатов полученных в экспериментах с паром и воздухом показывает что состав газовой фазы имеет небольшое значение Хотя состав газа рассматриваемого в качестве фазы играет небольшую роль газ может значительно влиять на флотиру1 В данном случае автор подчеркивает что существенное значение имеет лишь малая плотность газа по сравнению с жидкостью Прим ред\nемость минералов если имеют место реакции между молекулами газа и поверхностью минерала а также между молекулами газа и растворенным реагентом или самой водой Так кислород играет важную роль в качестве окисляющего агента сероводород является сульфидизирующим агентом и будучи растворенным в воде и при прямом действии на минеральные частицы Двуокись углерода и сероводород кроме того влияют на концентрацию водородных ионов в водной фазе Жидкая фаза Жидкая фаза во флотации всегда является водным раствором обычно содержащим растворенные вещества в небольших концентрациях Это обусловлено тем что вода почти всегда имеется в распоряжении обогатителей что она дешева и с ней удобно работать Конечно a priori нет причин по которым другие жидкости например жидкий аммиак расплавленные соли или легкоплавкие металлы не могли бы быть использованы в специальных флотационных процессах при обработке продуктов химического или металлургического производства когда высокая ценность продуктов позволяет применять дорогие флотационные среды Однако кроме флотации в нитробензоле. текст закончен - считай.",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 631, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.29, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 631, total state size = 29.584 MiB
+prompt cache save took 166.95 ms
+ - looking for better prompt, base f_keep = 0.285, sim = 0.218, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 2 prompts, 47.493 MiB (limits: 8192.000 MiB, 0 tokens, 174730 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+   - prompt 0x55b08c543770:     631 tokens,       0 discarded, checkpoints:  0,    29.584 MiB
+prompt cache load took 0.28 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065856 id_slot=0 id_task=258
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065856 id_slot=0 id_task=258 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=1017 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=1017 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token: 
+
+slot log_first_to: id  0 | task 258 | first-token-debug: prompt_tokens=1017 prompt_hash=0x35550babe9d93b3b target_logits_hash=0xa47ca7f9fff94bb0 top16_logits=[{"token_id":793,"piece":" \n","logit":12.785111427},{"token_id":1202,"piece":" \n\n","logit":12.750896454},{"token_id":279,"piece":"\n\n","logit":12.415199280},{"token_id":4707,"piece":"\n\n\n\n","logit":12.403995514},{"token_id":11691,"piece":"  \n\n","logit":11.855440140},{"token_id":4066,"piece":"  \n","logit":11.696289062},{"token_id":220,"piece":" ","logit":11.636629105},{"token_id":256,"piece":"  ","logit":11.087654114},{"token_id":5310,"piece":" ","logit":10.908145905},{"token_id":3456,"piece":" С","logit":10.540658951},{"token_id":350,"piece":" (","logit":10.341779709},{"token_id":3475,"piece":" В","logit":10.227484703},{"token_id":6240,"piece":" **","logit":10.111948013},{"token_id":4813,"piece":" Т","logit":10.085817337},{"token_id":2499,"piece":"\n\n\n","logit":10.018138885},{"token_id":5117,"piece":" Д","logit":9.980584145}]
+token:We
+token: need
+token: 
+token:30
+token: most
+token: frequent
+token: nouns
+token: (
+token:full
+token: nouns
+token:).
+token: We
+token: ignore
+token: pre
+token:positions
+token:,
+token: conjunction
+token:s
+token:,
+token: service
+token: words
+token:.
+token: OCR
+token: errors
+token: count
+token: as
+token: separate
+token: words
+token:.
+token: We
+token: need
+token: approximate
+token: frequency
+token:.
+token: Let's
+token: parse
+token: text
+token:.
+token: We'll
+token: list
+token: words
+token:.
+token: Let's
+token: extract
+token: nouns
+token::
+token: "
+token:атом
+token:ами
+token:",
+token: "
+token:Тип
+token:ы
+token:",
+token: "
+token:с
+token:вяз
+token:и
+token:",
+token: "
+token:атом
+token:ами
+token:",
+token: "
+token:Тип
+token:",
+token: "
+token:Сп
+token:особ
+token:",
+token: "
+token:образ
+token:ования
+token:",
+token: "
+token:с
+token:вяз
+token:и
+token:",
+token: "
+token:Глав
+token:ные
+token:",
+token: "
+token:особ
+token:енности
+token:",
+token: "
+token:Пр
+token:им
+token:еры
+token:",
+token: "
+token:К
+token:овал
+token:ент
+token:ная
+token:",
+token: "
+token:И
+token:он
+token:ная
+token:",
+token: "
+token:Мет
+token:ал
+token:личес
+token:кая
+token:",
+token: "
+token:О
+token:ст
+token:ат
+token:очная
+token:",
+token: "
+token:Об
+token:мен
+token:",
+token: "
+token:эл
+token:ект
+token:ро
+token:нами
+token:",
+token: "
+token:Перед
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065865 id_slot=0 id_task=258 n_ctx=131072 n_past=1144 n_system_tokens=0 n_cache_tokens=1144 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065865
+slot print_timing: id  0 | task 258 | 
+prompt eval time =    5478.64 ms /  1017 tokens (    5.39 ms per token,   185.63 tokens per second)
+       eval time =    3680.04 ms /   128 tokens (   28.75 ms per token,    34.78 tokens per second)
+      total time =    9158.67 ms /  1145 tokens
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065865 remote_addr="127.0.0.1" remote_port=46190 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\nВыведи только результат без пояснений. по види мому не велось Структура воды Вода является настолько распространенным веществом и\nне велось Структура воды Вода является настолько распространенным веществом и ее состав водород и кислород в атомной пропорции 2 1 известен так давно что о ее необычных свойствах часто забывают Между тем вода имеет интересные свойства выделяющие ее из других веществ а именно 1 максимальная плотность в жидком состоянии при температуре немного превышающей точку замерзания 2 высокая диэлектрическая постоянная 3 высокая растворяющая способность 4 низкая электропроводность несмотря на большую ионизирующую способность 5 сильная ассоциация молекул В течение долгого времени вода в жидком состоянии рассматривалась как смесь мономерных и полимерных молекул в которой соотношение молекул Н2О Н2О 2 Н2О 3 и т д меняется то мере изменения температуры Известно что вода диссоциирует на ион водорода и ион гидроксила согласно уравнению Н2ОЖН ОН 3 Равновесие в ионизированном состоянии определяется уравнением 4 в котором величины взятые в скобки означают молярные концентрации т е количества ионов выраженные в грамм молях и находящиеся в 1 л раствора при 25 Н ОН 10 14 4 1 Речь идет о диссоциации различных соединений на ионы при растворении их в воде Прим ред\nРис 2 Структура молекулы воды 15 нЗ ядро водорода О ядро кислорода О центр отрицательного заряда и молекулы Ассоциированный характер воды и ее самопроизвольная дис социация на ионы были сопоставлены Паннекуком 34 который пришел к выводу что эти свойства связаны с асимметричным или полярным характером молекул воды Это лучше всего заметно если рассматривать строение молекулы воды исходя из структуры электронных оболочек кислорода и водорода Атом кислорода имеет два электрона на внутренней или оболочке и шесть электронов на следующей А оболочке Для образования наиболее выгодной структуры инертного газа неона не хватает двух электронов В молекуле воды атомы водорода передают свои электроны в распоряжение кислородного ядра В свою очередь по одному из электронов А обо лочки атома кислорода поступает в распоряжение каждого водородного ядра Таким образом три ядра удерживаются вместе благодаря резонансу пары электронов между кислородом и каждым из атомов водорода Относительно\nпары электронов между кислородом и каждым из атомов водорода Относительно центра системы два водородных ядра образуют тетраэдрический угол в 109 30 Согласно Эвансу 141 ссылающемуся на труды Бернала и Фаулера 15 15 водородные ядра глубоко проникают внутрь атома кислорода так что молекула воды лишь немного больше атома кислорода На рис 2 изображена модель молекулы воды по Берналу и Фаулеру Предельный радиус молекулы составляет 1 38 А Радиус отсчитывается из центра отрицательного заряда молекулы О Ядро кислорода расположено в точке О на расстоянии 0 15 А от О и 0 96 А от каждого водородного ядра В этой модели водородные ядра располагаются на расстоянии 1 50 А одно от другого Можно полагать что в молекуле воды имеются две области с избытком положительного заряда в которых расположены два водородных ядра и две области с избытком отрицательного заряда По отношению к центру молекулы О эти четыре области расположены тетраэдрически С точки зрения статистики\nэлектронная пара преимущественно находится в области с избытком отрицательного заряда Молекулы воды находящейся в жидком состоянии связаны одна с другой таким образом что положительно заряженная область одной молекулы располагается против отрицательно заряженной области другой Благодаря этому образуется цепочка из нескольких молекул Сцепление молекул в воде часто рассматривается как обусловленное наличием водородной связи о которой будет сказано далее Цепочки молекул Н2О не прямолинейны а имеют зигзагообразную форму Они располагаются таким образом что у воды в жидком состоянии сохраняется тет I раэдрическое расположение водородных ядер относительно кислородных и создается возможность гексагонального расположения в структуре льда При низких температурах эти цепочки значительно увеличиваются при более высоких температурах преобладают одиночные молекулы НгО или пары молекул Как будет показано в дальнейшем лед обладает очень рыхлой структурой с значительными пустотами Если бы лед и вода состояли из плотно упакованных молекул диаметром 2 76 А расстояние между центрами двух ближайших молекул льда их плотность составляла бы 1 84 вместо обычных 1 0 и 0 91 То что у воды в жидком состоянии плотность меньше 1 00 показывает что ее структура далека от плотной\nменьше 1 00 показывает что ее структура далека от плотной упаковки свойственной твердым металлам или от приблизительно плотной упаковки присущей жидким металлам Это согласуется с представлением о том что тетраэдрическое расположение молекул НгО характерное для льда сохраняется в воде находящейся в жидком состоянии Наряду с этим у воды возможно наличие несколько долее плотной структуры и соответственно большей плотности чем у льда Одно из наиболее полных описаний структуры воды как разрушенной структуры льда дано Морганом и Уорреном 29 на основании рентгеноструктурных исследований воды в жидком состоянии Эти работы подтвердили высказывания Бернала и Фаулера о тетраэдрической связи молекул в воде Морган и Уоррен пришли к выводу что при обычных температурах вода преимущественно состоит из димеров Это условие дополняется тем что каждая молекула воды окружена в среднем четырьмя пятью ближайшими соседями расположенными в среднем на расстоянии от 2 9 до 3 0 А Это среднее расстояние несколько увеличивается при повышении температуры от близкой к температуре замерзания до близкой к температуре кипения Не следует считать что такие молекулярные группировки в воде являются постоянными они склонны разрушаться и вновь образовываться из других партнеров Продолжительность существования определеных Н2О полимеров в жидкой воде\nоценивается в промежутке от 1 микросекунды до 1 микромикросекунды от 106 до 10 12 сек Однако как это следует из законов статистики для данной температуры и давления существует некоторое распределение различных ассоциаций по времени существования Подобно тому как резонанс электронной пары между атомами кислорода и водорода обусловливает связь атомов в молекуле воды резонанс протонов обусловливает связь между молекулами воды В процессе перестройки молекулярных ассоциаций в жидкой воде часть образующихся обломков имеет избыток или недостаток протонов Эти обломки представляют собой ионы фигурирующие в уравнениях 3 и 4 Рис 3 Возможная структура льда с изображением расположения атомов водорода Структура образуется накладыванием двух изображенных слоев 5 а верхний слой б нижиий слой истинная элементарная ячейка псевдоэлементарная\nа верхний слой б нижиий слой истинная элементарная ячейка псевдоэлементарная ячейка Лед Тетраэдрическая ассоциация молекул воды в жидком состоянии более полно развивается у льда как это можно видеть на рис 3 где изображена структура соседних слоев льда Каждый атом кислорода соединен по тетраэдрическим направлениям с четырьмя другими атомами кислорода Расстояние между их Центрами равно 2 76 А Атомы водорода располагаются на линии О О Молекулы образуют гексагональный рисунок в котором три молекулы располагаются несколько выше. текст закончен - считай.",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 1144, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.16, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 1144, total state size = 53.634 MiB
+prompt cache save took 296.69 ms
+ - looking for better prompt, base f_keep = 0.157, sim = 0.113, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 3 prompts, 101.128 MiB (limits: 8192.000 MiB, 0 tokens, 174731 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+   - prompt 0x55b08c543770:     631 tokens,       0 discarded, checkpoints:  0,    29.584 MiB
+   - prompt 0x55b08c543930:    1144 tokens,       0 discarded, checkpoints:  0,    53.634 MiB
+prompt cache load took 0.64 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065866 id_slot=0 id_task=387
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065866 id_slot=0 id_task=387 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=2044 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=2044 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token:
+
+
+
+
+slot log_first_to: id  0 | task 387 | first-token-debug: prompt_tokens=2044 prompt_hash=0xebf86ebc1f435743 target_logits_hash=0xe426b9a1a46ecc07 top16_logits=[{"token_id":4707,"piece":"\n\n\n\n","logit":13.558897018},{"token_id":793,"piece":" \n","logit":13.415140152},{"token_id":1202,"piece":" \n\n","logit":13.193198204},{"token_id":279,"piece":"\n\n","logit":12.886802673},{"token_id":4066,"piece":"  \n","logit":12.722389221},{"token_id":11691,"piece":"  \n\n","logit":12.702136993},{"token_id":46545,"piece":" \n\n\n\n","logit":11.354757309},{"token_id":256,"piece":"  ","logit":11.304796219},{"token_id":5310,"piece":" ","logit":11.173826218},{"token_id":220,"piece":" ","logit":11.067487717},{"token_id":1416,"piece":" We","logit":10.983236313},{"token_id":2499,"piece":"\n\n\n","logit":10.946352959},{"token_id":3456,"piece":" С","logit":10.838927269},{"token_id":10190,"piece":"   \n","logit":10.600103378},{"token_id":723,"piece":" [","logit":10.473133087},{"token_id":3475,"piece":" В","logit":10.408988953}]
+token:[
+token:С
+token:Л
+token:ОВ
+token:А
+token:]
+
+token:1
+token:.
+token: воды
+token: —
+token: 
+token:12
+token:
+
+token:2
+token:.
+token: мол
+token:ек
+token:улы
+token: —
+token: 
+token:10
+token:
+
+token:3
+token:.
+token: кисл
+token:ор
+token:ода
+token: —
+token: 
+token:8
+token:
+
+token:4
+token:.
+token: вод
+token:ор
+token:ода
+token: —
+token: 
+token:7
+token:
+
+token:5
+token:.
+token: атом
+token:а
+token: —
+token: 
+token:6
+token:
+
+token:6
+token:.
+token: структуры
+token: —
+token: 
+token:5
+token:
+
+token:7
+token:.
+token: плот
+token:ность
+token: —
+token: 
+token:4
+token:
+
+token:8
+token:.
+token: соедин
+token:ений
+token: —
+token: 
+token:4
+token:
+
+token:9
+token:.
+token: ас
+token:социа
+token:ции
+token: —
+token: 
+token:4
+token:
+
+token:10
+token:.
+token: соедин
+token:ение
+token: —
+token: 
+token:3
+token:
+
+token:11
+token:.
+token: раствор
+token:ения
+token: —
+token: 
+token:3
+token:
+
+token:12
+token:.
+token: раствор
+token:я
+token:ющая
+token: —
+token: 
+token:3
+token:
+
+token:13
+token:.
+token: электр
+token:ич
+token:ества
+token: —
+token: 
+token:3
+token:
+
+token:14
+token:.
+token: раствор
+token:итель
+token: —
+token: 
+token:3
+token:
+
+token:15
+token:.
+token: соедин
+token:ения
+token: —
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065882 id_slot=0 id_task=387 n_ctx=131072 n_past=2171 n_system_tokens=0 n_cache_tokens=2171 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065882
+slot print_timing: id  0 | task 387 | 
+prompt eval time =   11531.58 ms /  2044 tokens (    5.64 ms per token,   177.25 tokens per second)
+       eval time =    4187.25 ms /   128 tokens (   32.71 ms per token,    30.57 tokens per second)
+      total time =   15718.84 ms /  2172 tokens
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787065882 remote_addr="127.0.0.1" remote_port=49454 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\nВыведи только результат без пояснений. При этом тетраэдрический угол 109 30 проектируется на базисную плоскость в виде угла в 120 как это и требуется для получения правильного гексагонального рисунка Твердый лед очевидно не очень тверд так как описанная структура весьма рыхлая По видимо А М Годэн\nму лед является неионным твердым телом если не рассматривать поверхности кристалла Водородная связь Подобно электронному резонансу обусловливающему ковалентную связь обмен протона между двумя атомами кислорода приводит к образованию резонансной связи этих атомов В воде атомы кислорода находятся на расстоянии 2 76 А один от другого в твердом состоянии и 2 90 А в жидком Протоны расположены на расстоянии 0 96 А от одного кислородного ядра и на остающемся расстоянии от другого Поскольку протон гораздо тяжелее электрона а резонансная энергия должна сохранять тот же самый порядок величин частота резонанса протона должна быть много меньше частоты резонанса электрона На самом деле резонансная энергия протона должна быть еще меньше так как энергия водородной связи меньше энергии ковалентной Однако обмен протонами все еще происходит чрезвычайно быстро По оценке Паулинга двухэлектронная связь в молекулярном водороде обладает частотой 7 1014 пер сек Если амплитуда колебаний протона в водородной\n7 1014 пер сек Если амплитуда колебаний протона в водородной связи в три раза больше амплитуды колебаний электронной пары в ковалентной связи его масса в 900 раз больше а энергия водородной связи составляет одну десятую энергии ковалентной то частота резонанса должна быть приблизительно в 300 раз меньше т е равняться примерно 2 1012 пер сек Энергия протонной связи хотя и меньше энергии ковалентной но все же велика по сравнению с энергией остаточной или ван дер Вааль совой связи Водородная связь отличается от остаточной тем что подобно ковалентной она анизотропна Помимо воды водородная связь имеется во многих органических жидких и кристаллических соединениях Она играет важную роль в пластмассах и живых тканях Так например молекулы спиртов или жирных кислот соединяются в бимолекулярные или двухслойные полимолекулярные группы с помощью водородных мостиков В В В В О ООО о О 7 В Кроме того гидролиз протеинов столь важный в процессе жизнедеятельности организмов можно рассматривать как заме\nщение одной водородной связи другой водородной связью Одна водородная связь заменяется другой и при построении протеинов из аминокислот Поскольку молекулы содержащие группы ОН могут ассоциировать через водородные мостики необходимо помнить что эти мостики весьма непрочны и что обломки образующиеся при их разрушении сильно реакционно способны Гидратация ионов в растворе Рассматривая уравнение 3 мы указывали что вода распадается на ионы водорода и гидроксила Это происходит при спонтанном разрушении Н20 полиме ров когда у одной из частей образуется избыток положительного заряда а у другой точно такой же избыток отрицательного Эти обломки обычно представляют собой не Н и ОНд а скорее Н2О Н и 6Н2О ОН Негидратированный водородный ион одиночный протон в жидкой воде практически не существует Определение предельных размеров до которых гидратируется гидроксильный ион все еще является спорным В водных растворах помимо гидроксила и водорода имеется ряд других гидратированных ионов Действительно гидратация ионов может быть одной из основных причин обусловливающих высокую растворяющую способность воды Например негидра тированные ионы каменной соли в процессе растворения будут следующим образом реагировать с водой m m Н2О\nрастворения будут следующим образом реагировать с водой m m Н2О iNa Cl 5 Na т Н2О С1 т Н2О 5 Представление о более или менее сильно гидратированных ионах важно для полного понимания флотации гидратированные ионы прилипают к поверхности минерала которая таким образом оказывается покрытой водой Однако степень гидратации у различных ионов неодинакова Причиной этого вероятно являются различия в их размерах Для оценки гидратации ионов в растворе может быть использовано несколько методов Один из них заключается в том чтобы вывести заключение о степени гидратации из числа и расположения молекул воды в кристаллогидратах Недостатком этого метода является предположение что условия имеющиеся в жидкой воде воспроизводят условия в твердом кристалле Фактически гидратация рассчитанная таким образом должна быть минимальной ибо кристаллы часто образуются с недостатком воды как например при естественном росте из водной среды Так 2 4 в кристаллическом NiSO4 6Н2О шесть молекул воды координируются с ионом никеля то же самое справедливо в отношении шести молекул воды из семи в гептагидрате NiSO4 7Н2О В пентагидрате сульфата меди CuSO4 5Н2О представляющем обычную форму гидратированного сульфата меди 3 катионом является Си 4Н2О 2 а анионом з\nSO4 Н2О 2 Из этого можно сделать только тот вывод что в воде катион никеля будет гидратирован не менее чем шестикратно а катион меди не менее чем четырехкратно Во втором методе одновременно используется скорость переноса электрических зарядов ионами и подвижность ионов которая согласно закону Стокса зависит от внутреннего трения вязкости и размера частиц Существует решение уравнения Стокса для произвольного радиуса гидратированного иона 12 Первым шагом в этом методе является оценка переносимого количества различных анионов и катионов Возможность проведения такой оценки не вызывает сомнений но ее интерпретация и особенно предположение что закон Стокса приложим к дисперсным частицам любых размеров включая частицы образующие дисперсионную среду требуют еще количественного подтверждения В третьем методе используется влияние растворенного электролита на удельный вес воды при этом учитывается вклад дегидратированных ионов в удельный объем раствора И Этому методу вероятно присущи значительные ошибки особенно при вычислении гидратации ионов размеры которых в негидра тированном состоянии малы поскольку при расчете по этому методу вода рассматривается как непрерывная фаза дискретность ее структуры во внимание\nвода рассматривается как непрерывная фаза дискретность ее структуры во внимание не принимается В четвертом методе примененном Ван Райвеном 44 используется корреляция между ионизацией концентрированного раствора рассчитываемой по его электропроводности и ионизацией рассчитываемой по понижению давления пара над раствором по сравнению с давлением пара над чистым растворителем При этом предполагается что имеются эталонные электролиты ионы которых не гидратируются В качестве такого эталона применяется азотнокислое серебро поскольку значения ионизации этой соли полученные из данных электропроводности и рассчитанные по понижению давления насыщенного пара одинаковы постольку Ag и NO должны быть негидрагированы так если гидратация Na NOrna пару ионов оказывается равной 8 то все восемь молекул воды должны быть связаны с Na и ни одна с NO7 Пятый метод примененный Реми 36 и затем изученный Свинджедоу 40 основывается на прохождении воды через пористые диафрагмы В основе этого метода лежит предположение что диафрагма негидратирована и неподвижна относительно обоих электродов если бы этого не было вода автоматически протекала через диафрагму что ошибочно приписывалось бы действию изучаемых ионов Значения гидратации полученные методом примененным Свинджедоу в несколько раз больше чем\nрезультаты полученные другими методами что заставляет сомневаться в их справедливости Типичные результаты полученные различными методами приведены в табл 3 Таблица 3 Гидратация ионов число молекул воды на ион Катионы и анионы Метод оценки координация в гидратированных кристаллах 1 общая координация2 волюмет рически8 волюметриче ски в комбинации с измерением подвижности ионов4 корреляция между удельной электропроводностью и давлением пара8 перенос воды через мембрану Катионы L1 6 6 2 13 12 6 Na 4 8 1 8 8 4 Pb 4 0 3 Ag 0 3 0 Al3 6 6 30 SO42 0 5 NO3 0 о 1 См книги по кристаллохимии Дармуа 12 6 Ван Райвен 44 8 Реми 36 В величинах гидратации получаемых разными методами Для одних и тех же ионов наблюдаются большие отклонения Однако можно считать установленным следующее 1 поливалентные катионы чаще всего гидратируются шестью или восемью молекулами воды\n2 гидратация катионов щелочных металлов уменьшается с увеличением размера ионов от Li к Cs 3 анионы обычно гидратированы гораздо меньше а часто возможно совсем не гидратированы Связь ядер гидратированных ионов с молекулами воды в растворе непостоянна Гидратированные ионы отщепляют и вновь присоединяют молекулы воды Так например весьма энергично протекает следующая реакция 19 35 Ni Н3О 6 2 Н2О Ni Н2О 5 Н2О 2 Н2О 6 Структура электролита такого например как хлористый магний напоминает разломанную структуру льда с ионами гидрония оксония гексагидратом магния и ионом хлора причем наблюдается быстрый обмен молекулами воды и электронами между гидратными слоями и водной фазой Вещества молекулярно растворимые в воде Эти вещества при растворении в воде не ионизируются хотя большое число их вероятно до некоторой степени гидратировано Неионизи рованные растворы образуют атмосферные газы и некоторые органические соединения Среди кислород или азотсодержащих органических соединений иногда одна часть молекулы более склонна к гидратированию чем другая В частности это относится к спиртам которые в чистом виде представляют\nчастности это относится к спиртам которые в чистом виде представляют ассоциированные жидкости очень сильно растворяющиеся в воде с выделением тепла хорошая растворимость и выделение тепла связаны с гидратацией ОН групп спиртов Концентрация водородных ионов Одним из наиболее значительных факторов характеризующих флотационную систему является концентрация водородных ионов в пульпе Как известно в результате ионизации воды образуются гидратированные ионы водорода и гидроксила Произведение концентраций этих ионов величина постоянная Если в воде имеется вещество при ионизации которого возникает много водородных ионов полное число водородных ионов увеличится а полное число гидроксильных ионов уменьшится в соответствии с уравнением 4 Такие растворы носят название кислых В свою очередь растворы с увеличенной концентрацией гидроксильных ионов и ввиду этого уменьшенной концентрацией водородных ионов носят название щелочных растворов Крайними пределами концентрации водородных ионов в воде будут приблизительно 10 1 и 1СП15 Первое соответствует полностью диссоциированному 10 м раствору одноосновной кисло ты а второе столь же концентрированному раствору одноосновной щелочи Во флотационных пульпах концентрация водородных ионов обычно меняется в более ограниченных пределах между 10 3 и 10 12\nСоренсен ввел специальную шкалу для характеристики кислотности и щелочности Это так называемая рН шкала 23 25 в которой численное значение pH равно взятому с обратным знаком десятичному логарифму концентрации водородных ионов pH lg10 Н 7 В растворах близких к нейтральным небольшая добавка вещества обладающего кислотными или щелочными свойствами вызывает значительное изменение pH Это легко можно заметить например рассматривая концентрацию водородных ионов необходимую для того чтобы pH чистой воды изменить от 7 до 6 Большое изменение pH в тщательно очищенной воде при добавлении малого количества кислоты или щелочи является причиной из за которой бывает трудно получить дистиллированную воду с pH 7 Углекислота содержащаяся в воздухе растворяясь в воде образует угольную кислоту и обычно вызывает такое дополнительное увеличение концентрации водородных ионов что pH становится меньше 6 Можно подсчитать что углекислота содержащаяся в 4 мл чистого воздуха способна в два раза увеличить концентрацию водородных ионов в 100 мл чистой воды С другой стороны требуется значительное количество кислоты чтобы изменить pH от 1 до 0\nзначительное количество кислоты чтобы изменить pH от 1 до 0 или от 14 до 13 Большинство солей не дает нейтральных растворов т е растворов у которых значение pH точно равно 7 даже в дистиллированной воде Это происходит потому что они реагируют с водой гидролиз образуя слабокислый или слабощелочной продукт вместе с сильнощелочным или сильнокислым продуктом Так раствор хлористого алюминия сильнокислый А1С13 ЗН2О7 А1 ОН3 ЗН ЗСГ 8 в то время как раствор карбоната натрия щелочной Na2CO3 Н2От 2Na ф НСО ОН 9 Находясь в воде такие соли как хлористый алюминий или карбонат натрия препятствуют резкому изменению pH при добавлении других веществ Добавление соляной кислоты в раствор уже содержащий хлористый алюминий не вызовет такого эффекта какой был бы достигнут в растворе с тем же pH но полученным с помощью одной соляной кислоты Аналогично добавление щелочи к раствору хлористого алюминия будет способствовать его гидролизу и pH раствора получится ниже чем при одной щелочи Способностью смягчать действие кислот и щелочей обладают все соли не дающие нейтральных растворов Это Их свойство носит название буферного действия\nКристаллические фазы Флотационные свойства кристаллической фазы определяются характером ее поверхности в гораздо большей степени нежели объемными свойствами Однако для оценки поверхностных свойств кристаллов полезно сначала рассмотреть внутреннее строение этих кристаллов полагая их бесконечными по всем направлениям Свойства бесконечных кристаллов будут рассмотрены в данном разделе свойства их поверхностей в главе 4 Кристаллы могут быть классифицированы по типу преобладающей в них связи Такая классификация приводится в табл 4 Таблица 4 Классификация кристаллов Структура определяется остаточной Существование других типов связи Протяженность ионной структуры Типы кристаллов ионная I СВЯЗЬ 1 1 свободные электроны ковалентная связь связью три измере Нет Нет Нет Атомный ния Есть Молекулярный Да два измере Волокнистый ния одно измерение Слоистый Алмазоподоб НЫЙ Нет Простой ионный Конечная Сложный ион протяжен ный ность Нет1 Есть Бесконечный в одном из Волокнистый мерении только Бесконечный в двух Слоистый внутри ионов измерениях Бесконеч Блоковый2 ный в трех измерениях Нет Есть Нет Металлический За исключением некоторых слоистых кристаллов у которых по одному направлению чередуются ионная и остаточная связи 2 Термин кристалл с блоковой структурой заимствован из статьи Г С Стрельцина см сноску иа стр 41 Прим ред Если принять во внимание табл 2 то видно что четыре типа связи и их совместные комбинации позволяют выделить один\nнадцать категорий кристаллов Такая классификация является идеальной Реальные кристаллы не совпадают с этими типами располагаясь между различными категориями В табл 4 кристаллы прежде всего классифицируют исходя из того определяется ли их структура остаточной связью или не определяется Остаточная связь существует во всех случаях но она легко перекрывается другими видами связи Таким образом можно сказать что в начальной стадии классификации основное выяснить определяется ли структура преимущественно одним из главных типов связи или остаточной связью На второй стадии классификации устанавливается присутствие или отсутствие ионной металлической и ковалентной связи В кристаллах в которых остаточная связь не является преобладающей металлическая связь отсутствует а имеется ионная связь Третья стадия классификации заключается в определении протяженности ионной структуры в различных измерениях. текст закончен - считай.",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 2171, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.08, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 2171, total state size = 101.783 MiB
+prompt cache save took 561.39 ms
+ - looking for better prompt, base f_keep = 0.083, sim = 0.058, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 4 prompts, 202.910 MiB (limits: 8192.000 MiB, 0 tokens, 174732 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+   - prompt 0x55b08c543770:     631 tokens,       0 discarded, checkpoints:  0,    29.584 MiB
+   - prompt 0x55b08c543930:    1144 tokens,       0 discarded, checkpoints:  0,    53.634 MiB
+   - prompt 0x55b08c5551c0:    2171 tokens,       0 discarded, checkpoints:  0,   101.783 MiB
+prompt cache load took 1.42 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065882 id_slot=0 id_task=516
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065882 id_slot=0 id_task=516 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4076 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4076 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token: 
+
+slot log_first_to: id  0 | task 516 | first-token-debug: prompt_tokens=4076 prompt_hash=0xd785214e2c849655 target_logits_hash=0xdd9632e3e188344c top16_logits=[{"token_id":793,"piece":" \n","logit":13.383434296},{"token_id":1202,"piece":" \n\n","logit":12.362232208},{"token_id":4066,"piece":"  \n","logit":12.263360023},{"token_id":11691,"piece":"  \n\n","logit":11.675718307},{"token_id":220,"piece":" ","logit":11.663635254},{"token_id":256,"piece":"  ","logit":11.102888107},{"token_id":4707,"piece":"\n\n\n\n","logit":11.036419868},{"token_id":46545,"piece":" \n\n\n\n","logit":10.837458611},{"token_id":1416,"piece":" We","logit":10.788749695},{"token_id":2550,"piece":" ...","logit":10.621691704},{"token_id":279,"piece":"\n\n","logit":10.300803185},{"token_id":5310,"piece":" ","logit":10.150779724},{"token_id":623,"piece":" The","logit":10.093280792},{"token_id":11339,"piece":" OK","logit":10.078637123},{"token_id":723,"piece":" [","logit":9.975580215},{"token_id":10190,"piece":"   \n","logit":9.955139160}]
+token:We
+token: need
+token: 
+token:30
+token: most
+token: frequent
+token: nouns
+token:.
+token: We
+token: ignore
+token: pre
+token:positions
+token: etc
+token:.
+token: OCR
+token: errors
+token: count
+token: as
+token: separate
+token: words
+token:.
+token: We
+token: need
+token: approximate
+token: frequency
+token:.
+token: Let's
+token: scan
+token: text
+token: for
+token: nouns
+token:.
+token: Words
+token: like
+token: "
+token:уг
+token:ол
+token:",
+token: "
+token:п
+token:л
+token:оск
+token:ость
+token:",
+token: "
+token:рис
+token:унок
+token:",
+token: "
+token:т
+token:вер
+token:дый
+token:",
+token: "
+token:лед
+token:",
+token: "
+token:структ
+token:ура
+token:",
+token: "
+token:ра
+token:ск
+token:лад
+token:",
+token: etc
+token:.
+token: Let's
+token: list
+token: nouns
+token: and
+token: count
+token: approximate
+token: occurrences
+token:.
+
+
+token:I'll
+token: go
+token: through
+token: text
+token: and
+token: note
+token: nouns
+token::
+
+
+token:Text
+token::
+token: "
+token:т
+token:етра
+token:эд
+token:р
+token:ический
+token: угол
+token: 
+token:109
+token: 
+token:30
+token: проект
+token:ируется
+token: на
+token: баз
+token:ис
+token:ную
+token: пл
+token:оск
+token:ость
+token: в
+token: виде
+token: уг
+token:ла
+token: в
+token: 
+token:120
+token: как
+token: это
+token: и
+token: требуется
+token: для
+token: получения
+token: правиль
+token:ного
+token: г
+token:екс
+token:аг
+token:он
+token:ального
+token: рисун
+token:ка
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065911 id_slot=0 id_task=516 n_ctx=131072 n_past=4203 n_system_tokens=0 n_cache_tokens=4203 truncated=false
+slot print_timing: id  0 | task 516 | 
+prompt eval time =   23872.56 ms /  4076 tokens (    5.86 ms per token,   170.74 tokens per second)
+       eval time =    5188.95 ms /   128 tokens (   40.54 ms per token,    24.67 tokens per second)
+      total time =   29061.51 ms /  4204 tokens
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065911
+INFO [      log_server_request] request | tid="123335992143872" timestamp=1787065911 remote_addr="127.0.0.1" remote_port=58892 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\n\nТекст:\n\nВыведи только результат без пояснений.ной связи между серой и кислородом Другие безводные сульфаты такие как барит целестит и англезит имеют аналогичную структуру образованную БОд тетраэдрами расстояние S О около 1 5 А и катионами металлов Среди ионных кристаллов с комплексным катионом типичным может считаться кобальтхлоридгексаммин Co NH3 6C12 В этом кристалле катионы Co NH3 6 2 располагаются вместе с ионами хлора в кубической\nNH3 6 2 располагаются вместе с ионами хлора в кубической гранецентрированной решетке Эта решетка в точности обратна решетке гексахлорплатината калия изображенной на рис 14 Роль катионов калия играют анионы хлора в аммине а роль аниона гексахлорплатината играет кобальтамминокатион В кобальтхлоридгексахлорам мине каждый атом кобальта окружен шестью молекулами аммония расстояние Со N составляет 2 5 А расстояние Со О 2п 4 27 А и расстояние N С1 2п 3 49 А В данном случае как и в ангидрите расстояния между центрами ядер в полиядерном ионе много меньше чем расстояния между центрами ближайших соседних ядер в различных ионах С другой стороны нужно подчеркнуть что в данном случае кристалл не представляет собой СоС1а 6ЫН3 в большей степени нежели ангидрит СаО SO3 В некоторых кристаллогидритах вода часто ведет себя так же как аммоний в амминах В типичном случае тетрагидрата 1 Структура ангидрита изображена например в книге Б Ф Ормонтг Структуры неорганических веществ Прим ред Термин аммин означает наличие в составе кристалла молекулярного NH3 он ничего общего не имеет с термином амин обозначающим молекулу аммония в которой один или более атомов водорода замещены углеводородными цепями в русской литературе употребляется термин аммиакат Прим ред\nсульфата бериллия структура образована ионами Ве Н2О 412 и SO которые расположены приблизительно таким же образом как ионы цезия и хлора в простом ионном кристалле хлористого цезия 46 В некоторых кристаллогидратах число молекул воды достаточно для того чтобы можно было предполагать полное окружение центрального металлического ядра в Рис 14 Гексахлорплатинат калия Р Р Ewald С Hermann Structurbericht I fig 194 1931 полиядерном ионе это наблюдается например у тетрагидрата сульфата бериллия В других случаях центральное металлическое ядро связано с атомами кислорода так же как в гипсе дигидрат сульфата кальция В исключительных случаях число молекул воды превосходит координационную способность центрального металлического ядра например в гептагидрате сульфата никеля Волокнистые слоистые и блоковые ионные кристаллы До сих пор рассматривались примеры комплексных ионных кристаллов с ионами ограниченными в пространстве таковы ионы в кристаллах содержащие одно ядро Однако нет причины по которой полиядерные ионы должны были бы быть ограничен\nними если входящие в их состав ядра могут образовывать ковалентные связи более чем по одному направлению Если ядра одного вида могут быть ковалентно связаны по четырем направлениям как в случае кремния и если ядра другого вида могут быть ковалентно связаны по двум или больше направлениям как в случае кислорода то появляется возможность образования неограниченно протяженных ионов Если этот процесс будет происходить в одном измерении то мы получим волокнистые кристаллы если в двух слоистые в трех кристаллы ионы которых не ограничены в трех измерениях В химии пластмасс существенное значение имеют некоторые принципы на основе которых происходит образование кристаллов с бесконечно протяженными ионами Однако упорядоченность структуры в твердом состоянии в пластмассах либо слабая либо отсутствует Химия силикатов достигшая ненормальной сложности на основе старых идей о многочисленных кремневых кислотах теперь чрезвычайно упростилась 7 26 Основным является то что атом кремния ковалентно связан с четырьмя атомами кислорода и что атом кислорода может быть ковалентно связан с двумя атомами кремния или может оставаться связанным только с одним атомом кремния В основных структурах\nоставаться связанным только с одним атомом кремния В основных структурах которые при этом образуются кислород может быть связан с кремнием следующими способами 1 каждый атом кислорода ковалентно связан только с одним атомом кремния 2 две трети атомов кислорода ковалентно связаны только с одним атомом кремния 3 шесть одиннадцатых атомов кислорода ковалентно связаны только с одним атомом кремния 4 одна треть атомов кислорода ковалентно связана только с одним атомом кремния 5 ни один атом кислорода не имеет ковалентной связи только с одним атомом кремния Анионом в котором каждый атом кислорода связан только с одним атомом кремния будет SiO4 4 ортосиликаты среди которых в качестве примера можно назвать оливин состоят из этих ионов Они принадлежат к классу с комплексными ионами о котором писалось в предыдущем разделе Если две трети атомов кислорода связаны только с одним атомом кремния то анион представляет собой бесконечную одиночную цепь SiOj рис 15 а Такую структуру имеют пироксены энстатит MgSiO3 диопсид CaMg SiO3 2 и сподумен LiAl SiO3 2 Если шесть одиннадцатых всех атомов кислорода ковалентно связаны только с одним атомом кремния то анион представ\nляет собой бесконечную двойную цепь Si fi Типичными здесь являются амфиболы такие например как тремолит ОН 2 Са2 Mg 5 1 Si4O M l На рис 15 б изображена модель двойной цепи атомов кремния и кислорода Когда одна треть атомов кислорода ковалентно связана только с одним атомом кремния анионы представляют бесконечные листы наблюдаемые в глинах тальках и а Рис 15 Кремнекислородные ионные цепи A F Wells Structural Inorganic Chemistry New York 1945 a в пироксенах б в амфиболах других силикатах расщепляющихся на тонкие слои В каолине тальке и пирофиллите бесконечные кремнийсодержащие листы состоят только из кремния и кислорода В слюдах листы состоят из кремния алюминия и кислорода причем кремний частично замещен алюминием Так во флогопите и мусковите четверть атомов кремния статистически замещена алюминием в то время как в хрупкой слюде маргарите замещена половина атомов кремния Так как алюминий трехвалентен в то время как кремний четырехвалентен это замещение изменяет заряд ионов листа с Si4Oio на 513А1О У Х или на Si2Al2O1Г Х Структура каолина образуется слоями гиббсита тригидрат алюминия связанного со слоями SUCt Связь осуществляется при помощи тех атомов кислорода кремнекислородного Слоя которые связаны только с одним атомом кремния Эти атомы кислорода осуществляющие связь между слоями соединяются с одним из гидроксилов гиббситового слоя В тальке или пирофиллите гиббситовый слой располагается\nмежду двумя слоями Si4010 В случае каолина кристалл состоит из наложенных одна на другую половин таких пакетов а в случае пирофиллита наложены один на другой целые пакеты В слюдах помимо слоев пирофиллита или талька имеются еще слои катионов они отсутствуют у пирофиллита и талька посредством которых осуществляется связь между соседними пакетами Наличие катионных слоев вызвано необходимостью нейтрализовать увеличившийся заряд силикатных слоев Это увеличение заряда силикатных слоев является результатом т частичного замещения в них четырехвалентного кремния трехвалентным алюминием Таким образом в мусковите KAl2 OH 2Si3AIOio имеется два типа атомов алюминия так же как и два типа атомов кислорода В том случае когда нет атомов кислорода которые были бы связаны только с одним атомом кремния т е если каждый атом кислорода связан с двумя атомами кремния возникает нейтральная бесконечная блоковая структура SiO2 Такие кристаллы относятся к кристаллам алмазного типа о которых говорилось выше Типичным примером кристалла с блоковой структурой является кварц Однако возможна замена четырехвалентного кремния трехвалентным алюминием на одну чет верть или на одну вторую в результате\nна одну чет верть или на одну вторую в результате чего блоковая структура будет состоять из ионов SiaAlOsL или Si2Al20s у При этом требуются компенсирующие катионы Такие катионы К Са2 Na или Ва2 располагаются в различных пусто тах структуры Примером кристаллов такого рода могут служить полевые шпаты 41 431 типа ортоклаза IK L AlSisOs в которых л катионы относительно велики г 1 33 А или типа плагиоклазов от Na b AlSi3O8 7x до Ca2 y Al2Si2O8 2j в которых катионы имеют меньшие размеры г 0 95 до 0 99 А Цеолиты представляют другой пример кристаллов с блоковой структурой Для них характерна настолько рыхлая структура что они пропускают и адсорбируют молекулы воды а также молекулы некоторых газов и многие ионы 71 Благодаря этому свойству их применяют в качестве ионообменников В известном смысле ионообменные смолы созданные недавно из органических полиядерных ионов представляют собой подобно цеолитам твердые пористые ионные остовы Однако в отличие от цеолитов они не обладают кристаллической структурой 4 Гетерополярные слоистые кристаллы Многие органические соединения с гетерополярными молекулами образующие слоистые кристаллы играют значительную роль в поверхностных\nявлениях и флотации Соединения молекулы или ионы которых имеют только одну полярную группу обычно кристаллизуются в виде двойных слоев состоящих из молекул или ионов Связь между слоями образующими двойной слой осуществляется за счет взаимодействия полярных частей молекул Например додециловый спирт пальмитиновая кислота солянокислый октадециламин и олеат калия все кристаллизуются согласно этому общему правилу В каждом слое молекулы располагаются одна около другой причем в боковом направлении между их углеводородными частями действуют силы остаточной связи Основная связь осуществляется полярными частями молекул согласно различным координационным схемам Углеводородные цепи располагаются перпендикулярно или наклонно к плоскости слоя В кристаллах спиртов группы ОН допускают образование водородной связи между молекулами соседних слоев При этом каждый атом кислорода связан с несколькими атомами кислорода другого слоя парциальными водородными мостиками Для натриевого мыла насыщенных жирных кислот известны орторомбическая альфа и моноклинная бета формы 1201 Эти формы отражают незначительные относительные изменения в расположении молекул которые связаны полярными группами С О с помощью ионов натрия и молекул воды В этих II О\nпомощью ионов натрия и молекул воды В этих II О соединениях внутри элементарного молекулярного кристалла толщиной от 30 до 60 А имеется ионный слой образованный карбоксильными группами окружающими ионы натрия Этот слой окружен неполярным углеводородным веществом толщиной 12 27 А Многие так называемые нейтральные мыла в действительности являются гидратированными мылами 8 10 161 часто с 0 5 моля воды на 1 моль дегидратированного мыла В других гидратированных мылах отношение воды к безводному мылу меньше Были найдены значения 1 4 1 6 1 8 Во всех этих гидратированных мылах вода располагается в центральном слое мыльного пакета т е таким же образом как атомы металла Предполагается что вода образует водородную связь между противолежащими слоями частично выполняя ту же функцию что и ионы металла Кислые мыла обычно не гидратированы Можно полагать что водородная связь осуществляемая атомами водорода кислоты делает излишним участие воды в кристалле даже если кристалл образовался из водной среды Фактически крупные кристаллы состоят из описанных выше элементарных молекулярных кристаллов наложенных один на Другой Обычно эти кристаллы относительно плоски и тонки что\nотражает их стремление расти вдоль пакета быстрее чем перпендикулярно ему В качестве типичного примера может быть приведен кислый пальмитат натрия представляющий моноклинный кристалл кристаллизующийся в так называемой альфа форме Каждый элементарный пакет его имеет толщину в 45 7 А Другие размеры ячейки составляют 9 97 и 7 38 А для четырех молекул кис лого пальмитата натрия NaHP2 Таким образом каждая углеводородная цепь с одним катионом в среднем имеет длину в 2 22 8 А и покрывает поверхность в 7 38X9 97 2 18 4 А Металлические кристаллы Металлы обычно кристаллизуются образуя относительно простые структуры с высокой симметрией Большое количество металлов сплавов и интерметаллических соединений образует разнообразные структуры Металлические кристаллы являются проводниками электричества отражают свет обладают ковкостью Способность образовывать твердые растворы является их характерной особенностью Хотя металлические кристаллы были практически неизвестны пятьдесят лет назад но в настоящее время сделано очень много и в литературе по физике металлов накопилось большое количество данных о структурах таких\nпо физике металлов накопилось большое количество данных о структурах таких кристаллов В задачу этой книги не входит подробное рассмотрение этого материала Металлические кристаллы можно рассматривать как массу j катионов более или менее плотно упакованных и погруженных в электронный газ В совершенном кристалле при температуре равной абсолютному нулю металлические катионы должны занимать все узлы решетки а между ними будут находиться освобожденные валентные электроны При таких условиях положение металлических катионов жестко фиксировано а электроны обладают огромной подвижностью Эта подвижность свободных электронов обусловливает электро и теплопроводность с наличием свободных электронов вероятно связан механизм скольжения двойникования пластической деформации и рекристаллизации свойственных металлам В кубических плотно упакованных структурах один из наиболее распространенных типов структур металлов каждый атом окружен двенадцатью ближайшими соседями расположенными на равных расстояниях от него четыре атома располагаются в плоскости грани куба содержащей рассматриваемый атом и четыре в каждой из двух плоскостей параллельных плоскости грани куба В гексагональных плотно упакованных структурах тоже часто встречающихся у металлов каждый атом как и в кубических структурах окружен двенадцатью\nближайшими соседями расположенными на равных расстояниях от него шесть из них в одной из плоскостей проходящих через рассматриваемый атом и по три в каждой из двух плоскостей параллельных этой базисной плоскости и расположенных по обе стороны от нее Межатомные расстояния в металлах относительно малы В меди например расстояние между центрами ядер составляет 2 55 А При этом следует помнить что атомы упакованы так плотно как только возможно Вариации межатомных расстояний в металлах относительно малы Железо обладает одним из наименьших межатомных расстояний 2 48 А а цезий наи большим 5 24 А Межатомные расстояния в конструкционных металлах колеблются в пределах от 2 5 до 3 5 А Полупроводниковые кристаллы Многие минералы представляющие особый интерес во флотации попадают в группу кристаллов условно объединенных вместе под названием полуметаллических или полупроводников Среди полупроводников имеются кристаллы очень сложные и простые Примерами могут служить сульфиды и сульфосоли многих металлов так же как арсениды карбиды бориды и пр Эти кристаллы отличаются от ионных кристаллов тем что\nи пр Эти кристаллы отличаются от ионных кристаллов тем что в них связь между ядрами образующими структуру не чисто ионная Эта связь также не является ни полностью ковалентной ни металлической Многие из этих кристаллов например обладают электропроводностью но значительно меньшей чем металлы Величина электропроводности полупроводников отличается от электропроводности металлов на несколько порядков В то же время полупроводники несравненно лучше проводят электрический ток нежели изоляторы и что имеет большое значение их электропроводность меняется как функция напряжения частоты и т д Некоторые полупроводниковые кристаллы обнаруживают свойство пропускать электрический ток только в одном направлении Например свойство односторонней проводимости галенита использовалось в первых детекторных радиоприемниках Халькозин и пирит представляют два интересных сульфида среди этого класса соединений Халькозин или скорее дигенит 19 по видимому состоит из анионов серы соприкасающихся один с другим и сравнительно более мелких катионов меди расположенных в промежутках Этим можно объяснить электропроводность минерала а также и значительно большую диффузию меди в кристаллах 17 по сравнению с серой Оптические свойства халькозина исключают предположение что связи в нем имеют лишь ионный характер\nСтруктура пирита похожа на структуру хлористого натрия с ковалентно связанными парами атомов серы вместо ионов хлора и железом вместо натрия она рис 16 довольно плотно Рис 16 Пирит  I a проекция элементарной ячейки пирита иа грань куба б упаковка соответствующая схеме а Рис 17 Сфалерит Перспективный рисунок изображающий атомы цинка и серы в структуре ZnS в предположении что они имеют размеры принятые для ионов Если же что более вероятно связь частично ковалентная то кружки должны быть более близкими по размерам R W G Wyckoff Crystal Structures I New York 1948 упакована расстояние между атомами серы в одной паре составляет 2 14 А между атомами железа и ближайшими атомами серы 2 26 А и между соседними атомами железа 3 82 А Для сравнения можно указать что расстояние РЬ РЬ в галените 4 18 А а расстояние Zn Zn в сфалерите структура цинковой обманки 3 83 А Сфалерит обладает структурой рис 17 которая похожа на структуру алмаза В отличие от алмаза здесь одну половину атомов представляют атомы серы а другую атомы цинка\nНеясно до какой степени эти атомы ионизированы и до какой степени они ковалентно связаны Вероятно атомы резонируют между ионной и ковалентной связями Металлические свойства в большой мере отсутствуют в сфалерите но дело осложняется в изоморфных или почти изоморфных сульфидах таких как станнин или халькопирит ЛИТЕРАТУРА 1 Anderson J S and J R Richards The self diffusion of lead in lead sulphide J Chern Soc 1946 1 p 537 541 2 Beevers C A and H Lipson The crystal structure of nickel sulfate hexahydrate NiSO4 6H2O Z Krist 83 123 135 1932 3 В e e v e г s C A and H Lipson Crystal structure of CuSO4 5H2O Proc Roy Soc London A146 570 582 1934 4 В ее vers C A and С M Schwartz The crystal structure of nickel sulfate heptahydrate NiSO4 7H2O Z Krist 91 157 169 1935 5 Bernal J D and R H Fowler A theory of water and ionic solution with particular reference to hydrogen and hydroxyl ions J Chern Phys I 515 548 1933 6 Born Max Atomic Physics 4th ed\nlong chain compounds zi hydro carbons Proc Roy Soc London A120 437 459 1928 32 Muller Alex The crystal structure of the normal paraffins at temperatures ranging from that of liquid air to the melting points Proc Roy Soc London A127 417 430 1930 33 Pauling Linus The nature of the chemical bond a p 168 table 21 5 Cornell University Press Ithaca N Y 1940 34 PennycuickS W The structure of water J Phys Chern 32 1681 1696 1928 35 Plane Robert A and Henry Taube Observations of the kinetics of the exchange of water between Сг НгО and solvent J Phys Chern 56 33 38 1952 36 Remy Heinrich The electrolytic transference of water and its significance for the theories of aqueous solutions Fortschr Chern Physik u physik Chern 19 2 5 72 1927 37 Sedgwick Nevil Vincent The electronic theory of valency Oxford University Press New York 1929 38 Sedgwick Nevil Vincent Chemical elements and their compounds Oxford University Press New York 1950 39 Slater J C Introduction to chemical physics a p 183 MacGraw Hill Book Company Inc New York 1939 40 Swyngedauw Jean New researches on hydration of ions J\nПОВЕРХНОСТЬ РАЗДЕЛА ГАЗ РАСТВОР В главе 2 мы рассмотрели бесконечную газообразную фазу и бесконечную трехмерную фазу состоящую из водного раствора В настоящей главе подробно описывается структура поверхности раздела между этими фазами электрическим свойствам поверхности раздела здесь внимания не уделяется так как они будут рассмотрены в главе 5 На поверхности жидкости находящейся в контакте с атмосферой плотность вещества резко изменяется приблизительно в тысячу раз В настоящее время считается что это изменение плотности происходит в пограничном слое толщиной примерно 10 А Можно сказать что наличие этого пограничного слоя делает изменение плотности менее резким Чистая жидкость в контакте с собственным паром Простейшим случаем поверхности раздела является поверхность раздела на границе жидкости с ее собственным паром На поверхности жидкости состоящей из неассоциированных молекул например четыреххлористого углерода находящейся в контакте с собственными парами молекулы жидкости испаряются и конденсируются\nв контакте с собственными парами молекулы жидкости испаряются и конденсируются молекулы газа В газообразную фазу могут перейти лишь те молекулы которые приближаясь к поверхности раздела приобретают вполне определенную кинетическую энергию При равновесии процесс испарения в точности компенсируется процессом конденсации поэтому положение поверхности раздела остается без изменения Для воды молекулы которой ассоциированы в жидком состоянии и не ассоциированы в газообразном состоянии переход молекул из жидкости в газ сопряжен также с изменением связи между атома ми Это согласуется с исключительно высоким значением скрытой теплоты испарения воды В случае веществ подобных спиртам аминам органическим кислотам и т д содержащим молекулы обладающие гетеро полярными свойствами что локализует их способность к ассоциации в жидкой фазе процессы испарения и конденсации в значительной степени зависят от ориентации молекул в поверхности раздела И наоборот молекулы на поверхности не могут быть расположены хаотично их ориентация отражает стремле 5 А М Годэн\nние к ассоциации Таким образом вероятность того что моле кула спирта ударившись о поверхность жидкого спирта своим углеводородным концом станет частью жидкости невелика в то время как молекула ударившаяся о поверхность жидкости гидроксильным концом по всей вероятности перейдет в жидкую фазу Молекула жидкости достигающая поверхности раздела и обладающая большой кинетической энергией должна повернуться так чтобы при испарении ее гидроксильный конец был направлен в сторону жидкой фазы Согласно этим качественным представлениям в поверхности жидкости состоящей из ге терополярных молекул в основном находятся углеводородные группы Поверхностное натяжение и поверхностная энергия Поверхностью раздела между жидкостью и ее парами может считаться место приложения силы действующей в плоскости поверхности раздела и называемой поверхностным натяжением Эта сила являющаяся характеристикой поверхности раздела измеряется в динах на сантиметр Свободная энергия обусловленная этой силой является одной из форм потенциальной энергии Так как потенциальная энергия любой системы стремится к минимуму то свободная поверхностная энергия системы жидкость газ выражаемая в эргах на\nсвободная поверхностная энергия системы жидкость газ выражаемая в эргах на сантиметр в квадрате также самопроизвольно стремится к минимуму это значит что поверхность раздела стремится уменьшиться Можно рассчитать изменение потенциальной энергии вызванное изменением величины поверхности раздела Например положим что свободная поверхностная энергия равна у эрг см2 Если п капель жидкости диаметром D сольются в одну каплю то убыль потенциальной энергии будет равна A D2 n п3 7 В среднем жидкость изотропна Это значит что связь любого атома молекулы или иона со своими соседями в среднем одинакова во всех направлениях Но это несправедливо для поверхности молекулы которой испытывают различные притяжения со стороны жидкости и газа В результате того что часть энергии связи молекул находящихся на поверхности не компенсирована молекулы поверхностного слоя обладают избыточной энергией по сравнению с энергией молекул находящихся внутри объема жидкости Избыточная энергия молекул поверхностного слоя и есть поверхностная энергия равная сумме свободной поверхностной энергии рассчитанной на основании измерений поверхностного натяжения и связанной поверхностной энергии рассчитанной по температурной зависимости поверхностного\nнатяжения Адам 1а дает следующее уравнение для полной поверхностной энергии е 1 о 1 где f свободная поверхностная энергия численно равная поверхностному натяжению Т абсолютная температура Представим себе что прямоугольный параллелепипед жидкости размером 2x1X1 см разделен на два кубика жидкости с ребрами равными 1 см Работа необходимая для такого разделения представляет собой работу затраченную на разрыв связей между молекулами жидкости в результате этого разделения молекулы находящиеся вблизи вновь образованной поверхности площадью равной 2 см2 уже не испытывают симметричного взаимодействия со всех сторон Эта работа равна 2у Образование новой поверхности таким способом приводит к охлаждению всей системы Если образование новой поверхности осуществляется изотермически а не адиабатически то затраченная энергия равняется 2е вместо 2 Y Интересно сравнить величину поверхностной энергии с энергией выделяемой при обычных химических реакциях большинство которых имеет энергию примерно равную одному электрон вольту на атом 1 6 1СН2 эрг Для воды при 20 Т 293 у 72 8 эрг см2 0 150\n20 Т 293 у 72 8 эрг см2 0 150 е 116 7 эрг см2 Количество молекул в 1 мл воды равно 6 02 X X Ю23 18 0 следовательно средний объем занимаемый одним атомом кислорода равен 30 А3 если принять атомы водорода за точки и средняя площадь занимаемая атомом кислорода на поверхности раздела равна 9 6 А2 Средняя энергия необходимая для изотермического отделения атома кислорода расположенного на вновь образованной поверхности равна 116 7 9 6 10 16 эрг или 0 07 электрон вольта Эта величина сравнима с изменениями энергии при обычных химических реакциях Поверхностное натяжение различных жидкостей Поверхностное натяжение различных жидкостей изменяется от величины равной примерно 1 дин см в случае конденсированных благородных газов вблизи критической температуры до 1000 и больше дин см для расплавленных металлов Большинство органических соединений имеет поверхностное натяжение от 20 до 30 дин см вода около 70 расплавленные соли от 70 до 200 Жидкая ртуть 450 500 другие расплавленные металлы имеют еще более высокие значения поверхностного натяжения\n199 5 хлористый свинец 490 138 0 Металлы натрий 100 206 4 ртуть 0 480 3 серебро 970 800 0 платина 2000 1819 1 Данные взяты из книги С D Hodgman и др Handboock Chemistry and Physics изданной Chemical Publishing Company Inc New York 1947 В табл 1 приведены значения поверхностных натяжений для жидкостей с различными типами связей Из этой таблицы видна зависимость между поверхностным натяжением жидкости и типом связей между молекулами Полная поверхностная энергия жидкости также зависит от типа связи между ее молекулами однако эту зависимость труднее установить так как не имеется достаточно точных значений производной поверхностного натяжения по температуре Измерение поверхностного натяжения Существует много методов измерения поверхностного натяжения на границе раздела жидкость газ и на границе двух жидкостей 13 Все эти методы делятся на статические и динамические При применении статических методов измеряются силы обусловленные неподвижной состарившейся поверхностью при применении ди\nнамических методов измеряются силы обусловленные движущейся поверхностью В последнем случае поверхностный слой жидкости непрерывно обновляется П Статические и динамические методы могут давать одни и те же или различные результаты в зависимости от скорости с которой устанавливается равновесие между поверхностью и объемной фазой При измерении поверхностного натяжения разбавленных растворов сильно поверхностно активных веществ эти методы дают существенно различные результаты Один из классических методов измерения поверхностного натяжения заключается в измерении высоты подъема жидкости в стеклянных капиллярах При этом поверхностное натяжение определяется уравнением где g ускорение силы тяжести D и d плотности жидкости и газа г радиус капилляра h высота подъема жидкости в капилляре Это уравнение справедливо только при условии полного смачивания поверхности капилляра поднимающейся жидкостью Вторым методом является метод максимального давления пузырьков При этом методе пузырек выдувается\nявляется метод максимального давления пузырьков При этом методе пузырек выдувается из трубки вертикально погруженной в жидкость По мере роста пузырька давление в нем возрастает и достигает максимума в момент когда пузырек принимает форму полусферы В этот момент избыточное давление внутри пузырька по сравнению с давлением жидкости на конце трубки равно Р 3 г где Р давление у поверхностное натяжение г радиус пузырька Метод достаточно точен если радиус трубки настолько мал что выдуваемый пузырек является шаровым сегментом Третьим методом применяемым для измерения поверхностного натяжения на границе между двумя жидкостями или жидкостью и газом является метод счета капель Метод основан на том что вес капель вытекающих из узкого отверстия является функцией поверхностного натяжения Харкинс и Браун 36 показали что поверхностное натяжение вес капли mg радиус трубки г и параметр F связаны следующим уравнением I f 4\nПараметр F в свою очередь зависит от отношения объема капли к кубу радиуса трубки V r3 На рис 1 даны значения параметра F как функции V r3 найденные экспериментально Харкинсом и Брауном Фотографии падающих капель полученные Эджертоном Хозером и Тэккером 23 показывают что процесс Рис 1 Зависимость параметра F и отношения V r3 V объем капли г радиус трубки из которой вытекает жидкость отрыва капли жидкости является сложным и что кроме основ ной капли при отрыве образуются маленькие капельки Экспериментальный параметр предложенный Харкинсом и Брауном позволяет статистически учесть сложность протекающих явлений и вычислить поверхностное натяжение Четвертым методом широко применяемым для измерения по верхностного натяжения является метод отрыва кольца Он заключается в погружении металлического кольца в жидкость и измерении величины сил препятствующих отрыву кольца из жидкости Если R радиус кольца q сила препятствующая\nотрыву кольца то поверхностное натяжение может быть найдено из следующего уравнения В этом уравнении F параметр изменяющийся являющийся функцией R3 V и R V где V объем жидкости поднимаемой кольцом a R радиус проволоки из которой сделано кольцо Интересным вариантом метода отрыва кольца является метод отрыва ножа 24 68 первоначально примененный Вильгельми В последние годы метод отрыва кольца получил более широкое признание однако он не дает статических значений поверхностного натяжения так как поверхность жидкости деформируется в момент измерения Пятым методом можно назвать метод закрепленного пузырька 69 74 Этот метод весьма точный и дает истинно статическое значение поверхностного натяжения Метод заключается в закреплении пузырька под плоскостью измерении с помощью микроскопа или микрофотографии соответствующих параметров формы состарившегося пузырька и расчета по этим параметрам поверхностного натяжения Шестой метод метод висящей капли в комбинации с ускоренной киносъемкой использовали Хозер и Эджертон\nкапли в комбинации.текст закончен - считай.",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 4203, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.04, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 4203, total state size = 197.048 MiB
+prompt cache save took 1085.70 ms
+ - looking for better prompt, base f_keep = 0.043, sim = 0.029, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 5 prompts, 399.959 MiB (limits: 8192.000 MiB, 0 tokens, 174732 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+   - prompt 0x55b08c543770:     631 tokens,       0 discarded, checkpoints:  0,    29.584 MiB
+   - prompt 0x55b08c543930:    1144 tokens,       0 discarded, checkpoints:  0,    53.634 MiB
+   - prompt 0x55b08c5551c0:    2171 tokens,       0 discarded, checkpoints:  0,   101.783 MiB
+   - prompt 0x55b08c55a830:    4203 tokens,       0 discarded, checkpoints:  0,   197.048 MiB
+prompt cache load took 3.07 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065913 id_slot=0 id_task=645
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065913 id_slot=0 id_task=645 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=0 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=0 requested_outputs=0 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4096 ub=32 outputs=0 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=0 requested_outputs=0 buf_alloc_mib=0.77
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065937 id_slot=0 id_task=645 p0=4096
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4068 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4068 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token:We
+slot log_first_to: id  0 | task 645 | first-token-debug: prompt_tokens=8164 prompt_hash=0x60d494aa75c5c227 target_logits_hash=0xe6a5197cd3e9e228 top16_logits=[{"token_id":2167,"piece":"We","logit":14.578505516},{"token_id":793,"piece":" \n","logit":14.512857437},{"token_id":35648,"piece":"Continue","logit":13.647884369},{"token_id":4066,"piece":"  \n","logit":13.020015717},{"token_id":4908,"piece":"...\n","logit":12.946884155},{"token_id":256,"piece":"  ","logit":12.913131714},{"token_id":1202,"piece":" \n\n","logit":12.831503868},{"token_id":5175,"piece":"OK","logit":12.689335823},{"token_id":220,"piece":" ","logit":12.636573792},{"token_id":14999,"piece":"Ok","logit":12.548976898},{"token_id":723,"piece":" [","logit":12.542120934},{"token_id":2550,"piece":" ...","logit":12.514783859},{"token_id":1131,"piece":"…","logit":12.513206482},{"token_id":2500,"piece":"This","logit":12.235254288},{"token_id":4707,"piece":"\n\n\n\n","logit":12.022550583},{"token_id":976,"piece":"The","logit":12.011011124}]
+token: need
+token: 
+token:30
+token: nouns
+token:.
+token: Count
+token: approximate
+token:.
+token: Hard
+token:.
+token: Probably
+token: many
+token: repeated
+token:.
+token: Provide
+token: list
+token: with
+token: counts
+token:.
+token: Hard
+token:.
+token: I
+token: will
+token: guess
+token:.
+token: Probably
+token: "
+token:к
+token:рист
+token:алл
+token:"
+token: many
+token: times
+token:.
+token: Provide
+token: 
+token:30
+token: nouns
+token: with
+token: counts
+token:.
+token: Also
+token: 
+token:300
+token: expressions
+token: 
+token:2
+token:-
+token:3
+token: words
+token:.
+token: Hard
+token:.
+token: I
+token: will
+token: output
+token: placeholder
+token:.
+token:<|end|>
+token:<|start|>
+token:assistant
+token:<|channel|>
+token:final
+token:<|message|>
+token:[
+token:С
+token:Л
+token:ОВ
+token:А
+token:]
+
+token:1
+token:.
+token: к
+token:рист
+token:алл
+token: —
+token: 
+token:12
+token:
+
+token:2
+token:.
+token: к
+token:рист
+token:ал
+token:лы
+token: —
+token: 
+token:8
+token:
+
+token:3
+token:.
+token: к
+token:рист
+token:алл
+token: —
+token: 
+token:7
+token:
+
+token:4
+token:.
+token: к
+token:рист
+token:алл
+token: —
+token: 
+token:6
+token:
+
+token:5
+token:.
+token: к
+token:рист
+token:алл
+token: —
+token: 
+token:5
+token:
+
+token:6
+token:.
+token: к
+token:рист
+token:алл
+token: —
+token: 
+token:4
+token:
+
+token:7
+token:.
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787065973 id_slot=0 id_task=645 n_ctx=131072 n_past=8291 n_system_tokens=0 n_cache_tokens=8291 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787065973
+slot print_timing: id  0 | task 645 | 
+prompt eval time =   52906.01 ms /  8164 tokens (    6.48 ms per token,   154.31 tokens per second)
+       eval time =    7194.38 ms /   128 tokens (   56.21 ms per token,    17.79 tokens per second)
+      total time =   60100.39 ms /  8292 tokens
+INFO [      log_server_request] request | tid="123336176685056" timestamp=1787065973 remote_addr="127.0.0.1" remote_port=32922 status=200 method="POST" path="/completion" params={}
+Prompt:
+{
+    "prompt": "Задача:\nПо приведённому OCR-тексту найди:\n\n1) 30 самых часто встречающихся слов (только полноценные существительные)\n2) 300 самых часто встречающихся выражений (2–3 слова)\n\nТребования:\n- Точная частота не требуется, нужна приблизительная оценка\n- OCR-ошибки считать отдельными словами/выражениями\n- Не объединять похожие слова\n- Не исправлять ошибки OCR\n- Игнорировать предлоги, союзы и служебные слова\n- Не объяснять решение\n\nФормат вывода:\n\n[СЛОВА]\n1. слово — количество\n...\n30. слово — количество\n\n[ВЫРАЖЕНИЯ]\n1. выражение — количество\n...\n300. выражение — количество\nТекст:\nВыведи только результат без пояснений. хорошо согласуются 231 Можно считать что каждый из этих методов дает прибли женное значение действительной поверхности и так как изме ренияприбли женное значение действительной поверхности и так как изме рения производятся при специально подобранных наиболее удачных значениях относительных давлений результаты полученные обоими методами согласуются Для измерения малых поверхностей Вутен и Браун 451 предложили заменить измерение адсорбции азота в интервале давлений 1 10 см рт ст измерением адсорбции этана при давлениях примерно 0 1 мм рт ст Этот метод оказался полезным при изучении процесса дробления 22 В последнее время усиленно предлагается заменять азот криптоном 71 При этом лучшие результаты должны получаться благодаря сферической форме одноатомной молекулы криптона Криптон может оказаться особенно полезным при изучении проблем обогащения 91 Зависимость физической адсорбции газа от давления С помощью физической адсорбции можно не только оценивать величину поверхности адсорбентов Характер изотермы адсорбции позволяет получить интересные данные и о рельефе поверхности Из данных рис 1 видно что хотя количество адсорбированного газа возрастает с ростом давления адсорбента все же не наблюдается линейной или другой простой зависимости или какой либо общей для всех газов зависимости между количеством поглощаемого газа и давлением Эта зависимость в одних слу чах изображается вогнутой по отношению к оси давлений кривой в других выпуклой Известно несколько причин влияющих\nна закономерности адсорбции в некоторых же случаях причины недостаточно выяснены часто влияние нескольких факторов значительно усложняет наблюдаемые закономерности Рассмотрение этих причин выходит за рамки настоящей книги интересующегося читателя отсылаем к книгам по адсорбции например см НИ Однако полезно отметить что диаграмма адсорбция давление газа в зависимости от ее формы может быть отнесена к одному из нескольких типов Наиболее важными являются тип I соответствующий мономолекулярной адсорбции Лэнгмю ра и тип II соответствующий полимолекулярной адсорбции Изменение поверхностного натяжения твердых тел обусловленное адсорбцией газов Выше было показано что адсорбцию на поверхности жидкости можно найти пользуясь производной поверхностной энергии по активности и применяя уравнение Гиббса 9 из гл 3 г 1 RT din а Аналогично можно вычислить изменение поверхностной свободной энергии по адсорбции проинтегрировав это же уравнение Такую возможность использовали Бангем и его ученики\nэто же уравнение Такую возможность использовали Бангем и его ученики 13 51 и Харкинс со своими учениками НО 27 311 связав уравнение Гиббса с уравнением Юнга для краевого угла см гл 7 Отметим что активность в уравнении Гиббса при условии малых концентраций можно заменить концентрацией не сделав при этом значительной ошибки Тогда бу Г Тб1пс Ь То RT J y дс о где у0 поверхностная энергия при нулевой концентрации адсорбата Это уравнение может быть записано в несколько более удобном виде Ъ То дс 1 Интегрирование нетрудно осуществить графически при условии что известны точные значения Гис для малых концентраций адсорбата В измерениях Ливингстона 31 проведенных для адсорбции различных газов на различных твердых телах концентрация ад сорбата пропорциональна давлению газа р так что отношение Г с пропорционально g p g адсорбция газа в миллиграммах на грамм адсорбента дс пропорционально приращению давле\nния др На рис 4 приведены типичные зависимости g от р до д р от р или что то же самое Г с от с Площадь под последней кривой ограниченная ординатой с х дает величину ух у0 Рис 4 Адсорбция паров воды на анатазе 31 Мономолекулярная адсорбция по Лэнгмюру Лэнгмюр предположил 30 что молекулы газа или пара непрерывно1 конденсируются на поверхности твердого и испаряются с нее Время запаздывания между этими событиями и обусловливает адсорбцию Если столкновение молекулы газа при попадании ее на покрытый молекулами этого же газа участок поверхности имеет характер упругого удара а при попадании на свободный участок неупругого удара то скорость конденсации будет пропорциональна выражению а 1 0 рЛ 1\nгде а коэффициент конденсации 6 доля поверхности адсорбента покрытой адсорбатом Р давление А величина всей поверхности твердого С другой стороны скорость испарения адсорбата пропорциональна покрытой им поверхности т е QA В случае равновесия справедливо равенство 6 А а 1 9 рА откуда 9 3g 1 а Р Из уравнения Лэнгмюра следует что величина адсорбции которая пропорциональна 0 при малых значениях р растет пропорционально давлению затем рост адсорбции с давлением замедляется и при значениях ар больших по сравнению с единицей величина адсорбции стремится к постоянному значению При исследовании процесса адсорбции Лэнгмюр полагал что молекулы закрепляются на поверхности твердого до тех пор пока на ней имеются свободные участки на которых молекулы газа могут закрепляться и удерживаться в течение определенного времени Если вся поверхность полностью покрыта адсорбированными молекулами то дальнейшая адсорбция невозможна Это допущение равносильно предположению\nадсорбированными молекулами то дальнейшая адсорбция невозможна Это допущение равносильно предположению что сродство молекулы к свободному и занятому молекулой газа участкам поверхности совершенно различно Поэтому нам кажется что теория мономолекулярной адсорбции Лэнгмюра должна лучше описывать явление хемосорбции чем явление физической адсорбции Полимолекулярная адсорбция БЭТ Основной предпосылкой этой теории Па 121 является допущение что силы обусловливающие физическую или вандерваальсову адсорбцию те же что и силы обусловливающие капиллярную конденсацию Однако используемый ими метод рассуждений является обобщением и развитием метода Лэнгмюра примененного им при исследовании мономолекулярной адсорбции Примем что So Si S2 St площади поверхности покрытые соответственно 0 1 2 i слоями адсорбированных молекул При равновесии величина So должна оставаться постоянной т е скорость конденсации на свободной поверхности и скорость испарения молекул из первого слоя должны быть равны что при водит к уравнению a1pS0 61S1expf L где Qi и постоянные для данного адсорбента р равновесное давление адсорбата\nЕ молярная теплота адсорбции первого слоя молекул R универсальная газовая постоянная Т абсолютная температура При равновесии величины So Sb S2 St также rife должны меняться поэтому для каждого слоя получается ряд уравнений аналогичных уравнению 3 которые можно записать в следующем виде Г г Уравнение 3 может быть записано в таком виде S ySv 5 где рехр i i L К Остальные уравнения можно упростить приняв что а21Ь2 a2lb2 at b и Е2 Е3 Е4 E EL равно теплоте конденсации Это допущение справедливо в случае если силы удерживающие молекулы действуют лишь на малых расстояниях Приняв это допущение и введя обозначения перепишем уравнение 4 в виде Sl xi S1 6 Комбинируя уравнения 5 и 6 получим ух So Обозначив у Сх перепишем уравнение 6 в виде St CxlS0 7 где При этих предположениях полная поверхность адсорбента равна Л 9 а объем поглощенного поверхностью адсорбата К Ю\nгде V объем адсорбата необходимый для покрытия 1 см2 поверхности мономолекулярным слоем Отношение количества адсорбированного газа к количеству необходимому для образования плотного мономолекулярного покрытия равно СО со CSa ixi Сумма стоящая в знаменателе дроби есть геометрическая прогрессия и равна она х 1 х сумма стоящая в числителе дроби может быть упрощена следующим образом ixl х х т д 12 и окончательно j с х 1 х 1 х Сх 1 х При давлении газа равном давлению насыщенных паров адсорбата на поверхности адсорбента образуется бесконечное число слоев адсорбированных молекул При этом х должен быть равен 1 как это следует из уравнения 13 Поэтому постулируем что в общем случае х 14 Подставляя это значение х в уравнение 13 получаем V 15 L Ро J тде Vm объем адсорбата необходимый для образования мономолекулярного слоя Уравнение может быть переписано в виде Р С Р 16 У р0 Р У nfi У nfi Ро\nЭто и есть линейная форма уравнения БЭТ используемая при измерении поверхности порошков о чем говорилось выше При выводе уравнения БЭТ были сделаны следующие предпосылки 1 теплоты адсорбции молекул во всех слоях за исключением первого равны между собой 2 относительные возможности закрепления и испарения из любого слоя за исключением первого равны 3 возможно образование бесконечно толстого слоя конденсированного газа при давлении адсорбата равном давлению его насыщенных паров 4 все участки поверхности адсорбента идентичны 5 адсорбированные молекулы не влияют на свойства соседних молекул или участков поверхности Хотя эти предположения не могут строго выполняться они являются логически обоснованным первым приближением при описании физической адсорбции Таким образом мы считаем очевидным что поверхности всех твердых тел находящихся в контакте с таким газом как воздух частично покрыты молекулами газа Физическая адсорбция таких постоянных газов как азот и кислород при комнатных температурах и атмосферном давлении по видимому невелика Конденсируемые газы такие как углекислый газ пары воды сернистый газ адсорбируются в значительно больших относительных количествах Плотность адсорбированного покрытия возрастает\nадсорбируются в значительно больших относительных количествах Плотность адсорбированного покрытия возрастает с увеличением давления уменьшается с повышением температуры и не является постоянной величиной так как зависит от равновесия между твердым телом и окружающей средой Хемосорбция на поверхности раздела кристалл газ До сих пор при рассмотрении процесса адсорбции принималось что характер связи адсорбированных атомов или молекул один и может быть точно определен Однако имеются и такие случаи когда характер адсорбции изменяется Так например кислород при низких температурах адсорбируется древесным углем без изменения структуры молекулы Адсорбция его в этом случае аналогична адсорбции аргона на древесном угле При более высоких температурах происходит перераспределение валентных связей в результате чего каждый атом кислорода оказывается связанным ковалентной связью с атомом углерода Если образующиеся при этом ассоциации атомов углерода и кислорода не испаряются с поверхности хемосорбция будет продолжаться до тех пор пока вся поверхность не покроется парами атомов углерод кислород Если ассоциации атомов углерод кислород испаряются в виде окиси углерода обнажая при этом свободную поверхность угля хемосорбция будет протекать со скоростью определяемой скоростью подачи кислорода и скоростью удале\nния окиси углерода Результат такой хемосорбции аналогичен горению угля Такой процесс можно рассматривать и как хемосорбцию кислорода и как процесс горения В тех случаях когда газовая фаза состоит из двух или нескольких газов весьма возможно что для протекания нужной реакции между этими газами необходимо чтобы их молекулы в течение некоторого времени находились в непосредственной близости Реакции не могут протекать в газовой фазе так как время столкновения молекул газов очень мало если же молекулы этих газов адсорбированы то время в течение которого они находятся в непосредственной близости может увеличиться в миллионы раз хотя время пребывания молекул на поверхности будет составлять лишь доли секунды Если реакция протекает в присутствии адсорбента но он участия в ней не принимает или принимает но возвращается в первоначальное состояние то такое явление называется гетерогенным или контактным катализом Поверхность раздела кристалл вода Влажность газов в значительной степени влияет на поверхность раздела кристалл газ Влияние это связано с тем что многие минералы являются окислами и при взаимодействии с водой превращаются в гидроокиси Так например кварц хемосорбирует пары воды в результате чего поверхность его гидролизуется В большинстве случаев возможны сложные\nрезультате чего поверхность его гидролизуется В большинстве случаев возможны сложные изменения поверхности минералов при контакте минерала с водой Эти изменения не ограничиваются образованием твердых поверхностных оснований или кислот а также связаны с переходом вещества из твердой фазы в жидкую Такой переход атомов или ионов вызван тем что поверхностные атомы или ионы испытывают притяжение не только со стороны соседних атомов или ионов твердого но и со стороны проходящих вблизи поверхности молекул или ионов жидкой фазы Конечное состояние системы отвечает равновесию между силами притяжения со стороны жидкой и твердой фазы при этом с точки зрения статистики не будет происходить никаких изменений в системе однако это не значит что условия в которых находится каждый атом или ион не меняются Ионный кристалл как простой так и сложный состоит из расположенных в определенной повторяющейся последовательности катионов и анионов Свежерасколотая поверхность такого кристалла полярна места с избытком положительного заряда чередуются с местами избыточного отрицательного заряда Поверхность состоит из атомных ядер и электронов иначе расположенных один относительно другого чем они располагались бы внутри твердого кристалла 36 42 43 В присутствии полярной жидкости такой как вода ионы диполи или просто группы молекул жидкости неизбежно будут задерживаться вблизи\nопределенных участков поверхности Адсорбированные таким образом ионы и молекулы будут притягивать другие молекулы и ионы в результате чего образуется пограничный слой отличающийся по своей структуре от объемной фазы жидкости аналогично тому как вблизи поверхности кристалла образуется поверхностный слой обладающий иной структурой чем структура внутренних участков кристалла По мере удаления от поверхности твердого структура жидкости постепенно меняется пока не перестанет отличаться от структуры внутренних слоев жидкости Конечно адсорбированные молекулы воды водородные или гидроксильные ионы не удерживаются все время на активных местах поверхности однако есть основание считать что время их пребывания на этих местах или вблизи них в жидкой фазе велико по сравнению со временем пребывания в заранее выбранном элементе объема внутри жидкости При растворении ионов кристалла происходит процесс по существу аналогичный описанному Если поместить чистый флюорит в чистую воду то ионы кальция и фтора будут переходить в воду до тех пор пока не установится максимальная концентрация этих ионов в воде Когда такое состояние будет достигнуто минерал перестанет растворяться вернее скорость растворения станет равной скорости кристаллизации Во\nперестанет растворяться вернее скорость растворения станет равной скорости кристаллизации Во многих случаях ионы поверхности кристалла погруженного в водный раствор гидратируются и в таком виде переходят в жидкую фазу Растворенные негидратированные ионы находятся в равновесии с гидратированными так что процесс гидратации может происходить как на поверхности твердого так и в объеме жидкости Процесс гидратации и растворения до некоторой степени аналогичен также реакции газа с твердой поверхностью при условии что продукты реакции удаляются с этой поверхности Молекулярные кристаллы менее склонны к смачиванию и растворению в воде чем ионные Молекулы веществ образующие такие кристаллы и молекулы воды при растворении просто перемешиваются поэтому растворение таких веществ в воде можно уподобить процессу испарения Скорость растворения твердых тел Скорость растворения твердых тел в ненасыщенных растворах зависит от градиента концентраций в непосредственной близости к поверхности твердого и от величины этой поверхности Такая зависимость иногда называемая законом Венцеля 33 была использована Гроссом и Циммерли 25 для измерения поверхности частиц кварца по скорости их растворения в слабом водном растворе плавиковой кислоты Первые серьезные исследования скорости реакций протекающих на поверхности раздела твердое жидкое проведенные\nНойсем и Уитни 32 39а привели к следующему уравнению Я m Cj C 17 где с концентрация в объеме раствора в момент времени cs концентрация насыщенного раствора т коэффициент пропорциональности величина которого остается постоянной только в том случае если во время опыта не изменяются условия особенно важно чтобы не изменялась поверхность твердого и толщина вязкой пленки смежной с поверхностью твердого Удобно выражать 41 изменение концентрации во времени de в виде функции константы скорости растворения К и отношения объема раствора к величине действующей поверхности Это уравнение после замены переменных примет следующий вид К In с с S 6 cs с2 и интегрирования где с ис2 исходная и конечная концентрации cs концентрация насыщенного раствора 6 время опыта мин В этом уравнении S выражается в см2 V в\nмин В этом уравнении S выражается в см2 V в см3 К в см мин и все концентрации в любых одинаковых единицах например в г л Интересно отметить что в уравнениях 18 и 19 не учитывается зависимость величины константы скорости растворения от перемешивания Для случая перемешивания раствора вращающимся импеллером со скоростью 400 об мин при условии что растворяющаяся поверхность кристалла расположена горизонтально под импеллером в International Critical Tables даются значения К от 0 18 для йодистого калия до 0 021 для водного сернокислого кальция гипса Интересно также оценить скорость процесса растворения Так для специального опыта с гипсом К 0 021 см мин при условии что 10 г минерального порошка с удельной поверхностью 4000 см2 г взвешено в 1 л воды первоначально не содержавшей гипса уравнение 19 может быть записано в виде In 1 1\nгде у отношение с с т е доля насыщенной концентрации достигаемая во время опыта Время t как функция у принимает следующие значения при у 0 1 t 7 6 сек при у 0 5 i 49 сек при у 0 9 t 2 мин 44 сек при у 0 95 t 3 мин 34 сек при у 0 99 t 5 мин 29 сек при у 0 999 t 8 мин 13 сек По этим данным можно судить что процесс растворения происходит далеко не мгновенно В других случаях процесс может протекать и значительно быстрее Например для того чтобы увеличить концентрацию 500 с и3 раствора от 99 до 99 9 предельного значения в присутствии 1000 г порошка с удельной поверхностью 200 см2 г К 0 105 требуется приблизительно 3 сек По видимому возможно вывести уравнение аналогичное уравнению 19 описывающее кинетику поглощения реагента минералом из раствора Однако его до настоящего времени не выводили хотя получить такое уравнение было бы весьма интересно Ранее отмечалось что постоянная диффузия зависит от толщины относительно неподвижной пленки жидкости окружающей твердые частицы Даже если жидкость совершенно неподвижна так же как и твердые частицы диффузия будет\nсовершенно неподвижна так же как и твердые частицы диффузия будет осуществляться благодаря движению молекул в согласии с уравнением приведенным выше Однако численное значение постоянной диффузии найденное экспериментально в этом случае будет меньше Если поток жидкости ламинарный вследствие чего различные ее слои не перемешиваются то в основном выполняются классические условия диффузии Если же жидкость движется турбулентно т е перемешивается во время движения конвекция помогает молекулярной диффузии в переносе вещества Однако даже в случае турбулентного перемешивания имеется конечно слой непосредственно прилегающий к частицам твердого 18 в котором доминирует ламинарное течение жидкости Толщина этого неперемешивающегося слоя зависит от условий опыта и обычно равняется 20 50 и 139 131 В основном толщина неподвижного слоя обратно пропорциональна скорости в степени меньшей чем единица равной например 2 з или 4 s Несмотря на важность этого явления для флотации им пренебрегали и только Туайнер и Корман 40 по данным своих опытов вычислили толщину неподвижного слоя жидкости при условиях относительно интенсивного и слабого перемешивания В первом случае согласно их данным толщина неподвижного слоя жидкости равнялась 41 и во втором 147 ц В частности эти исследователи пришли к выводу что процесс подготовки материала к флотации включает гетерогенную поверхностную реакцию при которой диффузия собирателя через прослой\nку жидкости у поверхности твердого протекает с измеримой скоростью Ряд соображений в том числе и это привел их к выводу что флотационная пульпа не достигает равновесия даже в стадии разделения Поверхность раздела кристалл водный раствор Характер поверхности раздела твердое водный раствор в основном определяет химию флотационного процесса Поверхности этого типа будут неоднократно рассматриваться в последующих главах Поэтому в настоящем разделе будут даны лишь основные черты явлений обменной адсорбции которая характерна для границ раздела такого типа Рис 5 Схематическое изображение связи кислород кремний в кварце и адсорбции Н и ОН ионов на поверхности расколотого под водой кварца Так как связи показаны в плоскости на рисунке представлены лишь три валентности кремния из четырех 24 Выше отмечалось\nпредставлены лишь три валентности кремния из четырех 24 Выше отмечалось что свежерасколотая поверхность кварца подвергается гидролизу На рис 5 показан двухмерный аналог 241 трехмерной решетки кварца в связи с чем на этой схеме атом кремния показан окруженным тремя атомами кислорода вместо четырех Атомы водорода и гидроксильные группы поверхности непрерывно обмениваются с ионами водорода и гидроксильными ионами воды В среднем в нейтральной воде количество ионов водорода покинувших свои места на поверхности больше чем количество гидроксильных ионов покинувших поверхность поэтому поверхность кристалла заряжена отрицательно а жидкость положительно Избыток положительных ионов находящихся в жидкости стремится сконцентрироваться вблизи поверхности частиц Поэтому поверхность твердого может рассматриваться как покрытая двойным слоем подробнее см в гл 5 В нашем примере анионы закреплены на поверхности твердого а катионы движутся вблизи них\nНаличие такого двойного слоя приводит к движению частиц относительно жидкости в тех случаях когда через суспензию пропускается электрический ток Если воду заменить водным раствором например раствором хлористого бария скорость с которой частицы движутся в электрическом поле изменится Может оказаться что частицы будут Двигаться даже в обратном направлении что свидетельствует об изменении структуры двойного слоя ионов а следовательно и структуры поверхности раздела Рис 6 Зависимость адсорбции бария на кварце из раствора нитрата бария от его концентрации при pH 8 14 Измерения адсорбции ионов бария кварцем из раствора нитрата бария показывают что адсорбция бария возрастает с увеличением концентрации ионов бария и pH по крайней мере до pH 10 как это видно на рис 6 и 7 Для определения адсорбции бария\nвидно на рис 6 и 7 Для определения адсорбции бария использовали радиоактивный изотоп Ва140 141 Аналогичные измерения адсорбции додециламина на кварце дали приблизительно те же результаты рис 8 Эти данные были получены с помощью радиоактивного углерода С14 которым был мечен додециламин 18 19 211 Удивительно что между поведением сферического двухвалентного катиона и крайне несимметричного одновалентного катиона наблюдается такое сходство Но для того чтобы построить более или менее полную теорию необходимо в данной области провести значительно большее число исследований Тем не менее надо иметь в виду что систематическая теория адсорбции электролитов должна быть тесно связана с теорией электролитов Поверхности адсорбентов при этом могут рассматриваться как гигантские полифункцио нальные ионы конкурирующие с ионами того же знака находящимися в жидкости и прочно связанные с ионами противоположного знака 8 А М Годэн\nЕсли состав водного раствора окружающего минеральную частицу изменяется благодаря добавлению растворимых реагентов изменение состава поверхности которое должно последовать за этим определяется не только диффузией нового ингредиента к поверхности но и одновременно происходящей диффузией замещаемого ингредиента от поверхности раздела в объем жидкости Так как градиенты концентраций не обязательно должны быть равны друг другу то скорость перестройки поверхности может определяться или скоростью поступления нового вещества или скоростью удаления вытесняемого Это представляет превосходный случай для появления многих совершенно неожиданных эффектов Обратимость обменной адсорбции Лишь в немногих случаях имеются прямые доказательства обратимости ионной адсорбции Так например при адсорбции додецил амин ацетата кварцем катионы додециламмония закрепившиеся на поверхности обмениваются с этими же катионами находящимися в жидкости и наоборот 191 Этот обмен можно заметить если ионы находящиеся в жидкости или на поверхности твердого пометить радиоактивным изотопом например углеродом С14 и измерить радиоактивность твердого и жидкого после обмена Однако очень мало известно о скорости с которой протека ет этот обмен Измерение скорости обмена прольет свет на коэффициент диффузии и коэффициенты диссоциации адсорбированных\nобмена прольет свет на коэффициент диффузии и коэффициенты диссоциации адсорбированных ионов Но измерить эти величины как методом радиоактивных индикаторов так и другими методами нелегко Естественная флотируемость С точки зрения флотации имеется существенная разница между кристаллами на поверхности которых находятся ионы вне зависимости от того являются кристаллы ионными или нет и на поверхности которых ионы отсутствуют Первые не обладают естественной флотируемостью вторые в той или иной степени ею обладают В табл 2 приведена классификация кристаллов согласно их естественной флотируемости данные взяты из табл 4 гл 2 и табл 1 настоящей главы Из таблицы видно что встречающиеся в природе минералы не обладают естественной флотируемостью Исключениями являются природные углеводороды сера графит борная кислота тальк и подобные тальку силикаты В действительности возникали сомнения обладают ли графит и сера естественной флотируемостью 1381 Таггарт и его школа утверждают что если эти минералы тщательно очистить от органических загряз1 Влияние характера ненасыщенных связей поверхности на естественную флотируемость минералов раньше и значительно более подробно описано в работе Г С Стрельцина помещенной в Трудах II научно технической сессии института Механобр Металлурпиэдат 1952 Прим ред\nТаблица 2 Естественная флотируемость кристаллов в воде Тнп кристаллов Примеры Естественная флотируемость Атимные Молекулярные Гелий аргон а Иод сера Некоторая Волокнистые и слои б Парафин нафталин Графит Высокая Значительная стые Типа алмаза Алмаз По всей вероятности Простые ионные Поваренная соль флю не обладает Не обладает Сложные ионные орит Кальцит оливины Волокнистые ионные Пироксен в в Слоистые ионные а Слюды Каркасные б Тальк в Жирные кислоты г Борная кислота Полевой шпат кварц Значительная Высокая Не обладают Металлические Медь Полупроводники Галенит пирнТ Не существует при температурах выше 0 нений они не будут флотироваться Эти авторы также отмечают что очистить графит и серу весьма трудно Указанным утверждениям базирующимся на измерении краевых углов на графите и сере можно противопоставить данные практических флотационных опытов проведенных с этими минералами\nможно противопоставить данные практических флотационных опытов проведенных с этими минералами Кроме того применяемая перед измерением краевых углов обработка графита и серы заключавшаяся в их очистке и последующей шлифовке гидрофильными порошками под водой могла привести к загрязнению поверхности Опыты с исключительно чистым графитом содержащим 9 1О 4 7о золы проводились в Массачусеттском технологическом институте графит был приготовлен Россом в лаборатории Carbon and Carbide Chemical Corp Очистка заключалась в нагревании уже очищенного графита в потоке азота и хлора при температурах изменяемых от 2000 до 2500 в графитовой печи подобной описанной Гартландом 17 После дробления и измельчения графита под водой результаты флотационных опытов проведенных в цилиндре и во флотационной камере показали что графит флотировался Сера графит молибденит и уголь значительно лучше смачиваются углеводородными жидкостями чем водой Это приводит к тому что органические масла прилипают к поверхности\nминеральных частиц находящихся в воде в результате чего на поверхности этих частиц может образоваться большой краевой угол Желательно было бы иметь количественные данные особенно если сравниваются свойства очищенных и неочищенных поверхностей твердого Убедиться в том что борная кислота обладает природной флотируемостью очень легко Для этого достаточно приготовить горячий насыщенный раствор борной кислоты профильтровать его если желательна очистка и дав возможность раствору охладиться для того чтобы образовались кристаллы борной Рис 9 Структура кристалла борной кислоты Показаны атомы расположенные в одном слое Большие кружки изображают атомы кислорода маленькие затемненные бор маленькие незатем ненные водород 88 стр 150 кислоты отфлотировать их При флотации без реагентов полученных таким образом кристаллов образуется сильно нагруженная шелковисто белая пена подобная наблюдаемой при флотации молекулярных органических кристаллов 1 2 28 351 Высокая естественная флотируемость борной кислоты может быть объяснена тем что соседние слои в кристалле притягиваются исключительно остаточными связями Внутри слоя каждая группа\nв кристалле притягиваются исключительно остаточными связями Внутри слоя каждая группа ВО3 связана через шесть атомов водорода с тремя со седними группами ВО3 Таким образом шесть атомов водорода образуют двойные водородные мостики между каждой парой ближайших групп ВО3 461 как это показано на рис 9 Межатомные расстояния внутри каждого слоя малы а расстояния между слоями велики Так расстояние между атомами кислорода и водорода расположенными в одном и том же слое в среднем равно 1 355 А а расстояние между атомами бора и кислорода одного и того же слоя равно 1 36 А Расстояние между атомами кислорода и атомами бора или водорода соседних слоев равно 3 18 А причем атомы кислорода расположены почти над иЛи под атомами бора и водорода двух соседних слоев Естественная флотируемость иода так же легко может быть продемонстрирована в лаборатории Естественная флотируемость таких различных неорганических кристаллов как борная кислота иод и пирофиллит 1291 показывает несостоятельность гипотезы утверждающей что для флотации необходимо присут\nствие углеводородных радикалов Действительно большинство твердых тел обладающих естественной флотируемостью содержит углеводородные радикалы В то же время приведенные выше примеры показывают что естественной флотируемостью обладают также некоторые кристаллы не содержащие углеводородных цепей радикалов В подавляющем большинстве случаев минералы не обладают естественной флотируемостью Если же минералы за исключением перечисленных выше флотируются без добавления реагентов то это может быть вызвано или загрязнением их поверхности органическими соединениями или преднамеренным изменением поверхности минералов Естественная флотируемость органических соединений Кристаллы органических соединений можно разделить на кристаллы состоящие из молекул удерживаемых в кристалле остаточными связями и на кристаллы состоящие из групп радикалов связанных между собой ионной или водородной связью В результате раскалывания твердых тел первого типа образуется неполярная поверхность Эти вещества обладают естественной флотируемостью Примерами таких соединений являются углеводороды и их полные или неполные галогенпроизвод ные То что полные галогена рои вводные обладают естественной флотируемостью может служить еще одним доказательством того что не только углеводородные радикалы обусловливают флотируемость Твердые тела\nтого что не только углеводородные радикалы обусловливают флотируемость Твердые тела второго типа могут проявлять ионные или водородные связи в двух или трех измерениях Разницу между этими структурами можно пояснить рассмотрев некоторые характерные примеры Жирные кислоты н первичные амины мыла соли аминов первичные спирты и многие другие одноосновные органические соединения образуют слоистые кристаллы на что уже обращалось внимание в гл 2 Для этих кристаллов характерно что их ионные свойства локализованы в плоскостях параллельных основным плоскостям Эти плоскости чередуются с плоскостями по которым соединяются концы молекул не содержащие ионных или водородных связей Так как ионные и водородные связи значительно прочнее остаточных кристаллы этого типа раскалываются обнажая преимущественно слабые остаточные связи Как и молекулярные кристаллы они образуют неполярные плоские грани Торцовые грани этих кристаллов имеют как полярные так и неполярные обнаженные связи но так как для образования единицы поверхности таких граней требуется затратить больше энергии чем для образования той же поверхности плоских граней разрывы по этим граням составляют незначительную часть всей поверхности Иными словами при\nдроблении слоистых кристаллов основная часть образующейся поверхности неполярна и лишь небольшая часть ее полярна Кристаллы органических соединений в которых каждая молекула обладает двумя или большим числом полярных групп образуют бесконечные структуры Каждый радикал такой молекулы обладая двумя или большим числом полярных групп связан по трем измерениям ионной или водородной связью Кристаллы этого типа имеют более высокую твердость не обладают совершенной спайностью слоистых кристаллов и их раскалывание невозможно без разрушения ионной или водородной связи При образовании поверхности твердого в зависимости От относительного числа разрушенных ионных или водородных и неполярных связей поверхность этих кристаллов в большей или меньшей степени флотационно активна ЛИТЕРАТУРА 1 Андреева А И Отделение борной кислоты из смеси солей Советский патент 53403 30 июня 1938 г 2 Андреева А И и С А Кузин Флотация борной кислоты и бора Из продуктов обработки индерских борацитов Журнал прикладной химии 10 845 852 1937 3 Bangham D Н The Gibbs adsorption equation and adsorption\nЭЛЕКТРИЧЕСКИЕ ЯВЛЕНИЯ НА ПОВЕРХНОСТЯХ РАЗДЕЛА ФАЗ До сих пор мы рассматривали адсорбцию не принимая во внимание изменение электрических свойств поверхности Однако если адсорбция имеет ионный характер то преимущественная концентрация ионов на поверхностях раздела вода воздух или вода минерал должна обусловливать появление электрического заряда на поверхности раздела фаз Так например на поверхности раствора бутирата натрия должны адсорбироваться ионы бутирата который обладает значительно меньшим поверхностным натяжением по сравнению с водой и находится в растворе в основном в ионизированном состоянии Это означает что поверхностный слой раствора заряжен отрицательно По мере увеличения концентрации растворенного вещества и его адсорбции величина заряда этого слоя возрастает до определенного значения Отсюда следует что катионы концентрируются в слое жидкости который непосредственно примыкает к ее поверхности Рис 1 дает качественное представление о распределении ионов у поверхности раздела фаз Если раствор содержит поверхностно активные ионы т\nповерхности раздела фаз Если раствор содержит поверхностно активные ионы т е такие ионы которые могут положительно адсорбироваться на поверхности раздела вода воздух то концентрация как этих ионов так и каких либо противоионов вблизи поверхности будет выше чем в объеме раствора Наоборот если находящиеся в растворе ионы не являются поверхностно активными то концентрация ионов в поверхностном слое будет ниже чем в объеме Те же рассуждения что и в случае поверхности раздела вода воздух можно применить и для случая поверхности раздела вода минерал но при этом появляется дополнительное усложнение которое состоит в том что возможен обмен ионов между поверхностью минерала и раствором причем обмениваются либо ионы кристаллической решетки либо ионы ранее адсорбированные твердой фазой В частном случае изображенном на рис 1 слой жидкости у поверхности раздела вода воздух имеет избыток отрицательных ионов тогда как слой жидкости под ним имеет избыток положительных ионов Безусловно расположение ионов получит\nся обратным если углеводородный радикал будет входить в состав не аниона а катиона Даже простейшая система минерал водный раствор состоящая из одной частицы окруженной раствором включает Концентрация ионов Воздух Поверхность Поверхностный спой Расстояние от поверхности Концентрации в объеме Адсорбированные ионы напри мер бутирата Противоионы например натрий Рис 1 Качественная схема поверхности раздела раствор воздух для водного раствора бутирата натрия двойной электрический слой который содержит адсорбированные ионы и их противоионы в слое жидкой фазы вблизи поверхности Электрические свойства суспензии в состав которой входит большое число частиц одного и того же минерала совершенно одинаковых по форме размеру и строению более сложны поскольку здесь уже имеется множество идентичных двойных слоев Если же мономинеральная суспензия состоит из частиц минерала отличающихся по форме и размеру то возникает дальнейшее усложнение системы электрических слоев так как в этом случае двойные слои скорее похожи чем тождественны В полиминеральной суспензии состоящей из частиц разных размеров например измельченная руда переплетаются разнообразные электрические двойные слои которые изменяются при переходе от частицы к частице даже если система достигла состояния равновесия Наконец система электрических слоев в водной суспензии руды в которую вводятся воздушные пузырьки с постоянно обновляемой поверхностью усложняется в еще большей степени благодаря разнообразию и взаимодействию различных двойных слоев\nЭлектрокинетические явления на поверхности раздела твердое жидкость Вследствие существования двойного электрического слоя на поверхности раздела фаз при наложении на систему электрического поля возникает движение дисперсной фазы относительно дисперсионной среды или наоборот Это движение может принимать различные формы Если дисперсная фаза представлена частицами капельками или пузырьками находящимися в воде то перемещаться будет дисперсная фаза либо к аноду либо к катоду в зависимости от знака заряда Это явление известно под названием электрофореза или катафореза Если дисперсная фаза представляет собой диафрагму имеющую капиллярные отверстия то перемещаться будет жидкость относительно диафрагмы Это явление носит название электроосмоса В обоих случаях наблюдается перемещение закрепленных на поверхности раздела ионов относительно жидкости причем в случае катафореза дисперсная фаза твердая жидкая или газообразная движется вместе с закрепленными ионами Так как жидкая фаза обладает вязкостью то сила трения противодействует электрической силе В результате быстро устанавливается постоянная скорость движения Практически скорость движения достигает постоянного значения в начале наблюдений Противоионы находятся в диффузной части двойного электрического\nв начале наблюдений Противоионы находятся в диффузной части двойного электрического слоя которая в случае разбавленных растворов имеет толщину порядка нескольких молекулярных слоев так что не вся электродвижущая сила приложена на одинаковом расстоянии от поверхности раздела В результате градиент скорости внутри двойного слоя не является постоянным как это должно было бы быть если исходить из предположения что все противоионы концентрируются на вполне определенном расстоянии от поверхности раздела В действительности градиент скорости в двойном слое изменяется постепенно при удалении от поверхности раздела в бесконечность т е в объем раствора Практически бесконечностью можно считать расстояние от 50 до 5000 А от поверхности раздела в зависимости от ионной силы электролита На рис 2 эти качественные выводы представлены в виде диаграммы Вполне понятно что градиентом скорости является наклон кривой выражающей зависимость скорости от расстояния до поверхности раздела В стеклянном капилляре или в промежутках между частицами песка размеры каналов обычно в значительной степени превосходят толщину двойного электрического слоя в связи с чем скорость течения жидкости между стенками канала обус\nловленную электрическим полем можно Считать постоянной Однако подобное допущение является лишь первым приближением Если жидкость продавливается через пористую диафрагму состоящую из твердых частиц или через капилляр то между электродами помещенными у концов диафрагмы возникает разность потенциалов Эта разность потенциалов известна под Рис 2 Зависимость электрокинетической скорости от расстояния до границы раздела фаз названием потенциала протекания Если же твердая фаза оседает в жидкости то возникает потенциал седиментации Эти четыре явления 14а электрофорез электроосмос потенциал протекания и потенциал седиментации зависят от одного и того же фактора а именно от избирательного распределения ионов у поверхности раздела фаз Двойной слой На рис 3 схематически изображена сферическая частица небольшого размера находящаяся в водном растворе Мы можем различить твердую частицу зона ОА слой закрепленных ионов и гидратный слой зона АВ водный слой содержащий диффузно распределенные противоионы зона ВС и объем жидкости зона С Плоскость скольжения между частицей и жидкостью находится не у точки Л а у точки В Потенциал ф определяющий работу переноса единицы заряда из бесконечности из объема раствора в точку находящуюся вблизи частицы равен нулю в точке С но быстро возрастает по мере приближения к точке В Потенциал в этой точке известен под названием электрокинетического или потенциала\nСчитается что слой закрепленных ионов по толщине должен быть моноионным Если не рассматривать органические ионы Рис 3 Зависимость потенциала от расстояния до поверхности раздела для сферической коллоидной частицы с длинными углеводородными цепями то толщина этого слоя О составляет приблизительно 3 А Диффузная часть двойного слоя имеет значительную толщину особенно в случае разбавленных растворов Александер и Джонсон 4Ь отождествляют толщину диффузной части двойного электрического слоя 8 со средним радиусом ионной атмосферы окружающей каждый ион в растворе электролита Эта величина равна обратной величине функции Дебая Гюккеля которая как обычно считают является одной из основных величин широко используемых в современной теории электролитов 1000 DRT 8тг e2N2 I где е заряд электрона равный 4 77 10 10 абсолютных электростатических единиц Л число Авогадро равное 6 023 Ю23 с ионная сила или концентрация одно одновалентного электролита лоль л D диэлектрическая постоянная равная примерно 80 для воды при комнатной температуре 7 газовая постоянная 8 314 107 Т абсолютная температура К Т 298 при 25 С Функцию Дебая Гюккеля х находят применив законы статической механики к ионной атмосфере окружающей рассматриваемый ион в растворе электролита 19 44 481 Вывод уравнения 1 можно найти в книге Харнеда и Оуэна 34а Подставив численные значения в уравнение 1 мы получим уравнение определяющее 6 в ангстремах при концентрации в миллимолях на литр в виде 1а\nСледует отметить что 6 изменяется обратно пропорциональ но корню квадратному из ионной силы раствора соответственно этому в концентрированных растворах двойной слой очень тонок в то время как в разбавленных растворах он распространяется на относительно большие расстояния В молярном растворе 6 3 А или приблизительно равняется диаметру молекулы воды В миллимолярных растворах которые обычно ветре О чаются во флотационных системах 6 97 А В микромолярных растворах т е в растворах приближающихся к дистиллированной воде 6 3050 А Этот простой пример показывает что толщина диффузного слоя может изменяться от 1 до 1000 атомных диаметров причем толщина эта значительно увеличивается по мере разбавления раствора Уместно упомянуть что отождествление величины 6 с толщиной двойного слоя в значительной степени является вопросом определения понятия толщины Первым ввел понятие двойного электрического слоя Гельмгольц 135 который использовал концепцию плоско параллельных обкладок подобных обкладкам конденсатора Гуи и Чапмэн 17 показали что такое представление является слишком упрощенным Вместо концепции Гельмгольца они ввели понятие о диффузной части двойного электрического слоя Под толщиной двойного электрического слоя в том\nдвойного электрического слоя Под толщиной двойного электрического слоя в том смысле в котором этот термин используется здесь понимается расстояние между обкладками плоско параллельного конденсатора той же емкости что и реальный электрический слой Уместно также второе предположение заключающееся в следующем если плоские поверхности или большие сферы окружены относительно тонким двойным электрическим слоем то характер падения потенциала по мере увеличения расстояния должен быть иным чем при малых сферах окруженных толстыми двойными электрическими слоями Именно последний случай рассматривается в развитой Дебаем и Гюккелем теории электролитов где центральный ион представляется в виде точечного заряда Коллоидные системы приближаются к ионным так как частицы дисперсной фазы в них весьма малы немеют сферическую форму Этого нельзя сказать о минеральных суспензиях отклонения которых от предпосылок Дебая Гюккеля весьма велики Уменьшение плотности заряда двойного электрического слоя по мере удаления от поверхности грубодисперсных частиц происходит медленнее чем в случае мелких частиц или точечных зарядов 111 Концентрация ионов в диффузной части двойного слоя Выше уже было показано качественное изменение плотности ионов в диффузном слое Количественное решение этого вопроса было предложено Абрамсоном Hal Это решение основано на исполь\nзовании уравнения Пуассона согласно которому оператор Лапласа для потенциала V V Ф пропорционален плотности заряда р и обратно пропорционален диэлектрической постоянной D 4тгр Предполагая что частица настолько велика по сравнению с толщиной диффузной части двойного слоя что ее можно рассматривать как частицу с плоской поверхностью Абрамсон нашел следующее выражение для плотности ионов D Г х р ехр где эквивалентная толщина двойного слоя потенциал у границы поверхности х расстояние от этой границы до данной точки в жидкости Плотность ионов р экспоненциально уменьшается с х становясь равной Me части значения при х 6 или также при х 0 Если х 26 то р уменьшается в 1 е2 раз как и при х 0 Из уравнения 3 видно что вблизи поверхности покрытой закрепленными ионами плотность противоионов наибольшая Однако не мало противоионов находится и в жидкости Так даже на расстоянии х 46 концентрация противоионов составляет еще около 2 от концентрации вблизи поверхности частицы л 0 Очевидно 5\n2 от концентрации вблизи поверхности частицы л 0 Очевидно 5 не представляет собой расстояние внутри которого заключены все противоионы это есть некоторое эффективное расстояние физический смысл которого рассмотрен выше Для случая сферических частиц размер которых мал по сравнению с 5 уравнения будут более сложными см у Абрамсона Детальное рассмотрение плоского и сферического двойного электрического слоя можно найти в заслуживающей внимания книге Фервея и Овербика 156 Электрокинетический или потенциал Если частицу см рис 3 поместить в электрическое поле то она начинает перемещаться в определенном направлении диффузная же часть двойного слоя в противоположном Однако вокруг частицы все время будет образовываться новый диффузный слой поэтому и в состоянии движения как и в состоянии покоя она будет окружена аналогичным диффузным слоем Вязкость жидкости оказывает противодействие приложенному электрическому полю так что эти две силы уравновешиваются В однородном поле электрокинетическая скорость постоянна Численное значение этой скорости можно получить используя те же рассуждения что и при выводе уравнения Стокса для оседания частиц 27а 52 Вывод уравнения для оценки электрокинетического по\nтенциала приводится во многих книгах 11 4 12 Наиболее удачно этот вопрос изложен у Гортнера ЗОЬ Если предположить что все ионы диффузной части двойного слоя расположены на расстоянии 6 от слоя закрепленных ионов см пунктирную линию на рис 2 то сила трения на единицу площади поверхности раздела равна иц 6 где и объемная скорость течения жидкости относительно частиц а р вязкость жидкости Движущая сила на единицу поверхности раздела равна оЕ где о заряд на единицу поверхности1 9 а Е приложенная разность потенциалов на единицу длины или градиент потенциала в направлении движения В условиях равновесия эти силы равны Если двойной слой подобен электрическому конденсатору с емкостью С на единицу площади то С р 5 где\nемкостью С на единицу площади то С р 5 где 5 электрокинетический потенциал С можно выразить также через диэлектрическую постоянную среды D и расстояние между обкладками конденсатора 6 с 6 4л8 Объединяя уравнения 5 и 6 получаем D или объединяя оба эти уравнения с уравнением 4 получаем 1 Следует отметить что заряд на единицу поверхности о отличается от заряда на единицу объема в диффузной части двойного слоя оценка которого дана в предыдущем параграфе и который определяется уравнением 3 Величина о введенная в настоящем разделе является плотностью заряда прочно закрепленных ионов Разумеется эти величины связаны между собой В случае электронейтральной системы А О J р dV х 0 где А площадь Р объем Предполагается что интегрирование производится с учетом геометрии системы 9 А XI Годэн\nВсе величины в этих уравнениях должны быть выражены в одной системе единиц например в электростатических единицах Если и выражено в сантиметрах в секунду jx в пуазах или в дин сек на 1 см2 то и Е будут выражены в абсолютных электростатических единицах потенциала и абсолютных электростатических единицах на сантиметр соответственно Если и Е должны быть выражены в вольтах и вольтах на сантиметр соответственно то следует их значения умножить на 300 27b 54а Если выразить в милливольтах и в микронах в секунду и подставить обычные значения D для разбавленных водных растворов при температуре 20 D 80 и ji 0 01 то получим С 141 8а Потенциал поверхности и потенциал Как установили Фер вей и Овербик 156а причиной возникновения двойного электрического слоя является равновесное распределение потенциал определяющих ионов между поверхностью частицы и жидкостью Это было найдено благодаря тщательной и скрупулезной\nчастицы и жидкостью Это было найдено благодаря тщательной и скрупулезной работе с золем йодистого серебра 10 Положим что Со концентрация потенциал определяющих ионов в случае йодистого серебра ионов серебра или иода отвечающая нулевому значению термодинамического потенциала тро а термодинамический потенциал соответствующий концентрации сп Хорошо известно что 1п 9 е сп где с концентрация k постоянная Больцмана Т абсолютная температура е заряд электрона ф термодинамический потенциал в абсолютных электростатических единицах В случае когда значение с0 выбрано таким что 0 уравнение примет следующий вид 0 058 1g в 10 Может возникнуть искушение отождествить величины ч я и К сожалению это совершенно неправильно Величины эти не равны хотя и связаны между собой причем абсолютная величина меньше абсолютной величины Фервей и Овербик полагают что различие между и обусловлено образованием у самого основания двойного электрического слоя рядом со слоем потенциал определяющих ионов слоя закрепленных противоионов таких же как ионы находящиеся в диффузной ча\nсти двойного слоя Это согласуется с точкой зрения Штерна 51 и схематически изображается на рис 4 Некоторые полагают что это различие можно связать с наличием гидратного слоя в основном обусловливающего теплоту смачивания твердых тел Вопрос о связи и относится к вопросам коллоидной химии и на него необходимо обратить внимание Рис 4 Схематическое изображение структуры двойного слоя в растворе электролита и распределение потенциала в двойном слое 28 А потенциал определяющие ионы В слой прочно закрепленных противоионов слой Штерна С диффузный слой противоионов слой Гун потенциал определяющий ион 2 гидратированный противоион 3 противоионы противоионов Электрический момент двойного слоя Булл и Гортнер 14 указывают что весьма характерной величиной является произведение плотности заряда в закрепленном слое ст на толщину двойного слоя 6 отождествляемую\nв закрепленном слое ст на толщину двойного слоя 6 отождествляемую со средним радиусом ионной атмосферы как упоминалось об этом выше Эту величину т6 можно рассматривать как удельный электрический момент двойного слоя Уравнение 7 показывает что электрический момент прямо пропорционален потенциалу Чтобы выразить электрический момент посредством измеряемых и известных величин уравнение 4 можно переписать следующим образом 8 Н Гугенгейм 32 заходит настолько далеко что считает произведение об более важной характеристикой электрокинетиче ских явлений чем потенциал Еще более настойчив в этом отношении Вуд 57 хотя он и расходится во мнениях с Гугенгей мом при толковании этого вопроса Все формулы для электрокинетического потенциала содержат величину диэлектрической постоянной В водной среде где концентрация ионов вблизи поверхности может быть относительно высокой использование диэлектрической постоянной воды вместо значения диэлектрической постоянной в двойном слое 9\nдо некоторой степени сомнительно особенно если значение д мало Однако никакой иной выбор величины D не может быть рправдан Формулы для электрического момента и для оценки плотности заряда поверхности не содержат диэлектрической постоянной и благодаря этому менее сомнительны Плотность ионов в прочно закрепленном слое Так как об можно рассчитать из уравнения 11 а 6 оценить из уравнения 1а то поверхностную плотность заряда в закрепленном слое можно рассчитать из уравнения g 3 25 1Q7 с 12 где величина и выражена в см сек и в пуазах с в моль л Е в абсолютных электростатических единицах на 1 см а о в абсолютных электростатических единицах количества электричества на 1 см2 Е обычно измеряется в вольтах на сантиметр и если 6 должно выражать количество одновалетных ионов в закрепленном слое то необходимо использовать множители 300 и 1 4 77 10 10 Тогда уравнение примет следующий вид g 2 04 Ю19 с электронных зарядов на 1 см2 12а ГН Е В частном случае когда и 0 002 см сек ц 0 01\nслучае когда и 0 002 см сек ц 0 01 пуаз Е 10 в см с 10 2 м то 6 4 08 1012 одновалентных ионов на 1 см2 что составляет приблизительно Г моноионного слоя е л и считать что на каждый ион приходится площадь 25 А2 В том случае когда данные уже выражены через К и с удобнее рассчитывать т из этих величин Комбинируя уравнения 8 и 12 получаем g l 42 lOi j T 13 рде величина выражена в вольтах с в моль л а ст в единицах заряда электрона на 1 см2 Согласно предварительным данным Сана 531 полученным методом микроэлектрофореза см ниже для кварца в 10 2 м растворе NaOH 5 52 мв Следовательно т 7 4 1012 зарядов на 1 см2 Для образования на поверхности моноионного слоя требуется гораздо большее количество зарядов на квадратный сантиметр скажем 4 1014 Не настаивая на точности предварительных данных Сана все же отметим что рассчитанное количество закрепленных на поверхности ионов составляет незначительную часть тех ионов которые могли бы разместиться на этой поверхности Возможно что на границе раздела места\nзанимают ионы разных знаков в почти одинаковых количествах и полученные данные относятся только к избытку ионов одного знака над ионами другого знака в противном случае математическая обработка включает в себя множество необоснованных предположений Этот вопрос представляет собой обширное поле для дальнейших исследований В таблице представлены некоторые результаты основанные на данных Сана 53а Плотность зарядов в закрепленном слое на пирите в растворах соляной кислоты и едкого натра различной концентрации 55 Величина РН С потенциал Концентрация ионов с рассчитана из pH ст заряд исна см2 Кажущееся заполнение ионного слоя Методы определения электрокинетического потенциала и удельного заряда Для определения величины Ъ или т можно использовать любое из четырех основных электрокинетических явлений При электрофорезе и электроосмосе измеряют обусловленные определенным электрическим полем механические эффекты скорость движения частиц в суспензии или скорость протекания жидкости через диафрагму Методы потенциала протекания и потенциала седиментации основаны на измерении электрической разности потенциалов возникающей за счет механических эффектов протекание раствора через диафрагму состоящую из частиц оседание частиц в растворе В настоящее время первый метод пользуется большим вниманием химиков коллоидников работающих обычно с гораздо меньшими по размеру частицами чем обогатители Для обогатителей же наиболее удобным методом при изучении свойств минеральных частиц является метод потенциала протекания 26 28 Метод электрофореза Типичным примером применения ме1 тода электрофореза является метод Бертона с U образной трубкой 16 В эту трубку с находящейся в ней суспензией или кол\nРис 5 Общий вид макроэлектрофо ретической ячейки Тизелиуса по Александеру и Джонсону лоидным раствором осторожно с обоих концов вводят раствор того же состава что и электролит содержащийся в суспензии При пропускании электрического тока граница между суспензией и залитым раствором электролита перемещается Скорость перемещения границы принимается за электрофоретическую скорость и используется в уравнениях для расчета электрокинети ческого потенциала или плотности заряда Метод макроэлетрофореза неоднократно совершенствовался и достиг высокой степени развития в приборе Тизелиуса 55 Этот прибор схематически изображенный на рис 5 детально описывается в довольно распространенных книгах Ис 30с1 Он состоит из маленькой U об разной трубки прямоугольной в сечении и сделанной так что верхняя часть ее может смещаться по шлифованной поверхности нижней части трубки в горизонтальном направлении U образная трубка соединяется с другой частью прибора содержащей обычные хлор серебряные электроды\nсоединяется с другой частью прибора содержащей обычные хлор серебряные электроды при помощи которых к трубке можно подвести желаемую разность потенциалов вплоть до 500 в Вначале суспензию вводят в нижнюю часть U образной трубки с таким расчетом чтобы уровень ее поднялся выше плоскости по которой эта часть может смещаться Затем нижнюю часть U образной трубки смещают и верхние ответвления прибора промывают После промывки верхние части наполняют электролитом соприкасающимся с исследуемой суспензией и с раствором хлористого калия в который опущены электроды При этом для сохранения гидростатического равновесия следует соблюдать некоторые предосторожности После того как установится температурное равновесие весь прибор термостатируется приводят все его части в рабочее положение сдвигая в прежнее положение нижнюю часть U образной трубки Прибор имеет много интересных особенностей Для точной оценки положения границы раздела применяется специальный оптический метод позволяющий наблюдать границу раздела соприкасающихся сред с различными коэффициентами прелом\nления Это особенно важно в случае белковых систем которые изучал Тизелиус так как белковые суспензии прозрачны и не окрашены Преимуществом метода микроэлектрофореза является его простота На микроскопе монтируется маленькая электрофоретическая трубка На ее концах располагаются обратимые электроды например Си CuSO4 или Ag AgCl отделенные от ее главной части пористыми перегородками рис 6 Движение частиц наблюдают под микроскопом Рис 6 Цилиндрическая микроэлектрофоретическая ячейка по Александеру и Джонсону 1 место наблюдения 2 обратимый электрод 3 и 4 стеклянная вата Однако этот метод вызывает некоторые возражения Дело в том что жидкость которая движется при наложении электрического поля в одну сторону должна каким либо способом возвращаться обратно в результате чего в трубке возникает циркуляция жидкости Поэтому чтобы получить точные результаты необходимо производить измерения в строго определенной части сечения электрофоретической трубки Для трубки прямоугольного сечения этот уровень отстоит\nсечения электрофоретической трубки Для трубки прямоугольного сечения этот уровень отстоит от верхней грани на расстоянии равном 21 высоты для трубки круглого сечения на расстоянии 14 диаметра от стенки трубки Даже в случае идеальной трубки с плоскими отшлифованными стенками трудно выполнить точные измерения Имеются и другие затруднения 1291 Одно из них связано с оптическими измерениями другое с невозможностью устранить тепловые конвекционные потоки и наконец твердые частицы размерами даже 2 3 р достаточно быстро осаждаются и таким образом уходят из области пригодной для измерения Метод измерения потенциала протекания Для изучения систем встречающихся в обогащении особенно удобным оказался метод измерения потенциала протекания Этот метод в основном был развит Крейтом Бриггсом Гортнером и Буллом Крёйт и Фрейндлих 21 разработали метод определения потенциала протекания для отдельных стеклянных капилляров Крёйт нашел что отношение наблюдаемого потенциала протекания Н к гидростатическому давлению Р проталкивающему раствор через капилляр является постоянной величиной\nБриггс 9 и Булл и Гортнер 13 распространили этот метод на диафрагмы состоящие из плотно упакованных твердых частиц Уравнение 8 выражающее зависимость электрокинетиче ского потенциала от скорости движения частиц вязкости жидкости и градиента потенциала можно переписать так чтобы выразить потенциал посредством величин измеряемых методом потенциала протекания Уравнение примет следующий вид 4тгр VA DI v Как видно уравнение выражает зависимость от некоторых новых величин а именно от V объема жидкости проходящего через диафрагму в единицу времени X удельной электропроводности жидкости в порах диафрагмы и силы тока I Иной вид уравнения получен Бриггсом 4тгр Е А Бр где Р гидростатическое давление Е наблюдаемый потенциал протекания Наиболее удобным для измерения потенциала протекания является прибор Фюрстенау 26 281 представляющий собой видоизменение применявшихся ранее приборов 8 39 40 Схематически он изображен на рис 7 Исследуемый электролит пропускают через диафрагму адсорбента такого например как порошок минерала под\nпропускают через диафрагму адсорбента такого например как порошок минерала под заданным постоянным давлением Разность потенциалов возникающая между платиновыми электро 7 дами измеряется при помощи вибрационно струнного электро метра После дополнительного измерения электропроводности можно рассчитать электрокинетический потенциал Хотя вывод уравнений 14 и 15 и указывает на то что электрокинетический потенциал не должен зависеть от размера капилляров имеются данные противоречащие этому В самом деле Булл и Гортнер 13 пришли к выводу что существует зависимость потенциала от размера частиц из которых состоит диафрагма Другие авторы нашли что потенциал протекания зависит от плотности упаковки диафрагмы Этот фактор очевидно для жестких минеральных частиц менее важен чем для пластичных органических материалов По видимому при выво j де уравнений были сделаны некоторые упрощающие предположения которые впоследствии были забыты Например следует напомнить что в том случае когда поры диафрагмы малы по сравнению с характеристической толщиной 6 Дебая Гюккеля поток протекающий через капилляры кроме обычного гидродинамического сопротивления обусловленного вязкостью будет\nиспытывать также электрокинетическое сопротивление При выводе уравнений этим фактором безусловно пренебрегли хотя уравнения и были предназначены для оценки электрокине тических явлений 11 15 30а Подробный анализ метода измерения потенциала протекания был сделан Вудом 57 Некоторые результаты по определению значений потенциала Несмотря на то что проделано не мало определений потенциала экспериментальные данные имеются для удивительно небольшого числа твердых фаз Большинство экспериментов проводилось со стеклом или плавленым кварцем Кроме того результаты различных экспериментаторов расходятся так что возникают сомнения о возможности определения абсолютных значений потенциала Например Фрейндлих 20а сообщает что согласно данным Квинке потен циал стекла в воде равен 53 мв по Терешину он равен 46 мв а для кварца в воде 44 мв Определения Лакса X и И Бичика 38 дали для плавленого кварца 146 мв а Вуда 58 177 мв Все эти вещества достаточно сходны между собой и для них можно было бы ожидать большей согласованности результатов определений Лучше согласуются между собой результаты полученные при\nсогласованности результатов определений Лучше согласуются между собой результаты полученные при применении одних и тех же приборов с одними и теми же твердыми веществами но с различными электролитами Обычно потенциал уменьшается с увеличением концентрации электролита Однако кло нений Замечено что эти отклонения связаны со специфическим взаимодействием иона электролита с ионами твердого вещества потенциал которого определяется Делаются попытки найти связь между свойствами ионов массой размером характером гидратации ионов с одной стороны и потенциалом с другой при эквивалентных концентрациях. текст закончен - считай",
+    "n_predict": 128,
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "min_p": 0.0,
+    "cache_prompt": false,
+    "stream": false
+}
+======== Prompt cache: cache size: 8291, n_keep: 0, n_discarded_prompt: 0, cache_ram_n_min: 0, f_keep: 0.02, cache_ram_similarity: 0.50
+updating prompt cache
+ - saving prompt with length 8291, total state size = 388.704 MiB
+prompt cache save took 2138.20 ms
+ - looking for better prompt, base f_keep = 0.022, sim = 0.015, n_keep = 0, n_discarded_prompt = 0
+ - cache state: 6 prompts, 788.663 MiB (limits: 8192.000 MiB, 0 tokens, 174733 est)
+   - prompt 0x55b08c575560:     382 tokens,       0 discarded, checkpoints:  0,    17.910 MiB
+   - prompt 0x55b08c543770:     631 tokens,       0 discarded, checkpoints:  0,    29.584 MiB
+   - prompt 0x55b08c543930:    1144 tokens,       0 discarded, checkpoints:  0,    53.634 MiB
+   - prompt 0x55b08c5551c0:    2171 tokens,       0 discarded, checkpoints:  0,   101.783 MiB
+   - prompt 0x55b08c55a830:    4203 tokens,       0 discarded, checkpoints:  0,   197.048 MiB
+   - prompt 0x55b08c52eef0:    8291 tokens,       0 discarded, checkpoints:  0,   388.704 MiB
+prompt cache load took 6.80 ms
+INFO [   launch_slot_with_task] slot is processing task | tid="123339453882368" timestamp=1787065975 id_slot=0 id_task=775
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065975 id_slot=0 id_task=775 p0=0
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=0 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=0 requested_outputs=0 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4096 ub=32 outputs=0 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=0 requested_outputs=0 buf_alloc_mib=0.77
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787065999 id_slot=0 id_task=775 p0=4096
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=0 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=0 requested_outputs=0 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4096 ub=32 outputs=0 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=0 requested_outputs=0 buf_alloc_mib=0.77
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787066028 id_slot=0 id_task=775 p0=8192
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4096 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=0 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=0 requested_outputs=0 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4096 ub=32 outputs=0 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=0 requested_outputs=0 buf_alloc_mib=0.77
+INFO [    batch_pending_prompt] kv cache rm [p0, end) | tid="123339453882368" timestamp=1787066062 id_slot=0 id_task=775 p0=12288
+llama_decode_internal: TurboPrefill requested=0 active=0 n_tokens=4085 n_ubatch=32 full_ubatches=0 devices=12 split_mode=1 nextn_layers=0 mtp_op=0 embeddings=0 mtp=0 has_mtp=0 emb_gate=1 n_outputs=1 n_seq_max=1 causal=1 compact_mtp=0 n_outputs_embd=1 requested_outputs=1 logits_mib=0.77 embd_mib=0.00 buf_used_mib=0.77 buf_alloc_mib=0.77
+llama_decode_internal: TP req=0 active=0 mtp_op=0 cb=0 tokens=4085 ub=32 outputs=1 seqmax=1 causal=1 split=1 devices=12 turbo_ub=0 compact_mtp=0 embd_outputs=1 requested_outputs=1 buf_alloc_mib=0.77
+token:
+
+
+
+
+slot log_first_to: id  0 | task 775 | first-token-debug: prompt_tokens=16373 prompt_hash=0xe7f6fd88e5b5e79e target_logits_hash=0xe9dd5fe6382e7760 top16_logits=[{"token_id":4707,"piece":"\n\n\n\n","logit":13.555330276},{"token_id":30,"piece":"?","logit":13.380246162},{"token_id":13,"piece":".","logit":13.278500557},{"token_id":220,"piece":" ","logit":13.082297325},{"token_id":1008,"piece":"...","logit":13.041898727},{"token_id":558,"piece":".\n","logit":12.887363434},{"token_id":198,"piece":"\n","logit":12.710151672},{"token_id":485,"piece":"..","logit":12.572726250},{"token_id":793,"piece":" \n","logit":12.566289902},{"token_id":4908,"piece":"...\n","logit":12.250690460},{"token_id":279,"piece":"\n\n","logit":12.232589722},{"token_id":1131,"piece":"…","logit":12.113964081},{"token_id":0,"piece":"!","logit":12.067454338},{"token_id":2550,"piece":" ...","logit":11.974969864},{"token_id":15227,"piece":".\n\n\n\n","logit":11.896430969},{"token_id":2161,"piece":"...\n\n","logit":11.674451828}]
+token:[
+token:С
+token:Л
+token:ОВ
+token:А
+token:]
+
+token:1
+token:.
+token: ад
+token:сор
+token:б
+token:ции
+token: —
+token: 
+token:12
+token:
+
+token:2
+token:.
+token: ад
+token:сор
+token:б
+token:ент
+token: —
+token: 
+token:4
+token:
+
+token:3
+token:.
+token: ад
+token:сор
+token:б
+token:ентов
+token: —
+token: 
+token:2
+token:
+
+token:4
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ного
+token: —
+token: 
+token:1
+token:
+
+token:5
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ного
+token: —
+token: 
+token:1
+token:
+
+token:6
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:7
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:8
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:9
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:10
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:11
+token:.
+token: ад
+token:сор
+token:б
+token:ирован
+token:ным
+token: —
+token: 
+token:1
+token:
+
+token:12
+token:.
+token: ад
+INFO [           release_slots] slot released | tid="123339453882368" timestamp=1787066112 id_slot=0 id_task=775 n_ctx=131072 n_past=16500 n_system_tokens=0 n_cache_tokens=16500 truncated=false
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787066112
+slot print_timing: id  0 | task 775 | 
+prompt eval time =  125833.44 ms / 16373 tokens (    7.69 ms per token,   130.12 tokens per second)
+       eval time =   11232.00 ms /   128 tokens (   87.75 ms per token,    11.40 tokens per second)
+      total time =  137065.45 ms / 16501 tokens
+INFO [      log_server_request] request | tid="123335983751168" timestamp=1787066112 remote_addr="127.0.0.1" remote_port=50078 status=200 method="POST" path="/completion" params={}
+INFO [              slots_idle] all slots are idle | tid="123339453882368" timestamp=1787066112
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 2 graphs
+~ggml_backend_cuda_context: have 0 graphs

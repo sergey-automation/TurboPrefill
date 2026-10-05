@@ -1,4 +1,4 @@
-# ik_llama.cpp_8337e4cd_v6.6.3
+# ik_llama.cpp_8337e4cd_v6.7
 - Moved several TurboPrefill checks out of the decode hot path to reduce decode overhead.
 
 TurboPrefill patch set for the original `ik_llama.cpp`.

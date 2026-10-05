@@ -1,6 +1,7 @@
 // TurboPrefill by Trykhlieb
 // Port target: ik_llama.cpp, commit 8337e4cd3861406fc04e0854b1409cd1b027fbc9
-// ik_llama.cpp_8337e4cd_v6.6.3 diagnostics: first target-logits hash and top-16 logits.
+// ik_llama.cpp_8337e4cd_v6.7 diagnostics: first target-logits hash and top-16 logits.
+// Functional code is V6.5; only this version comment is synchronized with the V6.7 bundle.
 #include "server-context.h"
 #include "server-chat.h"
 #include "server-common.h"
@@ -293,6 +294,29 @@ server_context::~server_context() {
 
 bool server_context::load_model(const gpt_params& params_) {
     params_base = params_;
+
+    const char * turboprefill_env = std::getenv("TURBOPREFILL");
+    const bool turboprefill_requested =
+            turboprefill_env != nullptr &&
+            std::strcmp(turboprefill_env, "0") != 0 &&
+            std::strcmp(turboprefill_env, "false") != 0 &&
+            std::strcmp(turboprefill_env, "off") != 0;
+
+    // TurboPrefill restores per-UB tensor metadata and data pointers during replay.
+    // Keep CUDA execution on normal streams on every GPU architecture.
+    if (turboprefill_requested) {
+#if defined(_WIN32)
+        const int env_status = _putenv_s("GGML_CUDA_DISABLE_GRAPHS", "1");
+#else
+        const int env_status = setenv("GGML_CUDA_DISABLE_GRAPHS", "1", 1);
+#endif
+        if (env_status != 0) {
+            SRV_ERR("%s", "failed to disable CUDA Graphs for TurboPrefill\n");
+            return false;
+        }
+
+        SRV_INF("%s", "TurboPrefill: CUDA Graphs disabled for target and draft contexts\n");
+    }
 
     llama_init_result llama_init = llama_init_from_gpt_params(params_base);
 

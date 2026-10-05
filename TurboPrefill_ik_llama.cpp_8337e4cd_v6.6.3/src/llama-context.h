@@ -1,6 +1,7 @@
 // TurboPrefill by Trykhlieb
 // Port target: ik_llama.cpp, commit 8337e4cd3861406fc04e0854b1409cd1b027fbc9
-// ik_llama.cpp_8337e4cd_v6.5
+// ik_llama.cpp_8337e4cd_v6.7
+// Functional code is V6.5; only this version comment is synchronized with the V6.7 bundle.
 #pragma once
 
 #include "llama-impl.h"

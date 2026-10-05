@@ -1,6 +1,6 @@
 // TurboPrefill by Trykhlieb
 // Port target: ik_llama.cpp, commit 8337e4cd3861406fc04e0854b1409cd1b027fbc9
-// ik_llama.cpp_8337e4cd_v6.6.3
+// ik_llama.cpp_8337e4cd_v6.7
 //
 // Copyright (C) 2023-2025 The llama.cpp authors
 // Copyright (C) 2024-2025 Iwan Kawrakow

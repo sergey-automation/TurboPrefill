@@ -1,16 +1,15 @@
 // TurboPrefill by Trykhlieb
 // Port target: ik_llama.cpp, commit 8337e4cd3861406fc04e0854b1409cd1b027fbc9
-// ik_llama.cpp_8337e4cd_v6.6.3
+// ik_llama.cpp_8337e4cd_v6.7
+// Functional code is V6.5; only this version comment and the version written to the log are synchronized with the V6.7 bundle.
 // Diagnostics: first target-logits FNV-1a hash and top-16 logits are logged by server-context.cpp.
 #include "ggml-backend-impl.h"
 #include "ggml-alloc.h"
 #include "ggml-impl.h"
 #include "ggml-rpc.h"
 #include "ggml-moe-prefetch.h"
-#if defined(GGML_USE_CUDA) || defined(GGML_USE_HIPBLAS) || defined(GGML_USE_MUSA)
+#ifdef GGML_USE_CUDA
 #include "ggml-cuda.h"
-extern "C" GGML_CALL enum ggml_status ggml_backend_cuda_graph_compute_no_graph(
-        ggml_backend_t backend, struct ggml_cgraph * cgraph);
 #endif
 
 #include <cassert>
@@ -3043,7 +3042,7 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
     ggml_tensor * standard_capture_last_ids_tensor = nullptr;
 
     static constexpr const char * GGML_BACKEND_SCHED_TP_FILE_VERSION =
-            "ik_llama.cpp_8337e4cd_v6.6.3";
+            "ik_llama.cpp_8337e4cd_v6.7";
     static ggml_backend_sched_t tp_timing_sched = nullptr;
     static int64_t tp_series_begin_us = -1;
     static int64_t tp_capture_done_us = -1;
@@ -4080,6 +4079,7 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
         ggml_backend_t split_backend = sched->backends[split_backend_id];
 
         static ggml_backend_sched_t tp_sched = nullptr;
+        static std::vector<ggml_backend_event_t> compute_done_events;
         static std::vector<ggml_backend_event_t> d2h_done_events;
         static std::vector<ggml_backend_event_t> h2d_ready_events;
         static std::vector<bool> compute_started;
@@ -4087,7 +4087,10 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
         static std::vector<bool> h2d_started;
         static std::vector<bool> h2d_ready_recorded;
 
-        if (tp_sched != sched || (int) d2h_done_events.size() < sched->n_splits) {
+        if (tp_sched != sched || (int) compute_done_events.size() < sched->n_splits) {
+            for (auto ev : compute_done_events) {
+                if (ev != nullptr) ggml_backend_event_free(ev);
+            }
             for (auto ev : d2h_done_events) {
                 if (ev != nullptr) ggml_backend_event_free(ev);
             }
@@ -4095,6 +4098,7 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
                 if (ev != nullptr) ggml_backend_event_free(ev);
             }
             tp_sched = sched;
+            compute_done_events.assign(sched->n_splits, nullptr);
             d2h_done_events.assign(sched->n_splits, nullptr);
             h2d_ready_events.assign(sched->n_splits, nullptr);
             compute_started.assign(sched->n_splits, false);
@@ -4105,6 +4109,7 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
             for (int i = 0; i < sched->n_splits; ++i) {
                 const int backend_id = splits[i].backend_id;
                 ggml_backend_t backend = sched->backends[backend_id];
+                compute_done_events[i] = ggml_backend_event_new(backend);
                 d2h_done_events[i]     = ggml_backend_event_new(backend);
                 h2d_ready_events[i]    = ggml_backend_event_new(backend);
             }
@@ -4225,20 +4230,14 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
                 return GGML_STATUS_FAILED;
             }
 
-            enum ggml_status ec;
-#if defined(GGML_USE_CUDA) || defined(GGML_USE_HIPBLAS) || defined(GGML_USE_MUSA)
-            if (ggml_backend_is_cuda(split_backend)) {
-                ec = ggml_backend_cuda_graph_compute_no_graph(split_backend, &split->graph);
-            } else {
-                ec = ggml_backend_graph_compute_async(split_backend, &split->graph);
-            }
-#else
-            ec = ggml_backend_graph_compute_async(split_backend, &split->graph);
-#endif
+            enum ggml_status ec = ggml_backend_graph_compute_async(split_backend, &split->graph);
             if (ec != GGML_STATUS_SUCCESS) {
                 return ec;
             }
 
+            if (compute_done_events[split_id] != nullptr) {
+                ggml_backend_event_record(compute_done_events[split_id]);
+            }
             compute_started[split_id] = true;
             h2d_started[split_id] = false;
             h2d_ready_recorded[split_id] = false;
@@ -4324,6 +4323,9 @@ static enum ggml_status ggml_backend_sched_compute_splits_turboprefill(ggml_back
             }
 
             d2h_started[split_id] = true;
+
+            if (split_id + 1 >= sched->n_splits) {
+            }
 
             return GGML_STATUS_SUCCESS;
         }
